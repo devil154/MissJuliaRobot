@@ -10,6 +10,20 @@ import glob
 import sys
 from julia import ubot
 
+from pymongo import MongoClient
+from julia import MONGO_DB_URI, tbot, OWNER_ID
+from telethon import types, events
+from telethon.tl import functions
+
+client = MongoClient()
+client = MongoClient(MONGO_DB_URI)
+dbb = client["leccher"]
+leechers = dbb.leecher
+
+async def check_spambot(id):
+    return leechers.find_one({'id': id})
+
+
 def register(**args):
     """ Registers a new message. """
     pattern = args.get('pattern')
@@ -50,6 +64,10 @@ def register(**args):
                pass
             else:
                print("i don't work in channels")
+               return
+    
+            checkspam = await check_spambot(check.sender_id)
+            if checkspam is not None:
                return
                      
             try:
