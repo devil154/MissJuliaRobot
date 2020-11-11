@@ -88,7 +88,8 @@ async def _(event):
         else:
             return
     if event.reply_to_message_id:
-        msg = await event.get_reply_message()
+        ctext= await event.get_reply_message()
+        msg = ctext.text
         params = dict(lang="US", clientVersion="2.0", apiKey=API_KEY, text=msg)
 
         res = requests.get(URL, params=params)
