@@ -81,11 +81,6 @@ async def leechers(event):
                 del starttimer 
 
 
-
-# for global spamcheck wrapper
-
-
-
 import inspect
 import logging
 import re, os
