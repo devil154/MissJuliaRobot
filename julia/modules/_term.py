@@ -38,7 +38,7 @@ async def terminal_runner(term):
         output = open("output.txt", "w+")
         output.write(result)
         output.close()
-        await term.client.send_file(
+        await tbot.send_file(
             term.chat_id,
             "output.txt",
             reply_to=term.id,

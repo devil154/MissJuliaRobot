@@ -198,8 +198,8 @@ async def okgoogle(img):
             k = requests.get(i)
             yeet.append(k.content)
         try:
-            await img.client.send_file(
-                entity=await img.client.get_input_entity(img.chat_id),
+            await tbot.send_file(
+                entity=await tbot.get_input_entity(img.chat_id),
                 file=yeet,
                 reply_to=img,
             )

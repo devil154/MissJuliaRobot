@@ -117,7 +117,7 @@ async def upstream(ups):
             file = open("output.txt", "w+")
             file.write(changelog_str)
             file.close()
-            await ups.client.send_file(
+            await tbot.send_file(
                 ups.chat_id,
                 "output.txt",
                 reply_to=ups.id,

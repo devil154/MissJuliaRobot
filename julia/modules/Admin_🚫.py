@@ -250,7 +250,7 @@ async def promote(promt):
 
     # Try to promote if current user is admin or creator
     try:
-        await promt.client(
+        await tbot(
             EditAdminRequest(promt.chat_id, user.id, new_rights, "Admin"))
         await promt.reply("Promoted Successfully!")
 
@@ -302,7 +302,7 @@ async def demote(dmod):
                                 pin_messages=None)
     # Edit Admin Permission
     try:
-        await dmod.client(
+        await tbot(
             EditAdminRequest(dmod.chat_id, user.id, newrights, "Admin"))
 
     # If we catch BadRequestError from Telethon
@@ -339,7 +339,7 @@ async def pin(msg):
         is_silent = False
 
     try:
-        await msg.client(
+        await tbot(
             UpdatePinnedMessageRequest(msg.to_id, to_pin, is_silent))
         await msg.reply("Pinned Successfully!")
     except Exception:
@@ -355,11 +355,11 @@ async def get_admin(show):
     else:
         return
 
-    info = await show.client.get_entity(show.chat_id)
+    info = await tbot.get_entity(show.chat_id)
     title = info.title if info.title else "this chat"
     mentions = f'<b>Admins in {title}:</b> \n'
     try:
-        async for user in show.client.iter_participants(
+        async for user in tbot.iter_participants(
                 show.chat_id, filter=ChannelParticipantsAdmins):
             if not user.deleted:
                 link_unf = "<a href=\"tg://user?id={}\">{}</a>"
@@ -451,7 +451,7 @@ async def promote(promt):
 
     # Try to promote if current user is admin or creator
     try:
-        await promt.client(
+        await tbot(
             EditAdminRequest(promt.chat_id, user.id, new_rights, title_admin))
         await promt.reply("Title set successfully !")
 
@@ -473,10 +473,10 @@ async def get_users(show):
             pass
         else:
             return
-    info = await show.client.get_entity(show.chat_id)
+    info = await tbot.get_entity(show.chat_id)
     title = info.title if info.title else "this chat"
     mentions = "Users in {}: \n".format(title)
-    async for user in show.client.iter_participants(show.chat_id):
+    async for user in tbot.iter_participants(show.chat_id):
         if not user.deleted:
             mentions += f"\n[{user.first_name}](tg://user?id={user.id}) {user.id}"
         else:
@@ -484,7 +484,7 @@ async def get_users(show):
     file = open("userslist.txt", "w+")
     file.write(mentions)
     file.close()
-    await show.client.send_file(
+    await tbot.send_file(
         show.chat_id,
         "userslist.txt",
         caption="Users in {}".format(title),
@@ -508,7 +508,7 @@ async def rm_deletedacc(show):
 
     if con != "clean":
         await show.reply("`Searching for zombie accounts...`")
-        async for user in show.client.iter_participants(show.chat_id):
+        async for user in tbot.iter_participants(show.chat_id):
             if user.deleted:
                 del_u += 1
 
@@ -523,10 +523,10 @@ async def rm_deletedacc(show):
     del_u = 0
     del_a = 0
 
-    async for user in show.client.iter_participants(show.chat_id):
+    async for user in tbot.iter_participants(show.chat_id):
         if user.deleted:
             try:
-                await show.client(
+                await tbot(
                     EditBannedRequest(show.chat_id, user.id, BANNED_RIGHTS))
             except ChatAdminRequiredError:
                 await show.reply("`I don't have ban rights in this group`")
@@ -534,7 +534,7 @@ async def rm_deletedacc(show):
             except UserAdminInvalidError:
                 del_u -= 1
                 del_a += 1
-            await show.client(
+            await tbot(
                 EditBannedRequest(show.chat_id, user.id, UNBAN_RIGHTS))
             del_u += 1
 
@@ -681,7 +681,7 @@ async def ban(bon):
       return
 
     try:
-        await bon.client(EditBannedRequest(bon.chat_id, user.id,
+        await tbot(EditBannedRequest(bon.chat_id, user.id,
                                            BANNED_RIGHTS))
         await bon.reply("Banned Successfully")
 
@@ -719,7 +719,7 @@ async def kick(bon):
       return
 
     try:
-        await bon.client.kick_participant(bon.chat_id, user.id)
+        await tbot.kick_participant(bon.chat_id, user.id)
         await bon.reply("Kicked Successfully")
 
     except:
@@ -757,7 +757,7 @@ async def unban(bon):
       return
 
     try:
-        await bon.client(EditBannedRequest(bon.chat_id, user.id,
+        await tbot(EditBannedRequest(bon.chat_id, user.id,
                                            UNBAN_RIGHTS))
         await bon.reply("Unbanned Successfully")
 
@@ -776,7 +776,7 @@ async def banme(bon):
         return
 
     try:
-        await bon.client(EditBannedRequest(bon.chat_id, sender,
+        await tbot(EditBannedRequest(bon.chat_id, sender,
                                            BAN_RIGHTS))
         await bon.reply("Ok Banned !")
 
@@ -796,7 +796,7 @@ async def kickme(bon):
         return
 
     try:
-        await bon.client.kick_participant(bon.chat_id, event.sender_id)
+        await tbot.kick_participant(bon.chat_id, event.sender_id)
         await bon.reply("Ok Banned !")
 
     except Exception as e:
@@ -838,7 +838,7 @@ async def spider(spdr):
       return
 
     try:
-        await spdr.client(EditBannedRequest(spdr.chat_id, user.id,
+        await tbot(EditBannedRequest(spdr.chat_id, user.id,
                                             MUTE_RIGHTS))
 
         await spdr.reply("Muted Successfully !")
@@ -880,7 +880,7 @@ async def spiderr(spdr):
       return
 
     try:
-        await spdr.client(EditBannedRequest(spdr.chat_id, user.id,
+        await tbot(EditBannedRequest(spdr.chat_id, user.id,
                                             UNMUTE_RIGHTS))
 
         await spdr.reply("Unmuted Successfully !")

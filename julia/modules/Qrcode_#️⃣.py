@@ -69,7 +69,7 @@ async def parseqr(qr_e):
             return
 
     start = datetime.now()
-    downloaded_file_name = await qr_e.client.download_media(
+    downloaded_file_name = await tbot.download_media(
         await qr_e.get_reply_message(), progress_callback=progress
     )
     url = "https://api.qrserver.com/v1/read-qr-code/?outputformat=json"
@@ -114,7 +114,7 @@ async def make_qr(qrcode):
         previous_message = await qrcode.get_reply_message()
         reply_msg_id = previous_message.id
         if previous_message.media:
-            downloaded_file_name = await qrcode.client.download_media(
+            downloaded_file_name = await tbot.download_media(
                 previous_message, progress_callback=progress
             )
             m_list = None
@@ -137,7 +137,7 @@ size=200x200&charset-source=UTF-8&charset-target=UTF-8\
     with open(required_file_name, "w+b") as file:
         for chunk in resp.iter_content(chunk_size=128):
             file.write(chunk)
-    await qrcode.client.send_file(
+    await tbot.send_file(
         qrcode.chat_id,
         required_file_name,
         reply_to=reply_msg_id,
