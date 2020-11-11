@@ -148,8 +148,10 @@ async def fetch_info(replied_user, event):
     caption += f"Permanent Link To Profile: "
     caption += f"<a href=\"tg://user?id={user_id}\">{first_name}</a>"
     if user_id in SUDO_USERS:
+      if not user_id in OWNER_ID:
          caption += f"\n\n<b>This person is one of my SUDO USERS almost as powerful as my owner.\nSo mind it !</b>"
-    elif user_id == OWNER_ID:
+    
+    if user_id == OWNER_ID:
          caption += f"\n\n<b>This person is my owner.\nHe is the reason why I am alive.</b>"
     return caption
 
