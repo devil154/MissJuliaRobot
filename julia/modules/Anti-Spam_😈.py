@@ -19,8 +19,9 @@ leechers = db.leecher
 global spamcounter
 spamcounter=0
 
-@tbot.on(events.NewMessage(pattern=None))
-async def leechers(event):
+try:
+ @tbot.on(events.NewMessage(pattern=None))
+ async def leechers(event):
     global spamcounter
     global starttimer
     starttimer=time.time()   
@@ -80,7 +81,8 @@ async def leechers(event):
                 del spamtimecheck 
                 del spamcounter 
                 del starttimer 
-
+except Exception:
+   continue
 
 import inspect
 import logging
