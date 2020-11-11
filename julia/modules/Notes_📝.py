@@ -32,7 +32,7 @@ async def can_change_info(message):
     )
 
 
-@tbot.on(events.NewMessage(pattern=r"\#(\S+)")
+@tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def on_note(event):
     name = event.pattern_match.group(1)
     note = get_notes(name)
