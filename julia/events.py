@@ -17,11 +17,8 @@ from telethon.tl import functions
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-dbb = client["leccher"]
+dbb = client["leecher"]
 leechers = dbb.leecher
-
-async def check_spambot(id):
-    return leechers.find_one({'id': id})
 
 
 def register(**args):
@@ -66,9 +63,15 @@ def register(**args):
                print("i don't work in channels")
                return
     
-            checkspam = await check_spambot(check.sender_id)
-            if checkspam is not None:
-               return
+            spammers = leechers.find({})
+            for c in spammers:
+              if event.sender_id == c['id']:
+                 painkiller = c['time']
+                 if str(time.strftime("%H", time.gmtime(spamtimecheck))) >= "24": 
+                    leechers.delete_one({"id": event.sender_id})     
+                    pass
+                 else:
+                    return
                      
             try:
                 await func(check)
