@@ -74,8 +74,9 @@ async def leechers(event):
                         EditBannedRequest(event.chat_id, event.sender_id, MUTE_RIGHTS)
                     )
                     await dev.edit(final + "\nYou are now muted !")
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(e)
+                    pass 
 
                 del spamtimecheck 
                 del spamcounter 
