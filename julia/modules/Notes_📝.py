@@ -1,5 +1,6 @@
 from telethon import utils
 from telethon.tl import types
+from julia import tbot
 from julia import *
 
 from julia.modules.sql.notes_sql import (
@@ -31,7 +32,7 @@ async def can_change_info(message):
     )
 
 
-@register(pattern=r"\#(\S+)")
+@tbot.on(events.NewMessage(pattern=r"\#(\S+)", 
 async def on_note(event):
     name = event.pattern_match.group(1)
     note = get_notes(name)
