@@ -11,6 +11,7 @@ from telethon.tl import functions
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["leecher"]
+global leechers
 leechers = db.leecher
 
 # MADE BY @MISSJULIA_ROBOT
