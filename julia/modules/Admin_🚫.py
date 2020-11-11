@@ -234,11 +234,7 @@ async def promote(promt):
             pass
     else:
       return
-      
-    # If not admin and not creator, also return
-    if not admin and not creator:
-        await promt.reply(NO_ADMIN)
-        return
+     
 
     new_rights = ChatAdminRights(add_admins=True,
                                  invite_users=True,
@@ -288,10 +284,6 @@ async def demote(dmod):
     else:
       return
 
-    
-    if not admin and not creator:
-        await dmod.reply(NO_ADMIN)
-        return
 
     # If passing, declare that we're going to demote
 
@@ -332,10 +324,6 @@ async def pin(msg):
         if not await can_pin_msg(message=msg):
             return
     else:
-        return
-    # If not admin and not creator, return
-    if not admin and not creator:
-        await msg.reply(NO_ADMIN)
         return
 
     to_pin = msg.reply_to_msg_id
@@ -399,9 +387,6 @@ async def set_group_photo(gpic):
     else:
         return
         
-    if not chat.admin_rights or chat.creator:
-        await gpic.reply(NO_ADMIN)
-        return
 
     if replymsg and replymsg.media:
         if isinstance(replymsg.media, MessageMediaPhoto):
@@ -450,12 +435,7 @@ async def promote(promt):
         else:
             pass
     else:
-      return
-      
-    # If not admin and not creator, also return
-    if not admin and not creator:
-        await promt.reply(NO_ADMIN)
-        return
+      return    
 
     new_rights = ChatAdminRights(add_admins=True,
                                  invite_users=True,
@@ -685,11 +665,6 @@ async def ban(bon):
     admin = chat.admin_rights
     creator = chat.creator
 
-    # Well
-    if not admin and not creator:
-        await bon.reply(NO_ADMIN)
-        return
-
     user = await get_user_from_event(bon)
     if user:
         pass
@@ -727,11 +702,6 @@ async def kick(bon):
     chat = await bon.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-
-    # Well
-    if not admin and not creator:
-        await bon.reply(NO_ADMIN)
-        return
 
     user = await get_user_from_event(bon)
     if user:
@@ -771,11 +741,6 @@ async def unban(bon):
             if not await can_ban_users(message=bon):
                 return
 
-    # Well
-    if not admin and not creator:
-        await bon.reply(NO_ADMIN)
-        return
-
     user = await get_user_from_event(bon)
     if user:
         pass
@@ -810,11 +775,6 @@ async def banme(bon):
     if not bon.is_group:  
         return
 
-    # Well
-    if not admin and not creator:
-        await bon.reply(NO_ADMIN)
-        return
-
     try:
         await bon.client(EditBannedRequest(bon.chat_id, sender,
                                            BAN_RIGHTS))
@@ -833,11 +793,6 @@ async def kickme(bon):
     sender = event.sender_id
 
     if not bon.is_group:  
-        return
-
-    # Well
-    if not admin and not creator:
-        await bon.reply(NO_ADMIN)
         return
 
     try:
@@ -866,11 +821,6 @@ async def spider(spdr):
     if spdr.is_group:
             if not await can_ban_users(message=spdr):
                 return
-
-    # If not admin and not creator, return
-    if not admin and not creator:
-        await spdr.reply(NO_ADMIN)
-        return
 
     user = await get_user_from_event(spdr)
     if user:
@@ -914,11 +864,6 @@ async def spiderr(spdr):
             if not await can_ban_users(message=spdr):
                 return
 
-    # If not admin and not creator, return
-    if not admin and not creator:
-        await spdr.reply(NO_ADMIN)
-        return
-
     user = await get_user_from_event(spdr)
     if user:
         pass
@@ -947,7 +892,6 @@ async def spiderr(spdr):
 
 @register(pattern="^/lock (.*)")
 async def locks(event):
-
     if not event.is_group:  
         return
     if event.is_group:
