@@ -54,39 +54,8 @@ async def leechers(event):
     else:
         USERSPAM = []
         USERSPAM.append(check)  
-    
     if spamcounter > 4 and event.sender_id == USERSPAM[0]:
-     spamtimecheck = time.time() - starttimer
-     if time.strftime("%S", time.gmtime(spamtimecheck)) <= 0o3: # octal number
-            print(time.strftime("%S", time.gmtime(spamtimecheck)))
-            VALID = True
-            spamcounter = 0
-            if senderr.username == None:
-                st = senderr.first_name
-                hh = senderr.id
-                final = f"[{st}](tg://user?id={hh}) you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"
-            else:
-                st = senderr.username
-                final = f"@{st} you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"           
-    else:
-            VALID = False
-            spamcounter = 0
-    if VALID == True:
-            dev = await event.respond(final)
-            users = leechers.find({})
-            for c in users:
-                if USERSPAM[0] == c["id"]:
-                    return
-                timerr = time.time()
-                leechers.insert_one({"id": USERSPAM[0], "time": timerr})
-                try:
-                    MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
-                    await event.client(
-                        EditBannedRequest(event.chat_id, event.sender_id, MUTE_RIGHTS)
-                    )
-                    await dev.edit(final + "\nYou are now muted !")
-                except Exception:
-                    pass
+        print(time.strftime("%S", time.gmtime(spamtimecheck)))
 
 # for global spamcheck wrapper
 
