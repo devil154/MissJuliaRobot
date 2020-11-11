@@ -105,7 +105,7 @@ async def on_note_list(event):
             OUT_STR += f"➤ #{a_note.note} \n"
     else:
         OUT_STR = "No notes. Start Saving using /addnote"
-    if len(OUT_STR) > Config.MAX_MESSAGE_SIZE_LIMIT:
+    if len(OUT_STR) > 4096:
         with io.BytesIO(str.encode(OUT_STR)) as out_file:
             out_file.name = "notes.text"
             await tbot.send_file(
