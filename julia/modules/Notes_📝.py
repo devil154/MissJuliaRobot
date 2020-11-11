@@ -15,7 +15,7 @@ TYPE_PHOTO = 1
 TYPE_DOCUMENT = 2
 
 
-from telethon import types
+from telethon import types, events
 from telethon.tl import functions
 
 
@@ -32,7 +32,7 @@ async def can_change_info(message):
     )
 
 
-@tbot.on(events.NewMessage(pattern=r"\#(\S+)", 
+@tbot.on(events.NewMessage(pattern=r"\#(\S+)")
 async def on_note(event):
     name = event.pattern_match.group(1)
     note = get_notes(name)
