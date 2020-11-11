@@ -77,7 +77,6 @@ if ENV:
         "CAACAgUAAxkBAALtC17p4EIAATVENsrWdMiTEinfiUXp3wACDwADTB0uPDaYvTB8iR7eGgQ",
     )
     ALLOW_EXCL = os.environ.get("ALLOW_EXCL", False)
-    SUDO_USERS.add(OWNER_ID)
     GBAN_LOGS = os.environ.get("MESSAGE_DUMP")
     LYDIA_API_KEY = os.environ.get("LYDIA_API_KEY", None)
     tbot = TelegramClient("alexa", API_KEY, API_HASH)
