@@ -1,3 +1,7 @@
+
+# todo event.from_id change to event.sender_id
+
+
 from julia.modules.sql import afk_sql as sql
 
 from telegram.error import BadRequest
