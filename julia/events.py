@@ -65,10 +65,10 @@ def register(**args):
     
             spammers = leechers.find({})
             for c in spammers:
-              if event.sender_id == c['id']:
+              if check.sender_id == c['id']:
                  painkiller = c['time']
                  if str(time.strftime("%H", time.gmtime(spamtimecheck))) >= "24": 
-                    leechers.delete_one({"id": event.sender_id})     
+                    leechers.delete_one({"id": check.sender_id})     
                     pass
                  else:
                     return
