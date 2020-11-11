@@ -34,6 +34,8 @@ spamcounter=0
 @tbot.on(events.NewMessage(pattern=None))
 async def leechers(event):
     global spamcounter
+    global starttimer
+    starttimer=time.time()   
     spamcounter += 1
     if str(event.sender_id) in str(OWNER_ID):
       return
@@ -50,8 +52,9 @@ async def leechers(event):
     else:
         USERSPAM = []
         USERSPAM.append(check)  
-    for sec in max_seconds(3):
-        if spamcounter > 4 and event.sender_id == USERSPAM[0]:
+    
+    if spamcounter > 4 and event.sender_id == USERSPAM[0]:
+     if time.time() - starttimer <= 3:
             VALID = True
             spamcounter = 0
             if senderr.username == None:
@@ -61,10 +64,10 @@ async def leechers(event):
             else:
                 st = senderr.username
                 final = f"@{st} you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"           
-        else:
+    else:
             VALID = False
             spamcounter = 0
-        if VALID == True:
+    if VALID == True:
             dev = await event.respond(final)
             users = leechers.find({})
             for c in users:
