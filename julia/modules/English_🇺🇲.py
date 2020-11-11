@@ -53,7 +53,8 @@ async def _(event):
     lang = event.pattern_match.group(1)
     if not lang:
         lang = "en"
-    translate_text = await event.get_reply_message().text
+    thetext = await event.get_reply_message()
+    translate_text = thetext.text
     ignore_text = UNICODE_EMOJI.keys()
     for emoji in ignore_text:
         if emoji in translate_text:
