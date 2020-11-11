@@ -10,23 +10,8 @@ from telethon.tl import functions
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-dbb = client["leccher"]
-leechers = dbb.leecher
-
-def max_seconds(max_seconds, *, interval=1):
-    interval = int(interval)
-    start_time = time.time()
-    end_time = start_time + max_seconds
-    yield 0
-    while time.time() < end_time:
-        if interval > 0:
-            next_time = start_time
-            while next_time < time.time():
-                next_time += interval
-            time.sleep(int(round(next_time - time.time())))
-        yield int(round(time.time() - start_time))
-        if int(round(time.time() + interval)) > int(round(end_time)):
-            return
+db = client["leecher"]
+leechers = db.leecher
 
 # MADE BY @MISSJULIA_ROBOT
 
@@ -70,9 +55,9 @@ async def leechers(event):
                 final = f"@{st} you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"           
     else:
             VALID = False
-            del spamtimecheck
-            del spamcounter
-            del starttimer
+            spamtimecheck = 0
+            spamcounter = 0
+            starttimer = 0
 
     if VALID == True:
             dev = await event.respond(final)
@@ -91,9 +76,9 @@ async def leechers(event):
                 except Exception:
                     pass
 
-                del spamtimecheck
-                del spamcounter
-                del starttimer
+                spamtimecheck = 0
+                spamcounter = 0
+                starttimer = 0
 
 
 
