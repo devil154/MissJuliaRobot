@@ -82,7 +82,7 @@ try:
                 del spamcounter 
                 del starttimer 
 except Exception:
-   continue
+   pass
 
 import inspect
 import logging
