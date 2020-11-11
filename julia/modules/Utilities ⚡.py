@@ -190,7 +190,7 @@ async def useridgetter(target):
 
 @register(pattern="^/chatid$")
 async def chatidgetter(chat):
-approved_userss = approved_users.find({})
+    approved_userss = approved_users.find({})
     for ch in approved_userss:
         iid = ch["id"]
         userss = ch["user"]
