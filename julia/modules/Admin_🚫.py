@@ -16,7 +16,6 @@ from time import sleep
 
 from telethon import *
 from telethon import events
-from telethon.errors import ChatAdminRequiredError
 from telethon.errors import FloodWaitError
 from telethon.errors import UserAdminInvalidError
 from telethon.tl import functions
@@ -28,23 +27,11 @@ from julia import *
 from julia.events import register
 
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
-from telethon.tl.types import ChatBannedRights
 
 from julia import CMD_HELP
-from julia.events import register
 
-from julia import tbot, CMD_HELP
-from julia.events import register
 from julia import tbot
-from telethon import events
-from telethon import types
-from telethon.tl import functions
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
-from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
-from telethon.tl.types import ChatBannedRights
-
-
-from telethon import events
 
 
 # =================== CONSTANT ===================
@@ -1198,9 +1185,6 @@ __help__ = """
  - /zombies: counts the number of deleted account in your group
  - /kickthefools: kicks all members inactive from 1 week
 """
-
-
-import os
 
 global file_helpo
 file_help = os.path.basename(__file__)

@@ -111,15 +111,8 @@ async def img_sampler(event):
                                  reply_to=event.id)
     os.chdir("/app/MissJuliaRobot/MissJuliaRobot")
     os.system("rm -rf store")
-
-import io
-import os
-import re
 import urllib
-
-import requests
 from bs4 import BeautifulSoup
-from PIL import Image
 
 from julia import CMD_HELP, tbot
 
@@ -340,11 +333,6 @@ async def apk(e):
             "No result found in search. Please enter **Valid app name**")
     except Exception as err:
         await e.reply("Exception Occured:- " + str(err))
-
-
-
-import re, os
-from julia import tbot, CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)

@@ -7,11 +7,7 @@ from telethon.tl.types import *
 from julia import *
 
 from julia.events import register, juliabot
-
-from telethon import types
-from telethon.tl import functions
 from julia import tbot
-from julia.events import register
 
 from pymongo import MongoClient
 from julia import MONGO_DB_URI
@@ -395,7 +391,7 @@ async def ramdomgamess(event):
 
 
 import os
-from julia import tbot, CMD_HELP
+from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)

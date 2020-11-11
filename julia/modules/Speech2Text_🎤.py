@@ -105,8 +105,6 @@ async def _(event):
     else:
         await event.reply(
             "Reply to a voice message, to get the text out of it.")
-
-import os
 from julia import tbot, CMD_HELP
 global __help__
 global file_helpo

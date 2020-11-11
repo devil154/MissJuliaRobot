@@ -15,7 +15,7 @@ TYPE_PHOTO = 1
 TYPE_DOCUMENT = 2
 
 
-from telethon import types, events
+from telethon import events
 from telethon.tl import functions
 
 
@@ -132,7 +132,7 @@ async def on_note_delete(event):
 
 
 import os
-from julia import tbot, CMD_HELP
+from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)

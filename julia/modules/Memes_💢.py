@@ -420,19 +420,11 @@ async def msg(event):
             reply_text += i
     reply_text += " 😭"
     await event.reply(reply_text)
-
-from julia import MONGO_DB_URI
-from pymongo import MongoClient
-import asyncio
-import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from telethon.tl import functions
 
 from julia import CHROME_DRIVER
 from julia import GOOGLE_CHROME_BIN
-from julia import tbot
-from julia.events import register
 
 CARBONLANG = "en"
 
@@ -528,20 +520,10 @@ async def carbon_api(e):
     )
     os.remove("./carbon.png")
     driver.quit()
-
-import io
 from random import randint, uniform
 
-from PIL import Image, ImageEnhance, ImageOps
+from PIL import ImageEnhance, ImageOps
 from telethon.tl.types import DocumentAttributeFilename
-from julia.events import register
-
-from telethon import types
-from telethon.tl import functions
-from julia import tbot
-
-from pymongo import MongoClient
-from julia import MONGO_DB_URI
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
@@ -670,15 +652,6 @@ async def check_media(reply_message):
         return False
     else:
         return data
-
-import asyncio
-from telethon import types
-from telethon.tl import functions
-from julia import tbot
-from julia.events import register
-
-from pymongo import MongoClient
-from julia import MONGO_DB_URI
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)

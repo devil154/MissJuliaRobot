@@ -8,7 +8,6 @@ from julia.events import register
 
 from pymongo import MongoClient
 from julia import MONGO_DB_URI, tbot
-from julia.events import register
 from telethon import types
 from telethon.tl import functions
 
@@ -81,7 +80,7 @@ async def wallpaper(event):
         )
 
 import os
-from julia import tbot, CMD_HELP
+from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)

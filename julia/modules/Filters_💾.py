@@ -22,8 +22,6 @@ TYPE_DOCUMENT = 2
 global last_triggered_filters
 
 last_triggered_filters = {}  # pylint:disable=E0602
-
-from telethon import types
 from telethon.tl import functions
 from julia import tbot
 from julia.events import register
@@ -212,7 +210,7 @@ async def on_snip_delete(event):
     await event.reply(f"Filter **{name}** deleted successfully")
 
  
-import re, os
+import os
 from julia import CMD_HELP
 global __help__
 global file_helpo

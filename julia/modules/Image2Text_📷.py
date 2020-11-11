@@ -118,8 +118,6 @@ async def parse_ocr_space_api(event):
         await event.reply("Read Document in {} seconds. \n{}".format(
             ProcessingTimeInMilliseconds, ParsedText))
     os.remove(downloaded_file_name)
-
-import os
 from julia import tbot, CMD_HELP
 global __help__
 global file_helpo
