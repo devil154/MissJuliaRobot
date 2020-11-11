@@ -28,6 +28,8 @@ def max_seconds(max_seconds, *, interval=1):
         if int(round(time.time() + interval)) > int(round(end_time)):
             return
 
+# MADE BY @MISSJULIA_ROBOT
+
 global spamcounter
 spamcounter=0
 
@@ -54,7 +56,9 @@ async def leechers(event):
         USERSPAM.append(check)  
     
     if spamcounter > 4 and event.sender_id == USERSPAM[0]:
-     if time.time() - starttimer <= 3:
+     spamtimecheck = time.time() - starttimer
+     if time.strftime("%S", time.gmtime(spamtimecheck)) <= 0o3: # octal number
+            print(time.strftime("%S", time.gmtime(spamtimecheck)))
             VALID = True
             spamcounter = 0
             if senderr.username == None:
