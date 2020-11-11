@@ -75,17 +75,18 @@ URL = "http://services.gingersoftware.com/Ginger/correct/json/GingerTheText"
 
 @register(pattern="^/spell$")
 async def _(event):
-        approved_userss = approved_users.find({})
-        for ch in approved_userss:
-           iid = ch["id"]
-           userss = ch["user"]
-        if event.is_group:
-          if (await is_register_admin(event.input_chat, event.message.sender_id)):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-          elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.from_id == userss:
             pass
-          else:
+        else:
             return
+    if event.reply_to_message_id:
         msg = await event.get_reply_message()
         params = dict(lang="US", clientVersion="2.0", apiKey=API_KEY, text=msg)
 
@@ -107,7 +108,7 @@ async def _(event):
         await event.reply(curr_string)
     else:
         await event.reply(
-            "Reply to some message to get grammar corrected text!"
+            "Reply to some message to get spelling corrected text!"
         )
 
 import inspect
