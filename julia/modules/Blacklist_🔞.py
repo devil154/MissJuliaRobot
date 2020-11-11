@@ -62,13 +62,13 @@ async def on_add_black_list(event):
 @register(pattern="^/listblacklist$")
 async def on_view_blacklist(event):
     all_blacklisted = sql.get_chat_blacklist(event.chat_id)
-    OUT_STR = "Blacklists in the Current Chat:\n"
+    OUT_STR = "**Blacklists in the Current Chat:\n**"
     if len(all_blacklisted) > 0:
         for trigger in all_blacklisted:
             OUT_STR += f"👉 {trigger} \n"
     else:
         OUT_STR = "No BlackLists. Start Adding using /addblacklist"
-    if len(OUT_STR) > Config.MAX_MESSAGE_SIZE_LIMIT:
+    if len(OUT_STR) > 4096:
         with io.BytesIO(str.encode(OUT_STR)) as out_file:
             out_file.name = "blacklist.text"
             await tbot.send_file(
