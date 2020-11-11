@@ -800,7 +800,7 @@ async def unban(bon):
         return
 
 @register(pattern="^/banme$")
-async def unban(bon):
+async def banme(bon):
     # Here laying the sanity check
     chat = await bon.get_chat()
     admin = chat.admin_rights
@@ -825,7 +825,7 @@ async def unban(bon):
         return
 
 @register(pattern="^/kickme$")
-async def unban(bon):
+async def kickme(bon):
     # Here laying the sanity check
     chat = await bon.get_chat()
     admin = chat.admin_rights
