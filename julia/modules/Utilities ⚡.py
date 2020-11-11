@@ -57,7 +57,7 @@ async def who(event):
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender.id == userss:
             pass
         else:
             return
@@ -156,6 +156,52 @@ async def fetch_info(replied_user, event):
 
     return caption
 
+@register(pattern="^/userid$")
+async def useridgetter(target):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if target.is_group:
+        if await is_register_admin(target.input_chat, target.message.sender_id):
+            pass
+        elif target.chat_id == iid and target.sender_id == userss:
+            pass
+        else:
+            return
+    message = await target.get_reply_message()
+    if message:
+        if not message.forward:
+            user_id = message.sender.id
+            if message.sender.username:
+                name = "@" + message.sender.username
+            else:
+                name = "**" + message.sender.first_name + "**"
+
+        else:
+            user_id = message.forward.sender.id
+            if message.forward.sender.username:
+                name = "@" + message.forward.sender.username
+            else:
+                name = "*" + message.forward.sender.first_name + "*"
+        await target.reply("**Name:** {} \n**User ID:** `{}`".format(
+            name, user_id))
+
+
+@register(pattern="^/chatid$")
+async def chatidgetter(chat):
+approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if chat.is_group:
+        if await is_register_admin(chat.input_chat, chat.message.sender_id):
+            pass
+        elif chat.chat_id == iid and chat.sender_id == userss:
+            pass
+        else:
+            return
+    await chat.reply("Chat ID: `" + str(chat.chat_id) + "`")
 
 
 
