@@ -168,7 +168,7 @@ async def get_user_sender_id(user, event):
         user = int(user)
 
     try:
-        user_obj = await event.client.get_entity(user)
+        user_obj = await tbot.get_entity(user)
     except (TypeError, ValueError) as err:
         await event.edit(str(err))
         return None
@@ -180,7 +180,7 @@ async def get_user_from_event(event):
     """ Get the user from argument or replied message. """
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        user_obj = await event.client.get_entity(previous_message.sender_id)
+        user_obj = await tbot.get_entity(previous_message.sender_id)
     else:
         user = event.pattern_match.group(1)
 
@@ -197,10 +197,10 @@ async def get_user_from_event(event):
             if isinstance(probable_user_mention_entity,
                           MessageEntityMentionName):
                 user_id = probable_user_mention_entity.user_id
-                user_obj = await event.client.get_entity(user_id)
+                user_obj = await tbot.get_entity(user_id)
                 return user_obj
         try:
-            user_obj = await event.client.get_entity(user)
+            user_obj = await tbot.get_entity(user)
         except (TypeError, ValueError) as err:
             await event.reply(str(err))
             return None
@@ -561,10 +561,10 @@ async def _(event):
     c = 0
     KICK_RIGHTS = ChatBannedRights(until_date=None, view_messages=True)
     done = await event.reply("Working ...")
-    async for i in event.client.iter_participants(event.chat_id):
+    async for i in tbot.iter_participants(event.chat_id):
 
         if isinstance(i.status, UserStatusLastMonth):
-            status = await event.client(
+            status = await tbot(
                 EditBannedRequest(event.chat_id, i, KICK_RIGHTS))
             if not status:
                 return
@@ -572,7 +572,7 @@ async def _(event):
                 c = c + 1
 
         if isinstance(i.status, UserStatusLastWeek):
-            status = await event.client(
+            status = await tbot(
                 EditBannedRequest(event.chat_id, i, KICK_RIGHTS))
             if not status:
                 return
@@ -596,7 +596,7 @@ async def _(event):
 
     done = await event.reply("Searching Participant Lists.")
     p = 0
-    async for i in event.client.iter_participants(
+    async for i in tbot.iter_participants(
             event.chat_id, filter=ChannelParticipantsKicked, aggressive=True):
         rights = ChatBannedRights(until_date=0, view_messages=False)
         try:
@@ -627,7 +627,7 @@ async def _(event):
 
     done = await event.reply("Working ...")
     p = 0
-    async for i in event.client.iter_participants(
+    async for i in tbot.iter_participants(
             event.chat_id, filter=ChannelParticipantsBanned, aggressive=True):
         rights = ChatBannedRights(
             until_date=0,
@@ -978,7 +978,7 @@ async def locks(event):
         change_info=changeinfo,
     )
     try:
-        await event.client(
+        await tbot(
             EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=lock_rights)
         )
         await event.reply(f"Locked Successfully !")
@@ -1076,7 +1076,7 @@ async def rem_locks(event):
         change_info=changeinfo,
     )
     try:
-        await event.client(
+        await tbot(
             EditChatDefaultBannedRightsRequest(
                 event.chat_id, banned_rights=unlock_rights
             )
@@ -1132,13 +1132,13 @@ async def purge_messages(event):
         messages.append(msg_id)
         if len(messages) == 100:
             try:
-                await event.client.delete_messages(event.chat_id, messages)
+                await tbot.delete_messages(event.chat_id, messages)
                 messages = []
             except MessageDeleteForbiddenError:
                 await event.reply("I can't delete messages that are too old")
                 return
     try:
-        await event.client.delete_messages(event.chat_id, messages)
+        await tbot.delete_messages(event.chat_id, messages)
     except MessageDeleteForbiddenError:
         await event.reply("I can't delete messages that are too old")
         return
@@ -1162,7 +1162,7 @@ async def delete_messages(event):
     chat = await event.get_input_chat()
     del_message = [message, event.message]
     try:
-        await event.client.delete_messages(chat, del_message)
+        await tbot.delete_messages(chat, del_message)
     except MessageDeleteForbiddenError:
         await event.reply("I can't delete messages that are too old")
         return

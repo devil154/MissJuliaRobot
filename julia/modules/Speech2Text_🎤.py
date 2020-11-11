@@ -58,7 +58,7 @@ async def _(event):
     await event.reply("Downloading to Julia's server for Analysis ...")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        required_file_name = await event.client.download_media(
+        required_file_name = await tbot.download_media(
             previous_message, TEMP_DOWNLOAD_DIRECTORY)
         if IBM_WATSON_CRED_URL is None or IBM_WATSON_CRED_PASSWORD is None:
             await event.reply(

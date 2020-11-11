@@ -58,10 +58,10 @@ async def asciiart(event):
         elif item.endswith(".jpeg"):
             os.remove(os.path.join(directory, item))
     reply_msg = await event.get_reply_message()
-    downloaded_file_name = await event.client.download_media(reply_msg, "./")
+    downloaded_file_name = await tbot.download_media(reply_msg, "./")
     let = f"{downloaded_file_name}"
     subprocess.run(["python", "scan.py", "--image", let])
-    await event.client.send_file(event.chat_id, "./scanned.jpg")
+    await tbot.send_file(event.chat_id, "./scanned.jpg")
     directory = "./"
     test = os.listdir(directory)
     for item in test:

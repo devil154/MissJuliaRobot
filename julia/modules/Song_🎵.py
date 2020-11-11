@@ -67,7 +67,7 @@ async def _(event):
         l = glob.glob("*.mp3")
         loa = l[0]
         await event.reply("sending the song")
-        await event.client.send_file(
+        await tbot.send_file(
             event.chat_id,
             loa,
             force_document=False,

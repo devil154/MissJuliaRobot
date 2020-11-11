@@ -64,7 +64,7 @@ async def _(event):
 
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        required_file_name = await event.client.download_media(
+        required_file_name = await tbot.download_media(
             previous_message, TEMP_DOWNLOAD_DIRECTORY)
         if IBM_WATSON_CRED_URL is None or IBM_WATSON_CRED_PASSWORD is None:
             await event.reply(
@@ -109,7 +109,7 @@ async def _(event):
                     except gTTSError:
                         return
                     with open("results.mp3", "r"):
-                        await event.client.send_file(
+                        await tbot.send_file(
                             event.chat_id,
                             "results.mp3",
                             voice_note=True,
@@ -130,7 +130,7 @@ async def _(event):
                     except gTTSError:
                         return
                     with open("results.mp3", "r"):
-                        await event.client.send_file(
+                        await tbot.send_file(
                             event.chat_id,
                             "results.mp3",
                             voice_note=True,

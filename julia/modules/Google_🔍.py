@@ -106,7 +106,7 @@ async def img_sampler(event):
     files_grabbed = []
     for files in types:
         files_grabbed.extend(glob.glob(files))
-    await event.client.send_file(event.chat_id,
+    await tbot.send_file(event.chat_id,
                                  files_grabbed,
                                  reply_to=event.id)
     os.chdir("/app/MissJuliaRobot/MissJuliaRobot")
@@ -283,7 +283,7 @@ async def img_sampler(event):
     files_grabbed = []
     for files in types:
         files_grabbed.extend(glob.glob(files))
-    await event.client.send_file(event.chat_id,
+    await tbot.send_file(event.chat_id,
                                  files_grabbed,
                                  reply_to=event.id)
     os.chdir("/app/MissJuliaRobot/MissJuliaRobot")

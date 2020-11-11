@@ -67,7 +67,7 @@ async def _(event):
         reply_message = await event.get_reply_message()
         await event.reply("Processing...")
         try:
-            downloaded_file_name = await event.client.download_media(
+            downloaded_file_name = await tbot.download_media(
                 reply_message, TEMP_DOWNLOAD_DIRECTORY
             )
         except Exception as e:
@@ -83,7 +83,7 @@ async def _(event):
     if "image" in contentType:
         with io.BytesIO(output_file_name.content) as remove_bg_image:
             remove_bg_image.name = "rmbg.png"
-            await event.client.send_file(
+            await tbot.send_file(
                 event.chat_id,
                 remove_bg_image,
                 force_document=True,

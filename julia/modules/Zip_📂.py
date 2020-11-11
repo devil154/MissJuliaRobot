@@ -65,7 +65,7 @@ async def _(event):
         reply_message = await event.get_reply_message()
         try:
             c_time = time.time()
-            downloaded_file_name = await event.client.download_media(
+            downloaded_file_name = await tbot.download_media(
                 reply_message, TEMP_DOWNLOAD_DIRECTORY
             )
             directory_name = downloaded_file_name
@@ -74,7 +74,7 @@ async def _(event):
     zipfile.ZipFile(directory_name + ".zip", "w", zipfile.ZIP_DEFLATED).write(
         directory_name
     )
-    await event.client.send_file(
+    await tbot.send_file(
         event.chat_id,
         directory_name + ".zip",
         force_document=True,
@@ -161,7 +161,7 @@ async def _(event):
         reply_message = await event.get_reply_message()
         try:
             c_time = time.time()
-            downloaded_file_name = await event.client.download_media(
+            downloaded_file_name = await tbot.download_media(
                 reply_message, TEMP_DOWNLOAD_DIRECTORY
             )
         except Exception as e:  
@@ -203,7 +203,7 @@ async def _(event):
                         )
                     ]
                 try:
-                    await event.client.send_file(
+                    await tbot.send_file(
                         event.chat_id,
                         single_file,
                         force_document=force_document,
@@ -213,7 +213,7 @@ async def _(event):
                         attributes=document_attributes
                     )
                 except Exception as e:
-                    await event.client.send_message(
+                    await tbot.send_message(
                         event.chat_id,
                         "{} caused `{}`".format(caption_rts, str(e)),
                         reply_to=event.message.id,

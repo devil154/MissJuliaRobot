@@ -88,11 +88,11 @@ async def ramdomgamess(event):
             return
 
     chat = "@MissJulia_Robot"
-    async with event.client.conversation(chat) as conv:
+    async with tbot.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1248815845))
-            entity = await event.client.get_entity(OWNER_USERNAME)
+            entity = await tbot.get_entity(OWNER_USERNAME)
             await tbot.send_message(entity, "/gameed")
             response = await response
             await response.forward_to(event.chat_id)
@@ -124,11 +124,11 @@ async def ramdomgamess(event):
         else:
             return
     chat = "@MissJulia_Robot"
-    async with event.client.conversation(chat) as conv:
+    async with tbot.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1248815845))
-            entity = await event.client.get_entity(OWNER_USERNAME)
+            entity = await tbot.get_entity(OWNER_USERNAME)
             await tbot.send_message(entity, "/jsusxjxhxhxshsjs")
             response = await response
             await response.forward_to(event.chat_id)
@@ -160,11 +160,11 @@ async def ramdomgamess(event):
         else:
             return
     chat = "@MissJulia_Robot"
-    async with event.client.conversation(chat) as conv:
+    async with tbot.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1248815845))
-            entity = await event.client.get_entity(OWNER_USERNAME)
+            entity = await tbot.get_entity(OWNER_USERNAME)
             await tbot.send_message(entity, "/jsuskhfkhdxjzhsjs")
             response = await response
             await response.forward_to(event.chat_id)
@@ -196,11 +196,11 @@ async def ramdomgamess(event):
         else:
             return
     chat = "@MissJulia_Robot"
-    async with event.client.conversation(chat) as conv:
+    async with tbot.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1248815845))
-            entity = await event.client.get_entity(OWNER_USERNAME)
+            entity = await tbot.get_entity(OWNER_USERNAME)
             await tbot.send_message(entity, "/jslgggfsslaxvuoqdjlxvqs")
             response = await response
             await response.forward_to(event.chat_id)
@@ -233,11 +233,11 @@ async def ramdomgamess(event):
         else:
             return
     chat = "@MissJulia_Robot"
-    async with event.client.conversation(chat) as conv:
+    async with tbot.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1248815845))
-            entity = await event.client.get_entity(OWNER_USERNAME)
+            entity = await tbot.get_entity(OWNER_USERNAME)
             await tbot.send_message(entity, "/jsdndbbduoqdjlxvqs")
             response = await response
             await response.forward_to(event.chat_id)
@@ -270,11 +270,11 @@ async def ramdomgamess(event):
         else:
             return
     chat = "@MissJulia_Robot"
-    async with event.client.conversation(chat) as conv:
+    async with tbot.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1248815845))
-            entity = await event.client.get_entity(OWNER_USERNAME)
+            entity = await tbot.get_entity(OWNER_USERNAME)
             await tbot.send_message(entity, "/jsdndbafjaffajlxvqs")
             response = await response
             await response.forward_to(event.chat_id)
@@ -307,11 +307,11 @@ async def ramdomgamess(event):
         else:
             return
     chat = "@MissJulia_Robot"
-    async with event.client.conversation(chat) as conv:
+    async with tbot.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1248815845))
-            entity = await event.client.get_entity(OWNER_USERNAME)
+            entity = await tbot.get_entity(OWNER_USERNAME)
             await tbot.send_message(entity, "/jsddjdhiwws")
             response = await response
             await response.forward_to(event.chat_id)
@@ -344,11 +344,11 @@ async def ramdomgamess(event):
         else:
             return
     chat = "@MissJulia_Robot"
-    async with event.client.conversation(chat) as conv:
+    async with tbot.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1248815845))
-            entity = await event.client.get_entity(OWNER_USERNAME)
+            entity = await tbot.get_entity(OWNER_USERNAME)
             await tbot.send_message(entity, "/whwyywwhewws")
             response = await response
             await response.forward_to(event.chat_id)
@@ -381,11 +381,11 @@ async def ramdomgamess(event):
         else:
             return
     chat = "@MissJulia_Robot"
-    async with event.client.conversation(chat) as conv:
+    async with tbot.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1248815845))
-            entity = await event.client.get_entity(OWNER_USERNAME)
+            entity = await tbot.get_entity(OWNER_USERNAME)
             await tbot.send_message(entity, "/wssksskxxskss")
             response = await response
             await response.forward_to(event.chat_id)

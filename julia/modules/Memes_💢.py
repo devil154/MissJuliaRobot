@@ -601,7 +601,7 @@ async def deepfryer(event):
         return
     
     image = io.BytesIO()
-    await event.client.download_media(data, image)
+    await tbot.download_media(data, image)
     image = Image.open(image)
     
     for _ in range(frycount):

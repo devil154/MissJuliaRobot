@@ -99,7 +99,7 @@ async def parse_ocr_space_api(event):
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
     lang_code = event.pattern_match.group(1)
-    downloaded_file_name = await event.client.download_media(
+    downloaded_file_name = await tbot.download_media(
         await event.get_reply_message(), TEMP_DOWNLOAD_DIRECTORY)
     if downloaded_file_name.endswith((".webp")):
         downloaded_file_name = conv_image(downloaded_file_name)

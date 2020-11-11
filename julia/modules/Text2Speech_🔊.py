@@ -85,7 +85,7 @@ async def _(event):
         await event.reply("Error in Google Text-to-Speech API request !")
         return
     with open("k.mp3", "r"):
-        await event.client.send_file(event.chat_id,
+        await tbot.send_file(event.chat_id,
                                      "k.mp3",
                                      voice_note=True,
                                      reply_to=reply_to_id)
