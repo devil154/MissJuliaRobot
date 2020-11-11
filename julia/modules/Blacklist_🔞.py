@@ -5,7 +5,6 @@ from julia.events import register
 from telethon import types
 from telethon.tl import functions
 from julia import tbot
-from julia.events import register
 
 
 async def can_change_info(message):
@@ -102,8 +101,8 @@ async def on_delete_blacklist(event):
     await event.reply(f"Removed {successful} / {len(to_unblacklist)} from the blacklist")
     
    
-import re, os
-from julia import tbot, CMD_HELP
+import os
+from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)

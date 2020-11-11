@@ -88,20 +88,11 @@ def zipdir(path, ziph):
         for file in files:
             ziph.write(os.path.join(root, file))
             os.remove(os.path.join(root, file))
-
-from julia import MONGO_DB_URI
-from pymongo import MongoClient
-import time
 from datetime import datetime
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from telethon import types
-from telethon.tl import functions
 from telethon.tl.types import DocumentAttributeVideo
-from julia import tbot
-from julia import TEMP_DOWNLOAD_DIRECTORY
-from julia.events import register
 
 extracted = TEMP_DOWNLOAD_DIRECTORY + "extracted/"
 thumb_image_path = TEMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"

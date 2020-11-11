@@ -90,8 +90,6 @@ async def _(event):
                                      voice_note=True,
                                      reply_to=reply_to_id)
         os.remove("k.mp3")
-
-import os
 from julia import tbot, CMD_HELP
 global __help__
 global file_helpo

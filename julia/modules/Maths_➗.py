@@ -336,7 +336,7 @@ async def _(event):
     await event.reply(str(math.log(int(args))))
 
 import os
-from julia import tbot, CMD_HELP
+from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)

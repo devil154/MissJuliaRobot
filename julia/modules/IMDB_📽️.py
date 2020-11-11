@@ -135,8 +135,8 @@ async def imdb(e):
     except IndexError:
         await e.reply("Please enter a valid movie name !")
 
-import re, os
-from julia import tbot, CMD_HELP
+import os
+from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)

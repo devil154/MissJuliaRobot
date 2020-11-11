@@ -117,8 +117,6 @@ async def _(event):
         response_api = await response_api_zero.read()
         with io.BytesIO(response_api) as out_file:
             await event.reply(file=out_file)
-
-import os
 from julia import tbot, CMD_HELP
 global __help__
 global file_helpo
