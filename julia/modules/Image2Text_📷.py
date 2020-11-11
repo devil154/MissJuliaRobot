@@ -47,7 +47,7 @@ async def get_ocr_languages(event):
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -91,7 +91,7 @@ async def parse_ocr_space_api(event):
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return

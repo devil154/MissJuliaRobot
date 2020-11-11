@@ -60,7 +60,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -112,7 +112,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -179,7 +179,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -205,7 +205,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -230,7 +230,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -256,7 +256,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -284,7 +284,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -306,7 +306,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -343,7 +343,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -377,7 +377,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -404,7 +404,7 @@ async def msg(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -474,7 +474,7 @@ async def carbon_api(e):
     if e.is_group:
         if (await is_register_admin(e.input_chat, e.message.sender_id)):
             pass
-        elif e.chat_id == iid and e.from_id == userss:
+        elif e.chat_id == iid and e.sender_id == userss:
             pass
         else:
             return
@@ -580,7 +580,7 @@ async def deepfryer(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return

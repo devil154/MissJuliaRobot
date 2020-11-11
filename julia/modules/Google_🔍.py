@@ -55,7 +55,7 @@ async def _(event):
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -87,7 +87,7 @@ async def img_sampler(event):
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -140,7 +140,7 @@ async def okgoogle(img):
     if img.is_group:
         if await is_register_admin(img.input_chat, img.message.sender_id):
             pass
-        elif img.chat_id == iid and img.from_id == userss:
+        elif img.chat_id == iid and img.sender_id == userss:
             pass
         else:
             return
@@ -264,7 +264,7 @@ async def img_sampler(event):
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
@@ -299,7 +299,7 @@ async def apk(e):
     if e.is_group:
         if await is_register_admin(e.input_chat, e.message.sender_id):
             pass
-        elif e.chat_id == iid and e.from_id == userss:
+        elif e.chat_id == iid and e.sender_id == userss:
             pass
         else:
             return

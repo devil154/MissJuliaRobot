@@ -163,7 +163,7 @@ async def can_del(message):
         isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.delete_messages
     )
 
-async def get_user_from_id(user, event):
+async def get_user_sender_id(user, event):
     if isinstance(user, str):
         user = int(user)
 
@@ -180,7 +180,7 @@ async def get_user_from_event(event):
     """ Get the user from argument or replied message. """
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        user_obj = await event.client.get_entity(previous_message.from_id)
+        user_obj = await event.client.get_entity(previous_message.sender_id)
     else:
         user = event.pattern_match.group(1)
 
@@ -469,7 +469,7 @@ async def get_users(show):
     if show.is_group:
         if await is_register_admin(show.input_chat, show.message.sender_id):
             pass
-        elif show.chat_id == iid and show.from_id == userss:
+        elif show.chat_id == iid and show.sender_id == userss:
             pass
         else:
             return
