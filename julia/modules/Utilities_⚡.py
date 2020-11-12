@@ -80,7 +80,7 @@ async def get_user(event):
     """ Get the user from argument or replied message. """
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        replied_user = await event.client(
+        replied_user = await tbot(
             GetFullUserRequest(previous_message.from_id))
     else:
         user = event.pattern_match.group(1)
@@ -89,7 +89,7 @@ async def get_user(event):
             user = int(user)
 
         if not user:
-            self_user = await event.client.get_me()
+            self_user = await tbot.get_me()
             user = self_user.id
 
         if event.message.entities is not None:
@@ -98,11 +98,11 @@ async def get_user(event):
             if isinstance(probable_user_mention_entity,
                           MessageEntityMentionName):
                 user_id = probable_user_mention_entity.user_id
-                replied_user = await event.client(GetFullUserRequest(user_id))
+                replied_user = await tbot(GetFullUserRequest(user_id))
                 return replied_user
         try:
-            user_object = await event.client.get_entity(user)
-            replied_user = await event.client(
+            user_object = await tbot.get_entity(user)
+            replied_user = await tbot(
                 GetFullUserRequest(user_object.id))
         except (TypeError, ValueError) as err:
             await event.reply(str(err))
@@ -129,7 +129,7 @@ async def fetch_info(replied_user, event):
         "This User has no Username")
     user_bio = "This User has no About" if not user_bio else user_bio
 
-    if user_id != (await event.client.get_me()).id:
+    if user_id != (await tbot.get_me()).id:
         common_chat = replied_user.common_chats_count
     else:
         common_chat = "I've seen them in... Wow. Are they stalking me? "
@@ -292,7 +292,7 @@ async def aexec(code, smessatatus):
         + "\n event = smessatatus = message"
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
-    return await locals()["__aexec"](message, reply, message.client, p)
+    return await locals()["__aexec"](message, reply, tbot, p)
 
 
 @juliabot(pattern=".eval")
