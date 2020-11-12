@@ -91,7 +91,7 @@ async def _(event):
                 return
     args = event.pattern_match.group(1)
     if args:
-        val = args[0].lower()
+        val = args
         if val in ("off", "no"):
             sql.set_cleanbt(event.chat_id, False)
             reply = "Bluetext cleaning has been disabled for <b>{}</b>".format(
