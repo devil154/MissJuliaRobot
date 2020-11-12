@@ -136,8 +136,8 @@ async def _(event):
         if isinstance(ent, types.MessageEntityMention):                       
           c = text
           a = c.split()[0]
-       let = await tbot.get_entity(a)
-       userid = let.id       
+        let = await tbot.get_entity(a)
+        userid = let.id       
      except Exception:
        return
     
