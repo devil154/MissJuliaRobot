@@ -42,7 +42,7 @@ def check_afk_status(user_id):
         SESSION.close()
 
 
-def set_afk(user_id, reason="", start_time=""):
+def set_afk(user_id, reason, start_time=""):
     with INSERTION_LOCK:
         curr = SESSION.query(AFK).get(user_id)
         if not curr:
