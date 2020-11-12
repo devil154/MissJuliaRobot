@@ -52,21 +52,19 @@ async def is_register_admin(chat, user):
 
 @tbot.on(events.NewMessage(pattern=None))
 async def _(event):
+    chats = approved_users.find({})
+    for c in chats:
+        iid = c["id"]
+        userss = c["user"]
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             return
         elif event.chat_id == iid and event.sender_id == userss:
             return
-        else:
-            pass
-    chats = approved_users.find({})
-    for c in chats:
-        iiid = c["id"]
-        usersss = c["user"]
-        if str(event.sender_id) in str(usersss) and str(event.chat_id) in str(iiid):
-            return
+        
     if event.sender_id == 1246850012:
         return
+
     if event.sender_id == OWNER_ID:
         return
 
