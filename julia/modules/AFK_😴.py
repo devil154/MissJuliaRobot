@@ -174,6 +174,7 @@ async def _(event):
                 fst_name, user.reason, final
             )
             await event.reply(res, parse_mode="markdown")
+    userid = None # after execution
 
 import inspect
 import logging
