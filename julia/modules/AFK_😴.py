@@ -134,7 +134,7 @@ async def _(event):
         if ent.offset != 0:
             break
         if isinstance(ent, types.MessageEntityMention):                       
-          c = text
+          c = txt
           a = c.split()[0]
           print (a)
         let = await tbot.get_entity(a)
