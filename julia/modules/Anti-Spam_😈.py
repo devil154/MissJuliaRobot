@@ -28,9 +28,37 @@ async def can_change_info(message):
             isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.change_info
         )
 
+async def is_register_admin(chat, user):
+    if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
+
+        return isinstance(
+            (
+                await tbot(functions.channels.GetParticipantRequest(chat, user))
+            ).participant,
+            (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
+        )
+    if isinstance(chat, types.InputPeerChat):
+
+        ui = await tbot.get_peer_id(user)
+        ps = (
+            await tbot(functions.messages.GetFullChatRequest(chat.chat_id))
+        ).full_chat.participants.participants
+        return isinstance(
+            next((p for p in ps if p.user_id == ui), None),
+            (types.ChatParticipantAdmin, types.ChatParticipantCreator),
+        )
+    return None
+
 
 @tbot.on(events.NewMessage(pattern=None))
 async def _(event):
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
     chats = approved_users.find({})
     for c in chats:
         iiid = c["id"]
@@ -58,6 +86,9 @@ async def _(event):
 
 @register(pattern="^/cleanbluetext ?(.*)")
 async def _(event):
+    if event.is_group:
+            if not await can_change_info(message=event):
+                return
     args = event.pattern_match.group(1)
     if args:
         val = args[0].lower()
