@@ -81,7 +81,7 @@ async def get_user(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         replied_user = await tbot(
-            GetFullUserRequest(previous_message.from_id))
+            GetFullUserRequest(previous_message.sender_id))
     else:
         user = event.pattern_match.group(1)
 
@@ -216,7 +216,7 @@ async def figlet(event):
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-        elif event.chat_id == iid and event.from_id == userss:
+        elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
             return
