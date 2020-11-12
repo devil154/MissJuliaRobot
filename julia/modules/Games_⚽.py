@@ -1,3 +1,4 @@
+from julia import tbot
 from telethon import *
 from telethon import events
 from telethon.tl import functions

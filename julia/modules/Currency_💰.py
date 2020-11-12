@@ -1,3 +1,4 @@
+from julia import tbot
 import requests
 
 from julia import CASH_API_KEY

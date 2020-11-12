@@ -1,3 +1,4 @@
+from julia import tbot
 import os
 
 from gtts import gTTS

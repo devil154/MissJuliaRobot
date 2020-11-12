@@ -1,3 +1,4 @@
+from julia import tbot
 from telethon import utils
 from telethon.tl import types
 from julia import tbot

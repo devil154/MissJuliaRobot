@@ -1,3 +1,4 @@
+from julia import tbot
 import re
 from telethon import events
 import julia.modules.sql.blacklist_sql as sql

@@ -1,3 +1,4 @@
+from julia import tbot
 
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import (

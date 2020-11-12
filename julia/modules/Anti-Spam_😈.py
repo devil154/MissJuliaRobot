@@ -1,3 +1,4 @@
+from julia import tbot
 import time
 from julia.events import register
 from telethon.tl.functions.channels import EditBannedRequest

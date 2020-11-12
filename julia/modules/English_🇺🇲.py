@@ -1,3 +1,4 @@
+from julia import tbot
 import json
 import requests
 from emoji import UNICODE_EMOJI

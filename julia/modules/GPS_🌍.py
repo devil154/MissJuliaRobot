@@ -1,3 +1,4 @@
+from julia import tbot
 from geopy.geocoders import Nominatim
 from julia.events import register
 from julia import *

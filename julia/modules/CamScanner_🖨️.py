@@ -1,3 +1,4 @@
+from julia import tbot
 from julia import CMD_HELP, MONGO_DB_URI
 from julia.events import register
 from telethon import *

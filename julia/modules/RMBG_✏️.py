@@ -1,3 +1,4 @@
+from julia import tbot
 from julia import MONGO_DB_URI
 from pymongo import MongoClient
 import io

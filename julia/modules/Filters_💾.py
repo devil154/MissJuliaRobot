@@ -1,3 +1,4 @@
+from julia import tbot
 import asyncio
 import re
 

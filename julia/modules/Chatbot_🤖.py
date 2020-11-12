@@ -1,3 +1,4 @@
+from julia import tbot
 from time import time
 
 import julia.modules.sql.chatbot_sql as sql

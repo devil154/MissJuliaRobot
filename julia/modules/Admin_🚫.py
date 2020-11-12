@@ -1,3 +1,4 @@
+from julia import tbot
 from telethon.errors import (ChatAdminRequiredError, ImageProcessFailedError,
                              PhotoCropSizeSmallError)
 from telethon.tl.functions.channels import (EditAdminRequest,

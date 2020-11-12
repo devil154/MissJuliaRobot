@@ -1,3 +1,4 @@
+from julia import tbot
 from random import randint
 
 import requests as r

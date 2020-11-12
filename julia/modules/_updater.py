@@ -1,3 +1,4 @@
+from julia import tbot
 
 from os import remove, execle, path, environ
 import asyncio

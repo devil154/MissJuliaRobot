@@ -1,3 +1,4 @@
+from julia import tbot
 import asyncio
 from getpass import getuser
 from os import remove
