@@ -75,7 +75,7 @@ API_KEY = "6ae0c3a0-afdc-4532-a810-82ded0054236"
 URL = "http://services.gingersoftware.com/Ginger/correct/json/GingerTheText"
 
 
-@register(pattern="^/spell$")
+@register(pattern="^/spell(?: |$)(.*)")
 async def _(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
@@ -89,7 +89,7 @@ async def _(event):
         else:
             return
     if event.reply_to_message_id:
-        ctext= await event.get_reply_message()
+        ctext = await event.get_reply_message()
         msg = ctext.text
         params = dict(lang="US", clientVersion="2.0", apiKey=API_KEY, text=msg)
 
