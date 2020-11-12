@@ -353,7 +353,8 @@ async def _(event):
 
 
 __help__ = """
- - /id: get the current group id. If replied to user's message gets that user's id.
+ - /userid: If replied to user's message gets that user's id.
+ - /chatid: get the current chat id. 
  - /runs: reply a random string from an array of replies.
  - /slap: slap a user, or get slapped if not a reply.
  - /info: get information about a user.
@@ -362,31 +363,8 @@ __help__ = """
  - /pastestats: Get stats of a paste or shortened url from del.dog
  - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
  - /shrug: try and check it out yourself.
- - /datetime <city>: Get the present date and time information
- - /camscanner: Reply to a image to scan and improve it's clarity.
-*Instructions*
-▪️The image should be a page with some written text on it (screenshots aren't permitted)
-▪️The image should contain the page with four corners clearly visible
-▪️The background should be somewhat darker than the page
-▪️The image should contain only the page with no other objects like pencil, eraser etc. beside it(within the image)
-*PRO TIP*
-You can simply draw a border(a black square) around the portion you want to scan for better efficiency and edge detection
-If you are still messed up send `/helpcamscanner` in pm for the tutorial !
- - /google <text>: perform a google search
- - /gps: <location> Get gps location.
- - /imdb - Get full info about a movie with imdb.com
- - /img <text>: Search Google for images and returns them\nFor greater no. of results specify lim, For eg: `/img hello lim=10`
- - /img2text <lang>: Type in reply to a image to extract the text from it
- - /img2textlang: List all the available languages
- - /phone <number in international format>: Check if the number really exists and returns information about it.If the number is fake then it will return null-type response
-Example: `/phone +9162XX93X805`, `/phone +1916X978XX1`
  - /news: Returns today's Indian Headlines (ONLY WORKS IN PM)
- - /getqr: Get the QR Code content from the replied QR Code
- - /makeqr <content>: Make a QR Code from the given message (text, link, etc...)
- - /reverse: Does a reverse image search of the media which it was replied to.
- - /rmbg: Type in reply to a media to remove it's background
  - /stt: Type in reply to a voice message(english only) to extract text from it.
- - /tts <lang | text>: Returns a speech note of the text provided
  - /torrent <text>: Search for torrent links
 If you are still messed up send `/helptorrent` in pm for the tutorial !
  - /wall <topic>: Searches best wallpaper on the given topic and returns them
