@@ -230,7 +230,7 @@ async def _(event):
             pass
         else:
             return   
-    text = event.text[len("/define "):]
+    text = event.text[len("/synonyms "):]
     word = f"{text}"
     let = dictionary.synonym(word)
     set = str(let)
@@ -253,7 +253,7 @@ async def _(event):
             pass
         else:
             return    
-    text = message.text[len("/define "):]
+    text = message.text[len("/antonyms "):]
     word = f"{text}"
     let = dictionary.antonym(word)
     set = str(let)
