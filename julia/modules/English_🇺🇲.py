@@ -91,6 +91,7 @@ async def _(event):
     if event.reply_to_message_id:
         ctext = await event.get_reply_message()
         msg = ctext.text
+        print (msg)
         params = dict(lang="US", clientVersion="2.0", apiKey=API_KEY, text=msg)
 
         res = requests.get(URL, params=params)
