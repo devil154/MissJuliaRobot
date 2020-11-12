@@ -1,8 +1,8 @@
+from translate import Translator 
 from julia import tbot
 import json
 import requests
 from emoji import UNICODE_EMOJI
-from googletrans import Translator
 from telegram.ext import CommandHandler
 from telegram.ext import run_async
 from julia import CMD_HELP, MONGO_DB_URI
@@ -132,24 +132,12 @@ async def _(event):
         else:
             return
     lang = event.pattern_match.group(1)
-    if not lang:
-        lang = "en"
     thetext = await event.get_reply_message()
     translate_text = thetext.text
-    ignore_text = UNICODE_EMOJI.keys()
-    for emoji in ignore_text:
-        if emoji in translate_text:
-            translate_text = translate_text.replace(emoji, "")
-
-    translator = Translator()
-    try:
-        translated = translator.translate(translate_text, dest=lang)
-        trl = translated.src
-        results = translated.text
-        await event.reply("Translated from {} to {}.\n {}".format(trl, lang, results))
-    except BaseException:
-        await event.reply("Error! invalid language code.")
-
+    translator= Translator(to_lang=lang)
+    translation = translator.translate(translate_text)
+    await event.reply(translation)
+    
 
 API_KEY = "6ae0c3a0-afdc-4532-a810-82ded0054236"
 URL = "http://services.gingersoftware.com/Ginger/correct/json/GingerTheText"
@@ -305,7 +293,7 @@ file_helpo=  file_help.replace("_", " ")
 __help__ = """
  - /spell: while replying to a message, will reply with a grammar corrected version
  - /forbesify: Correct your punctuations better use the advanged spell module
- - /tr (language code) as reply to a long message.
+ - /tr <language code>: Type in reply to a message to get it's translation in the destination language
  - /define <text>: Type the word or expression you want to search\nFor example /define Gay
  - /emotion: Type in reply to a message to check emotions 
  - /synonyms <word>: Find the synonyms of a word 
