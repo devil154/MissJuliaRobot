@@ -69,16 +69,11 @@ async def _(event):
         return
     if event.sender_id == OWNER_ID:
         return
-    try:
-      for (ent, txt) in event.get_entities_text():
-        if ent.offset != 0:
-            break
-        if isinstance(ent, types.MessageEntityBotCommand):                       
-            pass
-        else:
-            return
-    except Exception: # just in case of flood wait
-          return
+
+    if event.raw_text.startswith('/')
+       pass
+    else:
+       return
   
     if sql.is_enabled(event.chat_id):
           await event.delete()
@@ -97,25 +92,25 @@ async def _(event):
             reply = "Bluetext cleaning has been disabled for <b>{}</b>".format(
                 html.escape(event.chat.title)
             )
-            await event.reply(reply)
+            await event.reply(reply, parse_mode="html")
 
         elif val in ("yes", "on"):
             sql.set_cleanbt(event.chat_id, True)
             reply = "Bluetext cleaning has been enabled for <b>{}</b>".format(
                 html.escape(event.chat.title)
             )
-            await event.reply(reply)
+            await event.reply(reply, parse_mode="html")
 
         else:
             reply = "Invalid argument.Accepted values are 'yes', 'on', 'no', 'off'"
-            await event.reply(reply)
+            await event.reply(reply, parse_mode="html")
     else:
         clean_status = sql.is_enabled(event.chat_id)
         clean_status = "Enabled" if clean_status else "Disabled"
         reply = "Bluetext cleaning for <b>{}</b> : <b>{}</b>".format(
             event.chat.title, clean_status
         )
-        await event.reply(reply)
+        await event.reply(reply, parse_mode="html")
 
 
 __help__ = """
