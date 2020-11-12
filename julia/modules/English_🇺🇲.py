@@ -90,7 +90,7 @@ async def _(event):
             return
     ctext = await event.get_reply_message()
     msg = ctext.text
-    print (msg)
+    #  print (msg)
     params = dict(lang="US", clientVersion="2.0", apiKey=API_KEY, text=msg)
 
     res = requests.get(URL, params=params)
@@ -107,8 +107,8 @@ async def _(event):
                 curr_string += msg[prev_end:start] + sugg_str
                 prev_end = end
 
-            curr_string += msg[prev_end:]
-            await event.reply(curr_string)
+    curr_string += msg[prev_end:]
+    await event.reply(curr_string)
 
 
 import inspect
