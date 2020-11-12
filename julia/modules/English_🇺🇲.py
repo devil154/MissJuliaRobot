@@ -11,6 +11,86 @@ from telethon import *
 from telethon.tl import functions
 from pymongo import MongoClient
 import os, subprocess
+import asyncio
+import glob
+import html
+import io
+import json
+import os
+import random
+import re
+import subprocess
+import sys
+import textwrap
+import time
+import traceback
+import urllib.request
+from contextlib import contextmanager
+from datetime import datetime
+from html import unescape
+from random import randrange
+from time import sleep
+from typing import List
+from typing import Optional
+from urllib.request import urlopen
+
+import aiohttp
+import barcode
+import bs4
+import emoji
+import html2text
+import nude
+import pyfiglet
+import requests
+import telegraph
+import text2emotion as machi
+from barcode.writer import ImageWriter
+from better_profanity import profanity
+from bing_image_downloader import downloader
+from cowpy import cow
+from fontTools.ttLib import TTFont
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from gtts import gTTS
+from gtts import gTTSError
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+from PIL import ImageOps
+from PyDictionary import PyDictionary
+from pymongo import MongoClient
+from requests import get
+from telegram import InlineKeyboardButton
+from telegram import InlineKeyboardMarkup
+from telegram import Message
+from telegram import MessageEntity
+from telegram import ParseMode
+from telegram import ReplyKeyboardRemove
+from telegram import Update
+from telegram.error import BadRequest
+from telegram.ext import CallbackContext
+from telegram.ext import CommandHandler
+from telegram.ext import Filters
+from telegram.ext import run_async
+from telegram.utils.helpers import escape_markdown
+from telegram.utils.helpers import mention_html
+from telegraph import Telegraph
+from telethon import *
+from telethon import events
+from telethon.errors import ChatAdminRequiredError
+from telethon.errors import FloodWaitError
+from telethon.errors import UserAdminInvalidError
+from telethon.errors import YouBlockedUserError
+from telethon.tl import functions
+from telethon.tl import types
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import *
+from tswift import Song
+from wikipedia import summary
+from wikipedia.exceptions import DisambiguationError
+from wikipedia.exceptions import PageError
+
+
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
@@ -111,6 +191,105 @@ async def _(event):
     await event.reply(curr_string)
 
 
+dictionary = PyDictionary()
+
+
+@register(pattern="^/define")
+async def _(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return  
+    text = event.text[len("/define "):]
+    word = f"{text}"
+    let = dictionary.meaning(word)
+    set = str(let)
+    jet = set.replace("{", "")
+    net = jet.replace("}", "")
+    got = net.replace("'", "")
+    await event.reply(got)
+
+
+@register(pattern="^/synonyms")
+async def _(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return   
+    text = event.text[len("/define "):]
+    word = f"{text}"
+    let = dictionary.synonym(word)
+    set = str(let)
+    jet = set.replace("{", "")
+    net = jet.replace("}", "")
+    got = net.replace("'", "")
+    await event.reply(got)
+
+
+@register(pattern="^/antonyms")
+async def _(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return    
+    text = message.text[len("/define "):]
+    word = f"{text}"
+    let = dictionary.antonym(word)
+    set = str(let)
+    jet = set.replace("{", "")
+    net = jet.replace("}", "")
+    got = net.replace("'", "")
+    await event.reply(got)
+
+@register(pattern="^/emotion$")
+async def _(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.from_id == userss:
+            pass
+        else:
+            return
+
+    reply = await event.get_reply_message()
+    msg = reply.message
+    let = str(machi.get_emotion(msg))
+    # m = let.replace("'Happy'", "😀")
+    n = let.replace("{", "")
+    o = n.replace("}", "")
+    # p = o.replace("'Angry'", "😡")
+    # q = p.replace("'Sad'", "😭")
+    # r = q.replace("'Surprise'", "😮")
+    # s = r.replace("'Fear'", "")
+    t = o.replace(", ", "\n\n")
+    await event.reply(t)
+
+
 import inspect
 import logging
 import re, os
@@ -129,6 +308,8 @@ __help__ = """
  - /tr (language code) as reply to a long message.
  - /define <text>: Type the word or expression you want to search\nFor example /define Gay
  - /emotion: Type in reply to a message to check emotions 
+ - /synonyms <word>: Find the synonyms of a word 
+ - /antonyms <word>: Find the antonyms of a word 
 """
 
 CMD_HELP.update({
