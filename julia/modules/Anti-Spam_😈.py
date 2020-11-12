@@ -54,11 +54,11 @@ async def is_register_admin(chat, user):
 async def _(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
-            pass
-        elif event.chat_id == iid and event.sender_id == userss:
-            pass
-        else:
             return
+        elif event.chat_id == iid and event.sender_id == userss:
+            return
+        else:
+            pass
     chats = approved_users.find({})
     for c in chats:
         iiid = c["id"]
