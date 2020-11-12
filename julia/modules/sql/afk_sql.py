@@ -49,7 +49,8 @@ def set_afk(user_id, reason, start_time=""):
             curr = AFK(user_id, reason, True, start_time)
         else:
             curr.is_afk = True
-            curr.start_time = time.time()
+            curr.reason = reason
+            curr.start_time = time.time()          
         AFK_USERS[user_id] = reason
         AFK_USERSS[user_id] = start_time
         SESSION.add(curr)
