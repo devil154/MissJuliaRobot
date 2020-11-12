@@ -88,18 +88,17 @@ async def _(event):
             pass
         else:
             return
-    if event.reply_to_message_id:
-        ctext = await event.get_reply_message()
-        msg = ctext.text
-        print (msg)
-        params = dict(lang="US", clientVersion="2.0", apiKey=API_KEY, text=msg)
+    ctext = await event.get_reply_message()
+    msg = ctext.text
+    print (msg)
+    params = dict(lang="US", clientVersion="2.0", apiKey=API_KEY, text=msg)
 
-        res = requests.get(URL, params=params)
-        changes = json.loads(res.text).get("LightGingerTheTextResult")
-        curr_string = ""
-        prev_end = 0
+    res = requests.get(URL, params=params)
+    changes = json.loads(res.text).get("LightGingerTheTextResult")
+    curr_string = ""
+    prev_end = 0
 
-        for change in changes:
+    for change in changes:
             start = change.get("From")
             end = change.get("To") + 1
             suggestions = change.get("Suggestions")
@@ -108,12 +107,9 @@ async def _(event):
                 curr_string += msg[prev_end:start] + sugg_str
                 prev_end = end
 
-        curr_string += msg[prev_end:]
-        await event.reply(curr_string)
-    else:
-        await event.reply(
-            "Reply to some message to get spelling corrected text!"
-        )
+            curr_string += msg[prev_end:]
+            await event.reply(curr_string)
+
 
 import inspect
 import logging
