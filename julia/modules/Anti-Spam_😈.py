@@ -70,7 +70,7 @@ async def _(event):
     if event.sender_id == OWNER_ID:
         return
 
-    if event.raw_text.startswith('/')
+    if event.raw_text.startswith('/'):
        pass
     else:
        return
