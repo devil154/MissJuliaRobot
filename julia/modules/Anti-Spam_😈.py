@@ -16,6 +16,18 @@ client = MongoClient(MONGO_DB_URI)
 db = client["test"]
 approved_users = db.approve
 
+async def can_change_info(message):
+        result = await tbot(
+            functions.channels.GetParticipantRequest(
+                channel=message.chat_id,
+                user_id=message.sender_id,
+            )
+        )
+        p = result.participant
+        return isinstance(p, types.ChannelParticipantCreator) or (
+            isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.change_info
+        )
+
 
 @tbot.on(events.NewMessage(pattern=None))
 async def _(event):
