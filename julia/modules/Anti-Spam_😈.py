@@ -56,11 +56,16 @@ async def _(event):
     for c in chats:
         iid = c["id"]
         userss = c["user"]
+
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             return
         elif event.chat_id == iid and event.sender_id == userss:
             return
+        else:
+            pass
+    else:
+      return
         
     if event.sender_id == 1246850012:
         return
@@ -82,6 +87,8 @@ async def _(event):
     if event.is_group:
             if not await can_change_info(message=event):
                 return
+    else:
+       return
     args = event.pattern_match.group(1)
     if args:
         val = args
