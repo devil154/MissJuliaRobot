@@ -308,7 +308,7 @@ async def _(event):
 @register(pattern="^/stoppoll(?: |$)(.*)")
 async def stop(event):
     secret = event.pattern_match.group(1)
-    print(secret)
+    # print(secret)
     approved_userss = approved_users.find({})
     for ch in approved_userss:
         iid = ch["id"]
