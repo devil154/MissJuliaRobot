@@ -68,6 +68,7 @@ async def _(event):
         await event.reply("Poll id should contain only numbers")
         return
 
+    print(secret)
     count = 0
     while int(secret) > 0:
         count = count + 1
