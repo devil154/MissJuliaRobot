@@ -80,7 +80,7 @@ async def _(event):
         if event.sender_id == c["user"]:
             await event.reply("Please stop the previous poll before creating a new one !")
             return
-        poll_id.insert_one({"user": event.sender_id, "pollid": secret})
+    poll_id.insert_one({"user": event.sender_id, "pollid": secret})
 
     ques = quess.strip()
     option = options.strip()
