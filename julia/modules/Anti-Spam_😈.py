@@ -12,6 +12,7 @@ client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["test"]
 approved_users = db.approve
+CMD_STARTERS = '/'
 
 async def can_change_info(message):
         result = await tbot(
@@ -175,6 +176,8 @@ async def _(event):
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             return
+        elif str(event.sender_id) in str(userss) and str(event.chat_id) in str(iid):
+            return
         else:
             pass
     else:
@@ -186,13 +189,19 @@ async def _(event):
     for (ent, txt) in event.get_entities_text():
         if ent.offset != 0:
             break
-        if isinstance(ent, types.MessageEntityBotCommand):   
-          print("right")                    
+        if isinstance(ent, types.MessageEntityBotCommand):                       
           pass
         else:
           return 
     if sql.is_enabled(event.chat_id):
-       await event.delete()
+       fst_word = event.text.strip().split(None, 1)[0]
+       command = fst_word[1:].split('@')
+       if len(fst_word) > 1 and any(fst_word.startswith(start)
+                                         for start in CMD_STARTERS):
+
+          if sql.is_command_ignored(chat.id, command[0])
+              return
+          await event.delete()
 
 from better_profanity import profanity
 profanity.load_censor_words_from_file('./profanity_wordlist.txt')
