@@ -3,7 +3,7 @@ from julia.modules.sql import cleaner_sql as sql
 from pymongo import MongoClient
 from julia import MONGO_DB_URI
 from julia.events import register
-from telethon import *
+from telethon import types, events
 from telethon.tl import *
 from julia import *
 
