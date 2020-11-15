@@ -330,23 +330,20 @@ async def stop(event):
         return
 
     try:
-        secret = int(secret)
+        secret = str(secret)
     except ValueError:
         await event.reply("Poll id should contain only numbers")
         return
 
-    count = 0
-    while int(secret) > 0:
-        count = count + 1
-        secret = int(secret) // 10
-
-    if count != 5:
+    
+    if len(secret) != 5:
         await event.reply("Poll id should be an integer of 5 digits")
         return
 
     
     msg = await event.get_reply_message()
-    if str(msg.sender_id) != "1496659189":
+
+    if str(msg.sender_id) != "1246850012":
         await event.reply(
             "I can't do this operation on this poll.\nProbably it's not created by me"
         )
