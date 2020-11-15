@@ -122,9 +122,7 @@ async def _(event):
     send = await event.get_sender()
     sender = event.sender_id
     msg = str(event.text)
-    global userid
-    global let
-
+   
     if event.reply_to_msg_id:
        reply = await event.get_reply_message()
        userid = reply.sender_id 
@@ -136,6 +134,8 @@ async def _(event):
         if isinstance(ent, types.MessageEntityMention):                       
           c = txt
           a = c.split()[0]
+        global let
+        global userid
         let = await tbot.get_entity(a)
         userid = let.id       
      except Exception:
@@ -174,7 +174,8 @@ async def _(event):
                 fst_name, user.reason, final
             )
             await event.reply(res, parse_mode="markdown")
-    userid = None # after execution
+    userid = "" # after execution
+    let = "" # after execution
 
 import inspect
 import logging
