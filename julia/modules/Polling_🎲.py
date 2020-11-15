@@ -63,7 +63,7 @@ async def _(event):
         return
 
     try:
-        secret = int(secret)
+        secret = str(secret)
     except ValueError:
         await event.reply("Poll id should contain only numbers")
         return
@@ -78,7 +78,7 @@ async def _(event):
     print(secret)
     for c in allpoll:
         if event.sender_id == c["user"] and secret == c["pollid"]:
-            await event.reply("Please give another poll id, this id is already used")
+            await event.reply("Please give another poll id, this id is already in use")
             return
         poll_id.insert_one({"user": event.sender_id, "pollid": secret})
 
