@@ -352,20 +352,21 @@ async def stop(event):
         try:
             allpoll = poll_id.find({})
             for c in allpoll:
-                if event.sender_id == c["user"] and secret == c["pollid"]:
-                    print("🙂")
-                    allpoll.delete_one({"user": event.sender_id, "pollid": secret})
-                    pollid = msg.poll.poll.id
-                    await msg.edit(
+                if not event.sender_id == c["user"] and secret == c["pollid"]:
+                    await event.reply("Oops, either you haven't created this poll or you have given wrong poll id")
+                    return
+                    
+                allpoll.delete_one({"user": event.sender_id, "pollid": secret})
+                pollid = msg.poll.poll.id
+                await msg.edit(
                         file=types.InputMediaPoll(
                             poll=types.Poll(
                                 id=pollid, question="", answers=[], closed=True
                             )
                         )
                     )
-                    await event.reply("Successfully stopped the poll")  
-                await event.reply("Oops, either you haven't created this poll or you have given wrong poll id")
-                return
+                await event.reply("Successfully stopped the poll")  
+                
         except Exception:
             await event.reply(
                 "I can't do this operation on this poll.\nProbably it's already closed"
