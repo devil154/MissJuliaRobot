@@ -82,6 +82,89 @@ async def _(event):
         )
         await event.reply(reply, parse_mode="html")
 
+@register(pattern="^/ignorecleanbluetext ?(.*)")
+async def _(event):
+    if event.is_group:
+            if not await can_change_info(message=event):
+                return
+    else:
+       return
+    args = event.pattern_match.group(1)
+    chat = event.chat
+
+    if args is not None:
+        val = args
+        added = sql.chat_ignore_command(chat.id, val)
+        if added:
+            reply = "<b>{}</b> has been added to bluetext cleaner ignore list.".format(
+                args)
+        else:
+            reply = "Command is already ignored."
+        await event.reply(reply, parse_mode="html")
+
+    else:
+        reply = "No command supplied to be ignored."
+        await event.reply(reply)
+
+@register(pattern="^/unignorecleanbluetext ?(.*)")
+async def _(event):
+    if event.is_group:
+            if not await can_change_info(message=event):
+                return
+    else:
+       return
+    args = event.pattern_match.group(1)
+    chat = event.chat
+
+    if args is not None:
+        val = args
+        added = sql.chat_unignore_command(chat.id, val)
+        if added:
+            reply = "<b>{}</b> has been added to bluetext cleaner ignore list.".format(
+                args)
+        else:
+            reply = "Command isn't ignored currently."
+        await event.reply(reply, parse_mode="html")
+
+    else:
+        reply = "No command supplied to be unignored."
+        await event.reply(reply)
+
+
+@register(pattern="^/listcleanbluetext$")
+async def _(event):
+
+    if event.is_group:
+            if not await can_change_info(message=event):
+                return
+    else:
+       return
+       
+    chat = event.chat
+
+    global_ignored_list, local_ignore_list = sql.get_all_ignored(chat.id)
+    text = ""
+
+    if global_ignored_list:
+        text = "The following commands are currently ignored globally from bluetext cleaning :\n"
+
+        for x in global_ignored_list:
+            text += f" - <code>{x}</code>\n"
+
+    if local_ignore_list:
+        text += "\nThe following commands are currently ignored locally from bluetext cleaning :\n"
+
+        for x in local_ignore_list:
+            text += f" - <code>{x}</code>\n"
+
+    if text == "":
+        text = "No commands are currently ignored from bluetext cleaning."
+        await event.reply(text)
+        return
+
+    await event.reply(text, parse_mode="html")
+    return
+
 
 @tbot.on(events.NewMessage(pattern=None))
 async def _(event):    
@@ -230,4 +313,5 @@ __help__ = """
  - /ignorecleanbluetext <word>: prevent auto cleaning of the command
  - /unignorecleanbluetext <word>: remove prevent auto cleaning of the command
  - /listcleanbluetext: list currently whitelisted commands
+ - /profanity on/off: filters all explict/abusive words sent by non admins also filters explicit/porn images
 """
