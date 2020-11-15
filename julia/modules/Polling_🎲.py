@@ -352,9 +352,11 @@ async def stop(event):
             allpoll = poll_id.find({})
             for c in allpoll:
                 if not event.sender_id == c["user"] and secret == c["pollid"]:
-                    await event.reply("Oops, either you haven't created this poll or you have given wrong poll id or the poll is already closed")
+                    await event.reply("Oops, either you haven't created this poll or you have given wrong poll id")
                     return
-                    
+            if msg.poll.poll.closed:
+               await event.reply("Oops, the poll is already closed.")
+               return
             poll_id.delete_one({"user": event.sender_id})
             pollid = msg.poll.poll.id
             await msg.edit(
