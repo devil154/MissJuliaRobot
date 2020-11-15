@@ -1,4 +1,4 @@
-import html
+import html, asyncio
 from julia.modules.sql import cleaner_sql as sql
 from pymongo import MongoClient
 from julia import MONGO_DB_URI
