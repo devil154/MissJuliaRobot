@@ -55,15 +55,19 @@ async def _(event):
           userss = c["user"]
 
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            print("1")
             return
         elif event.chat_id == iid and event.sender_id == userss:
+            print("2")
             return
         else:
+            print("3")
             pass
     else:
+      print("4")
       return
         
-    if event.sender_id == 1246850012:
+    if str(event.sender_id) == "1246850012":
         return
 
     if event.sender_id == OWNER_ID:
