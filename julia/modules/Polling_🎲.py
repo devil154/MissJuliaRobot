@@ -75,10 +75,10 @@ async def _(event):
         return
 
     allpoll = poll_id.find({})
-    print(secret)
+    # print(secret)
     for c in allpoll:
-        if event.sender_id == c["user"] and secret == c["pollid"]:
-            await event.reply("Please give another poll id, this id is already in use")
+        if event.sender_id == c["user"]:
+            await event.reply("Please stop the previous poll before creating a new one !")
             return
         poll_id.insert_one({"user": event.sender_id, "pollid": secret})
 
