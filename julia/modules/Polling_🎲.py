@@ -349,11 +349,10 @@ async def stop(event):
         )
         return
     if msg.poll:
-        try:
             allpoll = poll_id.find({})
             for c in allpoll:
                 if not event.sender_id == c["user"] and secret == c["pollid"]:
-                    await event.reply("Oops, either you haven't created this poll or you have given wrong poll id")
+                    await event.reply("Oops, either you haven't created this poll or you have given wrong poll id or the poll is already closed")
                     return
                     
                 allpoll.delete_one({"user": event.sender_id, "pollid": secret})
@@ -365,13 +364,7 @@ async def stop(event):
                             )
                         )
                     )
-                await event.reply("Successfully stopped the poll")  
-                
-        except Exception:
-            await event.reply(
-                "I can't do this operation on this poll.\nProbably it's already closed"
-            )
-            return
+                await event.reply("Successfully stopped the poll")                  
     else:
         await event.reply("This isn't a poll")
 
