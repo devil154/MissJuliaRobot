@@ -18,7 +18,7 @@ client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
-
+pagenumber = db.pagenumber
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -213,7 +213,13 @@ async def go_back(event):
 def paginate_help(page_number, loaded_plugins, prefix):
     number_of_rows = 3
     number_of_cols = 2
-    
+    sender = event.sender_id
+    pagenumberr = pagenumberr.find({})
+    for c in pagenumberr:
+     if not event.sender_id == c['id']:
+       pagenumber.insert_one({'id': sender, 'page': page_number})
+     else:     
+       pagenumber.update_one({'id': sender, 'page': page_number})
     helpable_plugins = []
     for p in loaded_plugins:
         if not p.startswith("_"):
