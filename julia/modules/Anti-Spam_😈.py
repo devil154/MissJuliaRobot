@@ -6,10 +6,6 @@ from julia.events import register
 from telethon import *
 from telethon.tl import *
 from julia import *
-client = MongoClient()
-client = MongoClient(MONGO_DB_URI)
-db = client["test"]
-approved_users = db.approve
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
@@ -124,4 +120,3 @@ __help__ = """
  - /unignorecleanbluetext <word>: remove prevent auto cleaning of the command
  - /listcleanbluetext: list currently whitelisted commands
 """
-
