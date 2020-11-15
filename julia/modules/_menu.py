@@ -110,7 +110,7 @@ async def help(event):
         else:
             return
    if not event.is_group: 
-        buttons = paginate_help(0, CMD_LIST, "helpme")     
+        buttons = paginate_help(event, 0, CMD_LIST, "helpme")     
         await event.reply(PM_START_TEXT, buttons=buttons)
    else:
       await event.reply("Contact me in PM to get the help menu", buttons=[
@@ -131,7 +131,7 @@ async def help(event):
         else:
             return
    if not event.is_group: 
-        buttons = paginate_help(0, CMD_LIST, "helpme")     
+        buttons = paginate_help(event, 0, CMD_LIST, "helpme")     
         await event.reply(PM_START_TEXT, buttons=buttons)
    else:
       await event.reply("Contact me in PM to get the help menu", buttons=[
@@ -141,7 +141,7 @@ async def help(event):
 
 @tbot.on(events.CallbackQuery(pattern=r'help_menu'))
 async def help_menu(event):        
-        buttons = paginate_help(0, CMD_LIST, "helpme")     
+        buttons = paginate_help(event, 0, CMD_LIST, "helpme")     
         await event.edit(PM_START_TEXT, buttons=buttons)
 
 
@@ -152,7 +152,7 @@ async def help_menu(event):
     )
 async def on_plug_in_callback_query_handler(event):
             current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-            buttons = paginate_help(current_page_number + 1, CMD_LIST, "helpme")
+            buttons = paginate_help(event, current_page_number + 1, CMD_LIST, "helpme")
             await event.edit(buttons=buttons)
 
 
@@ -163,7 +163,7 @@ async def on_plug_in_callback_query_handler(event):
     )
 async def on_plug_in_callback_query_handler(event):
             current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-            buttons = paginate_help(
+            buttons = paginate_help(event, 
                 current_page_number - 1, CMD_LIST, "helpme"  
             )
             await event.edit(buttons=buttons)
@@ -207,16 +207,16 @@ async def go_back(event):
             pagenumberr = pagenumber.find({})
             for c in pagenumberr:
              if not event.sender_id == c['id']:
-                buttons = paginate_help(
+                buttons = paginate_help(event, 
                 0, CMD_LIST, "helpme")
                 await event.edit(PM_START_TEXT, buttons=buttons)
              else:
               if event.sender_id == c['id']:
                  number = c['page']
-              buttons = paginate_help(number, CMD_LIST, "helpme")
+              buttons = paginate_help(event, number, CMD_LIST, "helpme")
               await event.edit(PM_START_TEXT, buttons=buttons)
 
-def paginate_help(page_number, loaded_plugins, prefix):
+def paginate_help(event, page_number, loaded_plugins, prefix):
     number_of_rows = 3
     number_of_cols = 2
     sender = event.sender_id
