@@ -72,13 +72,14 @@ async def _(event):
     for (ent, txt) in event.get_entities_text():
         if ent.offset != 0:
             break
-        if isinstance(ent, types.MessageEntityBotCommand):                       
+        if isinstance(ent, types.MessageEntityBotCommand):   
+          print("right")                    
           pass
         else:
           return
   
     if sql.is_enabled(event.chat_id):
-          await event.delete()
+       await event.delete()
 
 
 @register(pattern="^/cleanbluetext ?(.*)")
