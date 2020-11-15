@@ -1,4 +1,4 @@
-# timer added by @MissJulia_Robot, noobs just copy paste no need to understand
+# timer added by @MissJulia_Robot
 
 import threading
 import time
@@ -24,7 +24,7 @@ class AFK(BASE):
         return "afk_status for {}".format(self.user_id)
 
 
-AFK.__table__.create(checkfirst=True)
+AFK.__table__.drop()
 INSERTION_LOCK = threading.RLock()
 
 AFK_USERS = {}
