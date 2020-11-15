@@ -77,10 +77,9 @@ async def _(event):
     allpoll = poll_id.find({})
     # print(secret)
     for c in allpoll:
-        if event.sender_id == c["user"] and str(secret) == c["pollid"]:
-            await event.reply("This poll id is already in use !")
+        if event.sender_id == c["user"]:
+            await event.reply("Please stop the previous poll before creating a new one !")
             return
-
     poll_id.insert_one({"user": event.sender_id, "pollid": secret})
 
     ques = quess.strip()
@@ -358,7 +357,7 @@ async def stop(event):
             if msg.poll.poll.closed:
                await event.reply("Oops, the poll is already closed.")
                return
-            poll_id.delete_one({"user": event.sender_id, "pollid": secret})
+            poll_id.delete_one({"user": event.sender_id})
             pollid = msg.poll.poll.id
             await msg.edit(
                         file=types.InputMediaPoll(
@@ -410,5 +409,3 @@ CMD_HELP.update({
         __help__
     ]
 })
-
-
