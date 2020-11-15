@@ -112,7 +112,7 @@ async def _(event):
        await event.delete()
 
 from better_profanity import profanity
-profanity.load_censor_words()
+profanity.load_censor_words_from_file('./profanity_wordlist.txt')
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
