@@ -355,16 +355,16 @@ async def stop(event):
                     await event.reply("Oops, either you haven't created this poll or you have given wrong poll id or the poll is already closed")
                     return
                     
-                allpoll.delete_one({"user": event.sender_id})
-                pollid = msg.poll.poll.id
-                await msg.edit(
+            poll_id.delete_one({"user": event.sender_id})
+            pollid = msg.poll.poll.id
+            await msg.edit(
                         file=types.InputMediaPoll(
                             poll=types.Poll(
                                 id=pollid, question="", answers=[], closed=True
                             )
                         )
                     )
-                await event.reply("Successfully stopped the poll")                  
+            await event.reply("Successfully stopped the poll")                  
     else:
         await event.reply("This isn't a poll")
 
