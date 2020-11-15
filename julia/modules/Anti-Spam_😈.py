@@ -50,6 +50,8 @@ async def is_register_admin(chat, user):
 async def _(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
+        global iid
+        global userss
         iid = ch['id']
         userss = ch['user']
     if event.is_group:
