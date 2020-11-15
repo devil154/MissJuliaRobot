@@ -77,7 +77,7 @@ async def _(event):
     allpoll = poll_id.find({})
     # print(secret)
     for c in allpoll:
-        if event.sender_id = c["user"] and str(secret) == c["pollid"]:
+        if event.sender_id == c["user"] and str(secret) == c["pollid"]:
             await event.reply("This poll id is already in use !")
             return
 
