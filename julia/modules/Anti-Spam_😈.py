@@ -186,13 +186,7 @@ async def _(event):
         return
     if event.sender_id == OWNER_ID:
         return
-    for (ent, txt) in event.get_entities_text():
-        if ent.offset != 0:
-            break
-        if isinstance(ent, types.MessageEntityBotCommand):                       
-          pass
-        else:
-          return 
+  
     if sql.is_enabled(event.chat_id):
        fst_word = event.text.strip().split(None, 1)[0]
        command = fst_word[1:].split('@')
