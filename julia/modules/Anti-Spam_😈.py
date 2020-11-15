@@ -69,10 +69,13 @@ async def _(event):
     if event.sender_id == OWNER_ID:
         return
 
-    if event.raw_text.startswith('/'):
-       pass
-    else:
-       return
+    for (ent, txt) in event.get_entities_text():
+        if ent.offset != 0:
+            break
+        if isinstance(ent, types.MessageEntityBotCommand):                       
+          pass
+        else:
+          return
   
     if sql.is_enabled(event.chat_id):
           await event.delete()
