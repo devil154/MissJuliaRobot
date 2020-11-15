@@ -10,7 +10,7 @@ from julia import *
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-db = client["test"]
+db = client["missjuliarobot"]
 approved_users = db.approve
 CMD_STARTERS = '/'
 
@@ -203,7 +203,7 @@ profanity.load_censor_words_from_file('./profanity_wordlist.txt')
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-dbb = client["spam"]
+dbb = client["missjuliarobot"]
 spammers = dbb.spammer
 
 

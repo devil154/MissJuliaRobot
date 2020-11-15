@@ -431,7 +431,7 @@ CARBONLANG = "en"
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-db = client["test"]
+db = client["missjuliarobot"]
 approved_users = db.approve
 
 
@@ -528,7 +528,7 @@ from telethon.tl.types import DocumentAttributeFilename
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-db = client["test"]
+db = client["missjuliarobot"]
 approved_users = db.approve
 
 
@@ -656,7 +656,7 @@ async def check_media(reply_message):
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-db = client["test"]
+db = client["missjuliarobot"]
 approved_users = db.approve
 
 

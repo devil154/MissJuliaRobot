@@ -94,7 +94,7 @@ from wikipedia.exceptions import PageError
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-db = client["test"]
+db = client["missjuliarobot"]
 approved_users = db.approve
 
 async def is_register_admin(chat, user):

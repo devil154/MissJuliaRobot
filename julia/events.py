@@ -17,7 +17,7 @@ from telethon.tl import functions
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-dbb = client["leecher"]
+dbb = client["missjuliarobot"]
 leechers = dbb.leecher
 
 

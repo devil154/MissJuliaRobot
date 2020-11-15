@@ -8,9 +8,9 @@ from julia import tbot
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-db = client["test"]
+db = client["missjuliarobot"]
 approved_users = db.approve
-dbb = client["poll"]
+dbb = client["missjuliarobot"]
 poll_id = dbb.pollid
 
 

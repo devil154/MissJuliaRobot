@@ -13,7 +13,7 @@ from julia import MONGO_DB_URI
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-db = client["test"]
+db = client["missjuliarobot"]
 approved_users = db.approve
 
 
@@ -102,7 +102,7 @@ if not os.path.isdir(extracted):
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
-db = client["test"]
+db = client["missjuliarobot"]
 approved_users = db.approve
 
 

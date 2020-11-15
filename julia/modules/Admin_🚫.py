@@ -915,7 +915,7 @@ async def locks(event):
     elif input_str == "inline":
         ainline = True
         what = "inline bots"
-    elif input_str == "poll":
+    elif input_str == "missjuliarobot":
         gpoll = True
         what = "polls"
     elif input_str == "invite":
@@ -1013,7 +1013,7 @@ async def rem_locks(event):
     elif input_str == "inline":
         ainline = False
         what = "inline bots"
-    elif input_str == "poll":
+    elif input_str == "missjuliarobot":
         gpoll = False
         what = "polls"
     elif input_str == "invite":
