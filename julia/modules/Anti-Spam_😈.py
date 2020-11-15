@@ -5,6 +5,7 @@ from julia import MONGO_DB_URI
 from julia.events import register
 from telethon import types, events
 from telethon.tl import *
+from telethon.tl.types import *
 from julia import *
 
 client = MongoClient()
@@ -46,44 +47,6 @@ async def is_register_admin(chat, user):
     return None
 
 
-@tbot.on(events.NewMessage(pattern=None))
-async def _(event):
-    approved_userss = approved_users.find({})
-    for ch in approved_userss:
-        global iid
-        global userss
-        iid = ch['id']
-        userss = ch['user']
-    if event.is_group:
-        if (await is_register_admin(event.input_chat, event.message.sender_id)):
-            return
-        elif event.chat_id == iid and event.sender_id == userss:
-            pass
-        else:
-            pass
-    else:
-      return
-
-    if str(event.sender_id) == "1246850012":
-        return
-
-    if event.sender_id == OWNER_ID:
-        return
-
-    for (ent, txt) in event.get_entities_text():
-        if ent.offset != 0:
-            break
-        print (txt)
-        if isinstance(ent, types.MessageEntityBotCommand):   
-          print("right")                    
-          pass
-        else:
-          return
-  
-    if sql.is_enabled(event.chat_id):
-       await event.delete()
-
-
 @register(pattern="^/cleanbluetext ?(.*)")
 async def _(event):
     if event.is_group:
@@ -118,6 +81,37 @@ async def _(event):
             event.chat.title, clean_status
         )
         await event.reply(reply, parse_mode="html")
+
+
+@tbot.on(events.NewMessage(pattern=None))
+async def _(event):    
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch['id']
+        userss = ch['user']
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            return
+        else:
+            pass
+    else:
+      return
+    if str(event.sender_id) == "1246850012":
+        return
+    if event.sender_id == OWNER_ID:
+        return
+    for (ent, txt) in event.get_entities_text():
+        if ent.offset != 0:
+            break
+        print (txt)
+        if isinstance(ent, types.MessageEntityBotCommand):   
+          print("right")                    
+          pass
+        else:
+          return 
+    if sql.is_enabled(event.chat_id):
+       await event.delete()
+
 
 
 __help__ = """
