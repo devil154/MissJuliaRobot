@@ -111,6 +111,70 @@ async def _(event):
     if sql.is_enabled(event.chat_id):
        await event.delete()
 
+from better_profanity import profanity
+profanity.load_censor_words()
+
+client = MongoClient()
+client = MongoClient(MONGO_DB_URI)
+dbb = client["spam"]
+spammers = dbb.spammer
+
+
+@register(pattern="^/profanity(?: |$)(.*)")
+async def sticklet(event):
+    if event.fwd_from:
+        return
+    if event.is_private:
+        return
+    if MONGO_DB_URI is None:
+        return
+    input = event.pattern_match.group(1)
+    chats = spammers.find({})
+    if not input:
+        for c in chats:
+            if event.chat_id == c["id"]:
+                await event.reply(
+                    "Please provide some input yes or no.\n\nCurrent setting is : **on**"
+                )
+                return
+        await event.reply(
+            "Please provide some input yes or no.\n\nCurrent setting is : **off**"
+        )
+        return
+    if input in "on":
+        if event.is_group:
+            if str(event.sender_id) in str(OWNER_ID):
+                pass
+            else:
+                if not await can_change_info(message=event):
+                    return
+
+            for c in chats:
+                if event.chat_id == c["id"]:
+                    await event.reply(
+                        "Profanity filter is already activated for this chat.")
+                    return
+            spammers.insert_one({"id": event.chat_id})
+            await event.reply("Profanity filter turned on for this chat.")
+    if input in "off":
+        if event.is_group:
+            if str(event.sender_id) in str(OWNER_ID):
+                pass
+            else:
+                if not await can_change_info(message=event):
+                    return
+            chats = spammers.find({})
+            for c in chats:
+                if event.chat_id == c["id"]:
+                    spammers.delete_one({"id": event.chat_id})
+                    await event.reply(
+                        "Profanity filter turned off for this chat.")
+                    return
+                await event.reply(
+                    "Profanity filter isn't turned on for this chat.")
+    if not input == "on" or input == "off":
+        await event.reply("I only understand by on or off")
+        return
 
 
 __help__ = """
