@@ -211,9 +211,10 @@ async def go_back(event):
                 0, CMD_LIST, "helpme")
                 await event.edit(PM_START_TEXT, buttons=buttons)
              else:
-                buttons = paginate_help(
-                c["page"] for c["id"] == event.sender_id, CMD_LIST, "helpme")
-                await event.edit(PM_START_TEXT, buttons=buttons)
+              if event.sender_id == c['id']:
+                 number = c['page']
+              buttons = paginate_help(number, CMD_LIST, "helpme")
+              await event.edit(PM_START_TEXT, buttons=buttons)
 
 def paginate_help(page_number, loaded_plugins, prefix):
     number_of_rows = 3
