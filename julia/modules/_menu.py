@@ -204,17 +204,22 @@ async def on_plug_in_callback_query_handler(event):
 
 @tbot.on(events.CallbackQuery(pattern=r'go_back'))
 async def go_back(event):
-            buttons = paginate_help(
-                0, CMD_LIST, "helpme"  
-            )
-            await event.edit(PM_START_TEXT, buttons=buttons)
-
+            pagenumberr = pagenumber.find({})
+            for c in pagenumberr:
+             if not event.sender_id == c['id']:
+                buttons = paginate_help(
+                0, CMD_LIST, "helpme")
+                await event.edit(PM_START_TEXT, buttons=buttons)
+             else:
+                buttons = paginate_help(
+                c["page"] for c["id"] == event.sender_id, CMD_LIST, "helpme")
+                await event.edit(PM_START_TEXT, buttons=buttons)
 
 def paginate_help(page_number, loaded_plugins, prefix):
     number_of_rows = 3
     number_of_cols = 2
     sender = event.sender_id
-    pagenumberr = pagenumberr.find({})
+    pagenumberr = pagenumber.find({})
     for c in pagenumberr:
      if not event.sender_id == c['id']:
        pagenumber.insert_one({'id': sender, 'page': page_number})
