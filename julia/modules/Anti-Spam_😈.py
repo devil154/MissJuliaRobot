@@ -199,8 +199,9 @@ async def _(event):
        if len(fst_word) > 1 and any(fst_word.startswith(start)
                                          for start in CMD_STARTERS):
 
-          if sql.is_command_ignored(chat.id, command[0])
-              return
+          ignored = sql.is_command_ignored(event.chat_id, command[0])
+          if ignored:
+             return
           await event.delete()
 
 from better_profanity import profanity
