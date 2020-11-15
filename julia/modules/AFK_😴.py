@@ -62,18 +62,19 @@ async def _(event):
 
     cmd = event.pattern_match.group(1)
 
-    if cmd:
+    if cmd is not None:
         reason = cmd
     else:
         reason = ""
  
     fname = sender.first_name
+
     notice = ""
     if len(reason) > 100:
         reason = reason[:100]
         notice = "{fname} your afk reason was shortened to 100 characters."
     else:
-        reason = ""
+        reason = cmd
     
     print(reason)
     start_time = time.time()
