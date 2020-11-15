@@ -358,7 +358,7 @@ async def stop(event):
             if msg.poll.poll.closed:
                await event.reply("Oops, the poll is already closed.")
                return
-            poll_id.delete_one({"user": event.sender_id})
+            poll_id.delete_one({"user": event.sender_id, "pollid": secret})
             pollid = msg.poll.poll.id
             await msg.edit(
                         file=types.InputMediaPoll(
