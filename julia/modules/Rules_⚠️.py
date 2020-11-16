@@ -12,8 +12,7 @@ async def _(event):
 
 
 async def send_rules(event, chat_id, from_pm=False):
-	user = event.sender_id
-	
+    user = event.sender_id	
     rules = sql.get_rules(chat_id)
     text = f"The rules for **{event.chat.title}** are:\n\n{rules}"
 
