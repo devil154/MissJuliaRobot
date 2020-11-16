@@ -230,7 +230,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     to_check = await get_page(id=event.sender_id)
 
     if not to_check:
-        pagenumber.insert_one({'id': event.sender_id, 'page', page_number})
+        pagenumber.insert_one({'id': event.sender_id, 'page': page_number})
         
     else:
         pagenumber.update_one(
