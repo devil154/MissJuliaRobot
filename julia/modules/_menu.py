@@ -241,7 +241,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     if len(modules) % number_of_cols == 1:
         pairs.append((modules[-1],))
     max_num_pages = ceil(len(pairs) / number_of_rows)
-    modulo_page = {page_number , max_num_pages}
+    modulo_page = page_number % max_num_pages
     if len(pairs) > number_of_rows:
         pairs = pairs[
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
