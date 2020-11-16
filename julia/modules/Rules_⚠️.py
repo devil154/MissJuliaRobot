@@ -50,7 +50,6 @@ async def send_rules(event, chat_id, from_pm=False):
 
 @register(pattern="^/start rules")
 async def give_rules(event):
-    if not event.is_private:
        rules = sql.get_rules(event.chat_id)
        text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
        await tbot.send_message(
@@ -59,8 +58,6 @@ async def give_rules(event):
             parse_mode="markdown", 
             link_preview=False,
         )
-    else:
-        return
 
 @register(pattern="^/setrules")
 async def _(event):
