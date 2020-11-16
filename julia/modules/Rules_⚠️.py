@@ -17,16 +17,14 @@ async def can_change_info(message):
         )
 
 
-@register(pattern="^/rules")
+@register(pattern="^/rules$")
 async def _(event):        
     if event.is_private:
       return
     chat_id = event.chat_id
     rules = sql.get_rules(chat_id)
     if rules:
-        await event.reply(
-            "Contact me in PM to get this group's rules.", buttons=[
-              [Button.url('Rules', url='t.me/MissJuliaRobot?start=rules')]])
+        await event.reply("Contact me in PM to get this group's rules.", buttons=[[Button.url('Rules', url='t.me/MissJuliaRobot?start=rules')]])
     else:
         await event.reply(
             "The group admins haven't set any rules for this chat yet. "
