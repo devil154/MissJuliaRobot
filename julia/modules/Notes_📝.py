@@ -145,7 +145,7 @@ __help__ = """
  - /addnote <word>: Type in reply to a message to save that message to the note called "word"
  - /rmnote <word>: delete the note called "word"
 
-**Non-Admin Only**
+**Admin+Non-Admin**
  - /notes: List all notes in the chat
  - #<word> : get the note registered to that word
 """
