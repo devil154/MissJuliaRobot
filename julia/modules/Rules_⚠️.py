@@ -41,14 +41,14 @@ async def send_rules(event, chat_id, from_pm=False):
     elif rules:
         await event.reply(
             "Contact me in PM to get this group's rules.", buttons=[
-              [Button.inline('Rules', data='give_rules')]])
+              [Button.inline('Rules', url=f'http://t.me/MissJuliaRobot?start=rules')]])
     else:
         await event.reply(
             "The group admins haven't set any rules for this chat yet. "
             "This probably doesn't mean it's lawless though...!"
         )
 
-@tbot.on(events.CallbackQuery(pattern=r'give_rules'))
+@register(pattern="^/start rules")
 async def give_rules(event):
     if not event.is_private:
        rules = sql.get_rules(event.chat_id)
@@ -57,7 +57,7 @@ async def give_rules(event):
             event.sender_id,
             text, 
             parse_mode="markdown", 
-            link_preview=True,
+            link_preview=False,
         )
     else:
         return
