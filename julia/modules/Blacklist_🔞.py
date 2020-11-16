@@ -34,9 +34,6 @@ async def on_new_message(event):
                 await event.delete()
             except Exception as e:
                 print(e)
-               
-                sql.rm_from_blacklist(event.chat_id, snip.lower())
-            break
 
 
 @register(pattern="^/addblacklist ((.|\n)*)")
