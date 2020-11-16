@@ -204,13 +204,6 @@ async def on_plug_in_callback_query_handler(event):
 
 @tbot.on(events.CallbackQuery(pattern=r'go_back'))
 async def go_back(event):
-            pagenumberr = pagenumber.find({})
-            for c in pagenumberr:
-             if not event.sender_id == c['id']:
-                buttons = paginate_help(event, 
-                0, CMD_LIST, "helpme")
-                await event.edit(PM_START_TEXT, buttons=buttons)
-             else:
               c = pagenumber.find_one({"id": event.sender_id})
               number = c["page"]
               print (number)
