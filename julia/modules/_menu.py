@@ -213,6 +213,7 @@ async def go_back(event):
              else:
               if event.sender_id == c['id']:
                  number = c['page']
+                 print(number)
               buttons = paginate_help(event, number, CMD_LIST, "helpme")
               await event.edit(PM_START_TEXT, buttons=buttons)
 
