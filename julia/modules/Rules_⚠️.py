@@ -19,6 +19,8 @@ async def can_change_info(message):
 
 @register(pattern="^/rules")
 async def _(event):        
+    if event.is_private:
+      return
     chat_id = event.chat_id
     await send_rules(event, chat_id)
 
