@@ -18,7 +18,7 @@ async def can_change_info(message):
 
 
 @register(pattern="^/rules")
-async def _(event):
+async def _(event):        
     chat_id = event.chat_id
     await send_rules(event, chat_id)
 
@@ -51,6 +51,11 @@ async def send_rules(event, chat_id, from_pm=False):
 
 @register(pattern="^/setrules")
 async def _(event):
+    if event.is_group:
+        if not await can_change_info(message=event):
+            return
+    else:
+        return
     chat_id = event.chat_id
     raw_text = event.text
     args = raw_text.split(None, 1)  
@@ -62,6 +67,11 @@ async def _(event):
 
 @register(pattern="^/clearrules$")
 async def _(event):
+    if event.is_group:
+        if not await can_change_info(message=event):
+            return
+    else:
+        return
     chat_id = event.chat_id
     sql.set_rules(chat_id, "")
     await event.reply("Successfully cleared rules for this chat !")
