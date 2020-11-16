@@ -217,7 +217,7 @@ async def go_back(event):
               buttons = paginate_help(event, number, CMD_LIST, "helpme")
               await event.edit(PM_START_TEXT, buttons=buttons)
 
-async def get_page(id):
+def get_page(id):
     return pagenumber.find_one({'id': id})
 
 
@@ -227,7 +227,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     sender = event.sender_id
     #  print (page_number)
  
-    to_check = await get_page(id=event.sender_id)
+    to_check = get_page(id=event.sender_id)
 
     if not to_check:
         pagenumber.insert_one({'id': event.sender_id, 'page': page_number})
