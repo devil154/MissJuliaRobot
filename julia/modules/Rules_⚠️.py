@@ -22,7 +22,6 @@ async def _(event):
     if event.is_private:
       return
     chat_id = event.chat_id
-    text = f"The rules for **{event.chat.title}** are:\n\n{rules}"
     rules = sql.get_rules(chat_id)
     if rules:
         await event.reply(
