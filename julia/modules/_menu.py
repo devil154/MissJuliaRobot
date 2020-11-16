@@ -225,8 +225,8 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     pagenumberr = pagenumber.find({})
     for c in pagenumberr:
       if sender == c['id']:
- 	pagenumber.delete_one({'id': sender})
- 	pagenumber.insert_one({'id': sender, "page": page_number})
+        pagenumber.delete_one({'id': sender})
+        pagenumber.insert_one({'id': sender, "page": page_number})
       else:
         pagenumber.insert_one({'id': sender, 'page': page_number})
     helpable_plugins = []
