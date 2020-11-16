@@ -220,7 +220,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     number_of_rows = 3
     number_of_cols = 2
     sender = event.sender_id
-    print (page_number)
+    #  print (page_number)
     pagenumberr = pagenumber.find({})
     for c in pagenumberr:
      if not event.sender_id == c['id']:
