@@ -71,3 +71,27 @@ async def _(event):
     chat_id = event.chat_id
     sql.set_rules(chat_id, "")
     await event.reply("Successfully cleared rules for this chat !")
+
+
+import os
+from julia import tbot, CMD_HELP
+global __help__
+global file_helpo
+file_help = os.path.basename(__file__)
+file_help = file_help.replace(".py", "")
+file_helpo=  file_help.replace("_", " ")
+
+__help__ = """
+**Admin Only**
+ - /setrules <rules>: set the rules for this chat
+ - /clearrules: clears the rules for this chat
+**Admin+Non-Admin**
+ - /rules: get the rules for this chat
+"""
+
+CMD_HELP.update({
+    file_helpo: [
+        file_helpo,
+        __help__
+    ]
+})
