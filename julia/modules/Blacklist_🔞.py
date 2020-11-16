@@ -45,6 +45,9 @@ async def is_register_admin(chat, user):
 @tbot.on(events.NewMessage(incoming=True))
 async def on_new_message(event):
     # TODO: exempt admins from locks
+    if await is_register_admin(event.input_chat, event.message.sender_id):
+        return
+
     name = event.raw_text
     snips = sql.get_chat_blacklist(event.chat_id)
     for snip in snips:
