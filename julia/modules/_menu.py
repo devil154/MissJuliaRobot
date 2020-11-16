@@ -217,18 +217,31 @@ async def go_back(event):
               buttons = paginate_help(event, number, CMD_LIST, "helpme")
               await event.edit(PM_START_TEXT, buttons=buttons)
 
+async def get_page(id):
+    return pagenumber.find_one({'id': id})
+
+
 def paginate_help(event, page_number, loaded_plugins, prefix):
     number_of_rows = 3
     number_of_cols = 2
     sender = event.sender_id
     #  print (page_number)
-    pagenumberr = pagenumber.find({})
-    for c in pagenumberr:
-      if sender == c['id']:
-        pagenumber.delete_one({'id': sender})
-        pagenumber.insert_one({'id': sender, 'page': page_number})
-      else:
-        pagenumber.insert_one({'id': sender, 'page': page_number})
+ 
+    to_check = await get_page(id=event.sender_id)
+
+    if not to_check:
+        pagenumber.insert_one({'id': event.sender_id, 'page', page_number})
+        
+    else:
+        pagenumber.update_one(
+            {
+                '_id': to_check["_id"],
+                'id': to_check["id"],
+                'page': to_check["page"],
+            }, {"$set": {
+                'page': page_number
+            }})
+        
     helpable_plugins = []
     for p in loaded_plugins:
         if not p.startswith("_"):
