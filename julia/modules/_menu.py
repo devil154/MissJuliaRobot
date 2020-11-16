@@ -226,7 +226,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
      if not event.sender_id == c['id']:
        pagenumber.insert_one({'id': sender, 'page': page_number})
      else:     
-       pagenumber.update_one({'id': sender, 'page': page_number}, {"$set": {"id": sender, "page": page_number}})
+       pagenumber.update_one({'id': sender}, {"$set": {"id": sender, "page": page_number}})
     helpable_plugins = []
     for p in loaded_plugins:
         if not p.startswith("_"):
