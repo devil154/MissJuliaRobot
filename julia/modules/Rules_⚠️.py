@@ -28,7 +28,8 @@ async def send_rules(event, chat_id, from_pm=False):
         )
     elif rules:
         await event.reply(
-            "Contact me in PM to get this group's rules.")
+            "Contact me in PM to get this group's rules.", buttons=[
+              [Button.url('Rules', f't.me/MissJuliaRobot?start={chat_id}')]])
     else:
         await event.reply(
             "The group admins haven't set any rules for this chat yet. "
