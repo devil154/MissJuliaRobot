@@ -1,131 +1,55 @@
 from typing import Optional
-
-from telegram import InlineKeyboardButton
-from telegram import InlineKeyboardMarkup
-from telegram import Message
-from telegram import ParseMode
-from telegram import Update
-from telegram import User
-from telegram.error import BadRequest
-from telegram.ext import CallbackContext
-from telegram.ext import CommandHandler
-from telegram.ext import Filters
-from telegram.ext import run_async
-from telegram.utils.helpers import escape_markdown
-from julia.modules.helper_funcs.chat_status import spamcheck
-
 import julia.modules.sql.rules_sql as sql
-from julia import dispatcher
-from julia.modules.helper_funcs.chat_status import user_can_change
-from julia.modules.helper_funcs.string_handling import markdown_parser
+from telethon import *
+from telethon.tl import *
+from julia import *
 
 
-@run_async
-@spamcheck
-def get_rules(update: Update, context: CallbackContext):
-    chat_id = update.effective_chat.id
-    send_rules(update, chat_id)
+@register(pattern="^/rules")
+async def _(event):
+    chat_id = event.chat_id
+    await send_rules(event, chat_id)
 
 
-def send_rules(update, chat_id, from_pm=False):
-    bot = dispatcher.bot
-    user = update.effective_user  
-    try:
-        chat = bot.get_chat(chat_id)
-    except BadRequest as excp:
-        if excp.message == "Chat not found" and from_pm:
-            bot.send_message(
-                user.id,
-                "The rules shortcut for this chat hasn't been set properly! Ask admins to "
-                "fix this.",
-            )
-            return
-        raise
-
+async def send_rules(event, chat_id, from_pm=False):
+	user = event.sender_id
+	
     rules = sql.get_rules(chat_id)
-    text = f"The rules for *{escape_markdown(chat.title)}* are:\n\n{rules}"
+    text = f"The rules for **{event.chat.title}** are:\n\n{rules}"
 
     if from_pm and rules:
-        bot.send_message(
-            user.id, text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+        await tbot.send_message(
+            user, text, parse_mode="markdown", link_preview=True
         )
     elif from_pm:
-        bot.send_message(
-            user.id,
+        await tbot.send_message(
+            user,
             "The group admins haven't set any rules for this chat yet. "
             "This probably doesn't mean it's lawless though...!",
         )
     elif rules:
-        update.effective_message.reply_text(
-            "Contact me in PM to get this group's rules.",
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="Rules", url=f"t.me/{bot.username}?start={chat_id}"
-                        )
-                    ]
-                ]
-            ),
-        )
+        await event.reply(
+            "Contact me in PM to get this group's rules.")
     else:
-        update.effective_message.reply_text(
+        await event.reply(
             "The group admins haven't set any rules for this chat yet. "
             "This probably doesn't mean it's lawless though...!"
         )
 
 
-@run_async
-@spamcheck
-@user_can_change
-def set_rules(update: Update, context: CallbackContext):
-    chat_id = update.effective_chat.id
-    msg = update.effective_message  
-    raw_text = msg.text
+@register(pattern="^/setrules")
+async def _(event):
+    chat_id = event.chat_id
+    raw_text = event.text
     args = raw_text.split(None, 1)  
     if len(args) == 2:
         txt = args[1]
-        offset = len(txt) - len(raw_text)  
-        markdown_rules = markdown_parser(
-            txt, entities=msg.parse_entities(), offset=offset
-        )
-
-        sql.set_rules(chat_id, markdown_rules)
-        update.effective_message.reply_text("Successfully set rules for this group.")
+        sql.set_rules(chat_id, txt)
+        await event.reply("Successfully set rules for this group.")
 
 
-@run_async
-@spamcheck
-@user_can_change
-def clear_rules(update: Update, context: CallbackContext):
-    chat_id = update.effective_chat.id
+@register(pattern="^/clearrules$")
+async def _(event):
+    chat_id = event.chat_id
     sql.set_rules(chat_id, "")
-    update.effective_message.reply_text("Successfully cleared rules!")
-
-
-def __stats__():
-    return f"• {sql.num_chats()} chats have rules set."
-
-
-def __import_data__(chat_id, data):
-    rules = data.get("info", {}).get("rules", "")
-    sql.set_rules(chat_id, rules)
-
-
-def __migrate__(old_chat_id, new_chat_id):
-    sql.migrate_chat(old_chat_id, new_chat_id)
-
-
-def __chat_settings__(chat_id, user_id):
-    return f"This chat has had it's rules set: `{bool(sql.get_rules(chat_id))}`"
-
-
-__mod_name__ = "Rules"
-
-GET_RULES_HANDLER = CommandHandler("rules", get_rules, filters=Filters.group)
-SET_RULES_HANDLER = CommandHandler("setrules", set_rules, filters=Filters.group)
-RESET_RULES_HANDLER = CommandHandler("clearrules", clear_rules, filters=Filters.group)
-
-dispatcher.add_handler(GET_RULES_HANDLER)
-dispatcher.add_handler(SET_RULES_HANDLER)
-dispatcher.add_handler(RESET_RULES_HANDLER)
+    await event.reply("Successfully cleared rules for this chat !")
