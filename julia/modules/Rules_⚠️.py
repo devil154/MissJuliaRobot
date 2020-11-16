@@ -41,13 +41,26 @@ async def send_rules(event, chat_id, from_pm=False):
     elif rules:
         await event.reply(
             "Contact me in PM to get this group's rules.", buttons=[
-              [Button.url('Rules', f't.me/MissJuliaRobot?start={chat_id}')]])
+              [Button.inline('Rules', data='give_rules')]])
     else:
         await event.reply(
             "The group admins haven't set any rules for this chat yet. "
             "This probably doesn't mean it's lawless though...!"
         )
 
+@tbot.on(events.CallbackQuery(pattern=r'give_rules'))
+async def give_rules(event):
+    if not event.is_private:
+       rules = sql.get_rules(event.chat_id)
+       text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
+       await tbot.send_message(
+            event.sender_id,
+            text, 
+            parse_mode="markdown", 
+            link_preview=True,
+        )
+    else:
+        return
 
 @register(pattern="^/setrules")
 async def _(event):
