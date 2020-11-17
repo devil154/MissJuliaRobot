@@ -22,6 +22,8 @@ async def _(event):
     if event.is_private:
       return
     global chatrules
+    global chattitle
+    chattitle = event.chat.title
     chat_id = event.chat_id
     chatrules = chat_id
     rules = sql.get_rules(chat_id)
@@ -35,10 +37,10 @@ async def _(event):
 
 @register(pattern="^/start rules$")
 async def rules(event):       
-       print(chatrules)
+       #print(chatrules)
        rules = sql.get_rules(chatrules)
-       print(rules)
-       text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
+       #print(rules)
+       text = f"The rules for **{chattitle}** are:\n\n{rules}"       
        await event.respond(
             text, 
             parse_mode="markdown", 
