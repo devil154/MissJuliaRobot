@@ -151,7 +151,7 @@ async def can_del(message):
         isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.delete_messages
     )
 
-async def can_pin_message(message):
+async def can_pin_msg(message):
     result = await tbot(
         functions.channels.GetParticipantRequest(
             channel=message.chat_id,
