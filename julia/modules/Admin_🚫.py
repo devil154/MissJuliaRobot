@@ -196,11 +196,8 @@ async def get_user_from_event(event):
     return user_obj
 
 
-
-
 @register(pattern="^/promote(?: |$)(.*)")
 async def promote(promt):
-
     # Get targeted chat
     chat = await promt.get_chat()
     # Grab admin status or creator in a chat
@@ -250,7 +247,6 @@ async def promote(promt):
 
 @register(pattern="^/demote(?: |$)(.*)")
 async def demote(dmod):
-
     # Admin right check
     chat = await dmod.get_chat()
     admin = chat.admin_rights
@@ -303,7 +299,6 @@ async def demote(dmod):
 
 @register(pattern="^/pin(?: |$)(.*)")
 async def pin(msg):
-
     # Admin or creator check
     chat = await msg.get_chat()
     admin = chat.admin_rights
@@ -364,7 +359,6 @@ async def get_admin(show):
 
 @register(pattern="^/setgrouppic$")
 async def set_group_photo(gpic):
-
     replymsg = await gpic.get_reply_message()
     chat = await gpic.get_chat()
     photo = None
@@ -1100,7 +1094,6 @@ async def clocks(event):
 
 @tbot.on(events.NewMessage(pattern="^/purge$"))
 async def purge_messages(event):
-
     if event.sender_id is None:
         return
 
