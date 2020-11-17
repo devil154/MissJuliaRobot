@@ -38,8 +38,7 @@ async def rules(event):
        print(chatrules)
        rules = sql.get_rules(chatrules)
        text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
-       await tbot.send_message(
-            event.sender_id, 
+       await event.respond(
             text, 
             parse_mode="markdown", 
             link_preview=False)
