@@ -37,6 +37,7 @@ async def _(event):
 async def rules(event):       
        print(chatrules)
        rules = sql.get_rules(chatrules)
+       print(rules)
        text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
        await event.respond(
             text, 
