@@ -22,8 +22,9 @@ async def _(event):
     if event.is_private:
       return
     global chatrules 
+    global sendruleschat
     chat_id = event.chat_id
-    chatrules = chat_id
+    sendruleschat = chat_id
     rules = sql.get_rules(chat_id)
     if rules:
         await event.reply("Contact me in PM to get this group's rules.", buttons=[[Button.url('Rules', url='t.me/MissJuliaRobot?start=rules')]])
@@ -36,7 +37,7 @@ async def _(event):
 
 @register(pattern="^/start rules")
 async def give_rules(event):
-       rules = sql.get_rules(event.chat_id)
+       rules = sql.get_rules(sendruleschat)
        text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
        await tbot.send_message(
             event.sender_id, 
