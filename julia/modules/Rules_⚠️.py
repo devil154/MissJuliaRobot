@@ -41,6 +41,9 @@ async def rules(event):
        rules = sql.get_rules(chatrules)
        print(rules)
        text = f"The rules for **{chattitle}** are:\n\n{rules}"       
+       if not rules:
+         await event.respond("The link has expired, use /rules again to get that chat rules.")
+         return
        await event.respond(
             text, 
             parse_mode="markdown", 
