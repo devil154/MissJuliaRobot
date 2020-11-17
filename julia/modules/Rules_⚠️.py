@@ -31,9 +31,8 @@ async def _(event):
             "This probably doesn't mean it's lawless though...!"
         )
 
-
-@register(pattern="^/start rules")
-async def _(event):
+@register(pattern="^/start rules$")
+async def rules(event):       
        rules = sql.get_rules(event.chat_id)
        text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
        await tbot.send_message(
