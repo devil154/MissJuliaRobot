@@ -46,7 +46,7 @@ async def _(event):
             link_preview=False)
 
 @register(pattern="^/setrules")
-async def (event):
+async def _(event):
     if event.is_group:
         if not await can_change_info(message=event):
             return
