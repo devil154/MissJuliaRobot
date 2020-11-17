@@ -378,9 +378,9 @@ async def set_group_photo(gpic):
 
     if replymsg and replymsg.media:
         if isinstance(replymsg.media, MessageMediaPhoto):
-            photo = await bot.download_media(message=replymsg.photo)
+            photo = await tbot.download_media(message=replymsg.photo)
         elif "image" in replymsg.media.document.mime_type.split('/'):
-            photo = await bot.download_file(replymsg.media.document)
+            photo = await tbot.download_file(replymsg.media.document)
         else:
             await gpic.reply(INVALID_MEDIA)
 
