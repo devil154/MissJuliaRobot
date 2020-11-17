@@ -36,7 +36,7 @@ async def _(event):
 
 
 @register(pattern="^/start rules")
-async def give_rules(event):
+async def (event):
        rules = sql.get_rules(sendruleschat)
        text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
        await tbot.send_message(
@@ -46,7 +46,7 @@ async def give_rules(event):
             link_preview=False)
 
 @register(pattern="^/setrules")
-async def _(event):
+async def (event):
     if event.is_group:
         if not await can_change_info(message=event):
             return
