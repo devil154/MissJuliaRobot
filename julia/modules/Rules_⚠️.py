@@ -36,7 +36,7 @@ async def _(event):
 
 
 @register(pattern="^/start rules")
-async def (event):
+async def _(event):
        rules = sql.get_rules(sendruleschat)
        text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
        await tbot.send_message(
