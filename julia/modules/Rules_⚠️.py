@@ -45,8 +45,8 @@ async def rules(event):
             text, 
             parse_mode="markdown", 
             link_preview=False)
-       chatrules = ""
-       chattitle = ""
+       del chatrules 
+       del chattitle 
 
 @register(pattern="^/setrules")
 async def _(event):
