@@ -151,6 +151,18 @@ async def can_del(message):
         isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.delete_messages
     )
 
+async def can_pin_message(message):
+    result = await tbot(
+        functions.channels.GetParticipantRequest(
+            channel=message.chat_id,
+            user_id=message.sender_id,
+        )
+    )
+    p = result.participant
+    return isinstance(p, types.ChannelParticipantCreator) or (
+        isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.pin_messages
+    )
+
 async def get_user_sender_id(user, event):
     if isinstance(user, str):
         user = int(user)
