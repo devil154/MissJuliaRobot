@@ -37,9 +37,9 @@ async def _(event):
 
 @register(pattern="^/start rules$")
 async def rules(event):       
-       #print(chatrules)
+       print(chatrules)
        rules = sql.get_rules(chatrules)
-       #print(rules)
+       print(rules)
        text = f"The rules for **{chattitle}** are:\n\n{rules}"       
        await event.respond(
             text, 
