@@ -16,13 +16,13 @@ async def can_change_info(message):
             isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.change_info
         )
 
-global chatrules
-global chattitle
 
 @register(pattern="^/rules$")
 async def _(event):        
     if event.is_private:
       return
+    global chatrules
+    global chattitle
     chattitle = event.chat.title
     chat_id = event.chat_id
     chatrules = chat_id
