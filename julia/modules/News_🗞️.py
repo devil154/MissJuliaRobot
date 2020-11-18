@@ -99,4 +99,25 @@ async def _(event):
         l = "\n"
         lastisthis = title + l + text + l + date + l + seperator
         await event.reply(lastisthis)
+        
+import inspect
+import logging
+import re, os
+from pathlib import Path
+from julia import tbot, CMD_HELP
+global __help__
+global file_helpo
+file_help = os.path.basename(__file__)
+file_help = file_help.replace(".py", "")
+file_helpo=  file_help.replace("_", " ")
 
+__help__ = """
+ - /news: Returns today's American News Headlines (ONLY WORKS IN PM)
+"""
+
+CMD_HELP.update({
+    file_helpo: [
+        file_helpo,
+        __help__
+    ]
+})
