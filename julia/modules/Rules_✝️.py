@@ -36,14 +36,17 @@ async def rules(event):
        rules = sql.get_rules(event.chat_id)
        # print(rules)
        text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
-       await tbot.send_message(
+       try:
+         await tbot.send_message(
             event.sender_id,
             text, 
             parse_mode="markdown", 
             link_preview=False)
-       await event.edit("Click on the below button to get this group's rules 👇", buttons=[[Button.inline('Sorry link has expired 😔', data="nothing_here_bro")]])
+         await event.edit("Click on the below button to get this group's rules 👇", buttons=[[Button.inline('Sorry link has expired 😔', data="nothing_here_bro")]])
 
-
+       except Exception:
+          await event.answer("I can't send you the rules as you haven't started me in PM, first start me !")
+       
 @register(pattern="^/setrules")
 async def _(event):
     if event.is_group:
