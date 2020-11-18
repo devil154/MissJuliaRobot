@@ -68,6 +68,7 @@ def register(**args):
               if check.sender_id == c['id']:
                  painkiller = c['time']
                  spamtimecheck = float(time.time()) - float(painkiller)
+                 print (str(time.strftime("%H", time.gmtime(spamtimecheck))))
                  if str(time.strftime("%H", time.gmtime(spamtimecheck))) >= "24": 
                     leechers.delete_one({"id": check.sender_id})     
                     pass
