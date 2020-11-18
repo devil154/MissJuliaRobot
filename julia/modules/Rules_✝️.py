@@ -21,35 +21,31 @@ async def can_change_info(message):
 async def _(event):        
     if event.is_private:
       return
-    global chatrules
-    global chattitle
-    chattitle = event.chat.title
     chat_id = event.chat_id
-    chatrules = chat_id
     rules = sql.get_rules(chat_id)
     if rules:
-        await event.reply("Contact me in PM to get this group's rules.", buttons=[[Button.url('Rules', url='t.me/MissJuliaRobot?start=rules')]])
+        await event.reply("Click on the below button to get this group's rules 👇", buttons=[[Button.url('Rules', url='t.me/MissJuliaRobot?start=rules')]])
     else:
         await event.reply(
             "The group admins haven't set any rules for this chat yet. "
             "This probably doesn't mean it's lawless though...!"
         )
 
-@register(pattern="^/start rules$")
+@tbot.on(events.CallbackQuery(pattern=r'^/start rules$'))
 async def rules(event):       
-       print(chatrules)
-       rules = sql.get_rules(chatrules)
+       rules = sql.get_rules(event.chat_id)
        print(rules)
-       text = f"The rules for **{chattitle}** are:\n\n{rules}"       
+       text = f"The rules for **{event.chat.title}** are:\n\n{rules}"       
        if not rules:
          await event.respond("The link has expired, use /rules again to get that chat rules.")
          return
-       await event.respond(
+       await tbot.send_message(
+            event.sender_id,
             text, 
             parse_mode="markdown", 
             link_preview=False)
-       del chatrules 
-       del chattitle 
+       await event.edit("Click on the below button to get this group's rules 👇", buttons=[[Button.inline('Sorry link has expired 😔', data="nothing_here_bro")]])
+
 
 @register(pattern="^/setrules")
 async def _(event):
