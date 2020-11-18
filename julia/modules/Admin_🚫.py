@@ -679,7 +679,8 @@ async def ban(bon):
                                            BANNED_RIGHTS))
         await bon.reply("Banned Successfully")
 
-    except:
+    except Exception as e:
+        print(e)
         return
     
 @register(pattern="^/kick(?: |$)(.*)")
@@ -771,7 +772,7 @@ async def banme(bon):
 
     try:
         await tbot(EditBannedRequest(bon.chat_id, sender,
-                                           BAN_RIGHTS))
+                                           BANNED_RIGHTS))
         await bon.reply("Ok Banned !")
 
     except Exception as e:
