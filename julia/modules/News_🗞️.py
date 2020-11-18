@@ -115,7 +115,7 @@ async def _(event):
     xml_page = Client.read()
     Client.close()
     soup_page = bs4.BeautifulSoup(xml_page,'lxml')
-    news_list = soup_page.findAll("item")
+    news_list = soup_page.find_all("item")
     for news in news_list:
         title = news.title.text
         text = news.link.text
