@@ -884,7 +884,7 @@ async def spiderr(spdr):
 
 
 
-@register(pattern="^/lock (.*)")
+@register(pattern="^/lock ?(.*)")
 async def locks(event):
     if not event.is_group:  
         return
@@ -979,7 +979,7 @@ async def locks(event):
 
 
 
-@register(pattern="^/unlock (.*)")
+@register(pattern="^/unlock ?(.*)")
 async def rem_locks(event):
     if not event.is_group:  
         return
@@ -987,7 +987,7 @@ async def rem_locks(event):
             if not await can_change_info(message=event):
                 return
     input_str = event.pattern_match.group(1).lower()
-    print(input_str)
+    #print(input_str)
     peer_id = event.chat_id
     msg = None
     media = None
