@@ -392,7 +392,7 @@ async def set_group_photo(gpic):
 
     if photo:
         try:
-            await EditPhotoRequest(gpic.chat_id, await tbot.upload_file(photo))
+            await tbot(EditPhotoRequest(gpic.chat_id, await tbot.upload_file(photo)))
             await gpic.reply(CHAT_PP_CHANGED)
 
         except PhotoCropSizeSmallError:
