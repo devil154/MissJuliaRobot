@@ -969,12 +969,9 @@ async def locks(event):
         send_polls=gpoll,
         invite_users=adduser,
         pin_messages=cpin,
-        change_info=changeinfo,
-    )
+        change_info=changeinfo)
     try:
-        await tbot(
-            EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=lock_rights)
-        )
+        await tbot(EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=lock_rights))
         await event.reply(f"Locked Successfully !")
     except Exception as e:
         await event.reply(e)
@@ -1067,14 +1064,9 @@ async def rem_locks(event):
         send_polls=gpoll,
         invite_users=adduser,
         pin_messages=cpin,
-        change_info=changeinfo,
-    )
+        change_info=changeinfo)
     try:
-        await tbot(
-            EditChatDefaultBannedRightsRequest(
-                event.chat_id, banned_rights=unlock_rights
-            )
-        )
+        await tbot(EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=unlock_rights))
         await event.reply(f"Unlocked Successfully !")
     except Exception as e:
         print(e)
