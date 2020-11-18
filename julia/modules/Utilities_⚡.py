@@ -1,6 +1,6 @@
 import io
 import sys
-import traceback
+import traceback, random, time
 
 import pyfiglet
 from pymongo import MongoClient
@@ -211,6 +211,75 @@ async def chatidgetter(chat):
             return
     await chat.reply("Chat ID: `" + str(chat.chat_id) + "`")
 
+@register(pattern="^/runs$")
+async def runs(event):
+    RUNIT = [
+        "Now you see me, now you don't.",
+        "ε=ε=ε=ε=┌(;￣▽￣)┘",
+        "Get back here!",
+        "REEEEEEEEEEEEEEEEEE!!!!!!!",
+        "Look out for the wall!",
+        "Don't leave me alone with them!!",
+        "You've got company!",
+        "Chotto matte!",
+        "Yare yare daze",
+        "*Naruto run activated*",
+        "*Nezuko run activated*",
+        "Hey take responsibilty for what you just did!",
+        "May the odds be ever in your favour.",
+        "Run everyone, they just dropped a bomb 💣💣",
+        "And they disappeared forever, never to be seen again.",
+        "Legend has it, they're still running.",
+        "Hasta la vista, baby.",
+        "Ah, what a waste. I liked that one.",
+        "As The Doctor would say... RUN!",
+    ]
+    await event.reply(random.choice(RUNIT))
+
+
+
+def get_readable_time(seconds: int) -> str:
+    count = 0
+    ping_time = ""
+    time_list = []
+    time_suffix_list = ["s", "m", "h", "days"]
+
+    while count < 4:
+        count += 1
+        if count < 3:
+            remainder, result = divmod(seconds, 60)
+        else:
+            remainder, result = divmod(seconds, 24)
+        if seconds == 0 and remainder == 0:
+            break
+        time_list.append(int(result))
+        seconds = int(remainder)
+
+    for x in range(len(time_list)):
+        time_list[x] = str(time_list[x]) + time_suffix_list[x]
+    if len(time_list) == 4:
+        ping_time += time_list.pop() + ", "
+
+    time_list.reverse()
+    ping_time += ":".join(time_list)
+
+    return ping_time
+
+
+@register(pattern="^/runs$")
+async def runs(event):
+    start_time = time.time()
+    message = await event.reply("Pinging...")
+    end_time = time.time()
+    telegram_ping = str(round((end_time - start_time) * 1000, 3)) + " ms"
+    uptime = get_readable_time((time.time() - StartTime))
+
+    await message.edit(
+        "PONG!!\n"
+        "<b>Time Taken:</b> <code>{}</code>\n"
+        "<b>Service uptime:</b> <code>{}</code>".format(telegram_ping, uptime),
+        parse_mode=ParseMode.HTML,
+    )
 
 
 @register(pattern="^/figlet (.*)")
@@ -231,6 +300,8 @@ async def figlet(event):
     input_str = event.pattern_match.group(1)
     result = pyfiglet.figlet_format(input_str)
     await event.respond("`{}`".format(result))
+
+
 
 
 @register(pattern="^/eval")
