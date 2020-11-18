@@ -24,14 +24,14 @@ async def _(event):
     chat_id = event.chat_id
     rules = sql.get_rules(chat_id)
     if rules:
-        await event.reply("Click on the below button to get this group's rules 👇", buttons=[[Button.inline('Rules', url='t.me/MissJuliaRobot?start=rules')]])
+        await event.reply("Click on the below button to get this group's rules 👇", buttons=[[Button.inline('Rules', data='start_rules')]])
     else:
         await event.reply(
             "The group admins haven't set any rules for this chat yet. "
             "This probably doesn't mean it's lawless though...!"
         )
 
-@tbot.on(events.CallbackQuery(pattern=r'^/start rules$'))
+@tbot.on(events.CallbackQuery(pattern=r'start_rules'))
 async def rules(event):       
        rules = sql.get_rules(event.chat_id)
        # print(rules)
