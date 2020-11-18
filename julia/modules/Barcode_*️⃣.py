@@ -93,7 +93,7 @@ async def _(event):
             pass
         else:
             return
-    start = datetime.datetime.now()
+    start = datetime.now()
     input_str = event.pattern_match.group(1)
     message = "SYNTAX: `.barcode <long text to include>`"
     reply_msg_id = event.message.id
