@@ -120,7 +120,7 @@ async def _(event):
             pass
         else:
             return
-    start = datetime.datetime.now()
+    start = datetime.now()
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
     await event.reply("Downloading to Julia's server for Analysis ...")
@@ -157,7 +157,7 @@ async def _(event):
                     transcript_confidence += (
                         " " + str(alternatives["confidence"]) + " + "
                     )
-                end = datetime.datetime.now()
+                end = datetime.now()
                 ms = (end - start).seconds
                 if transcript_response != "":
                     string_to_show = "Language: `English`\nTRANSCRIPT: `{}`\nTime Taken: {} seconds\nConfidence: `{}`".format(
