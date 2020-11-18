@@ -1065,6 +1065,9 @@ async def rem_locks(event):
         invite_users=adduser,
         pin_messages=cpin,
         change_info=changeinfo)
+
+    print(input_str)
+    print (unlock_rights)
     try:
         await tbot(EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=unlock_rights))
         await event.reply(f"Unlocked Successfully !")
