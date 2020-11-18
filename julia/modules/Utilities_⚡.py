@@ -1,7 +1,7 @@
 import io
 import sys
 import traceback, random, time
-
+from time import sleep
 import pyfiglet
 from pymongo import MongoClient
 from telethon import *
@@ -266,8 +266,8 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-@register(pattern="^/runs$")
-async def runs(event):
+@register(pattern="^/ping$")
+async def ping(event):
     start_time = time.time()
     message = await event.reply("Pinging...")
     end_time = time.time()
