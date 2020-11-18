@@ -174,3 +174,24 @@ async def _(event):
     else:
         await event.reply("Reply to a voice message, to get the text out of it.")
 
+import inspect
+import logging
+import re, os
+from pathlib import Path
+from julia import tbot, CMD_HELP
+global __help__
+global file_helpo
+file_help = os.path.basename(__file__)
+file_help = file_help.replace(".py", "")
+file_helpo=  file_help.replace("_", " ")
+
+__help__ = """
+ - /stt: Type in reply to a voice message(english only) to extract text from it.
+"""
+
+CMD_HELP.update({
+    file_helpo: [
+        file_helpo,
+        __help__
+    ]
+})
