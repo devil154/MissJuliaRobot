@@ -107,8 +107,6 @@ async def is_register_admin(chat, user):
 async def _(event):
     if event.is_group:
         return
-    if event.fwd_from:
-        return
 
     news_url = "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en"
     Client = urlopen(news_url)
@@ -122,7 +120,7 @@ async def _(event):
         date = news.pubDate.text
         seperator = "-" * 50
         l = "\n"
-        lastisthis = [title](text) + l + date + l + seperator
+        lastisthis = title + l + text + l + date + l + seperator
         await event.reply(lastisthis)
         
 import inspect
