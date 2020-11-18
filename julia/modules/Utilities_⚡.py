@@ -154,6 +154,14 @@ async def fetch_info(replied_user, event):
     if user_id == OWNER_ID:
          caption += f"\n\n<b>This person is my owner.\nHe is the reason why I am alive.</b>"
 
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+  
+    if event.chat_id == iid and event.sender_id == userss:
+       caption += f"\n\n<b>This person is approved in this chat.</b>"
+
     return caption
 
 @register(pattern="^/userid$")
