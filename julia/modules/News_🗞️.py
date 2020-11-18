@@ -122,7 +122,7 @@ async def _(event):
         date = news.pubDate.text
         seperator = "-" * 50
         l = "\n"
-        lastisthis = title + l + text + l + date + l + seperator
+        lastisthis = [title](text) + l + date + l + seperator
         await event.reply(lastisthis)
         
 import inspect
