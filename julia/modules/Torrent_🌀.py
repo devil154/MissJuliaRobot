@@ -79,6 +79,11 @@ from wikipedia.exceptions import PageError
 from julia import *
 from julia.events import register
 
+client = MongoClient()
+client = MongoClient(MONGO_DB_URI)
+db = client["missjuliarobot"]
+approved_users = db.approve
+
 async def is_register_admin(chat, user):
         if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
             return isinstance(
