@@ -114,7 +114,7 @@ async def _(event):
     Client = urlopen(news_url)
     xml_page = Client.read()
     Client.close()
-    soup_page = bs4.BeautifulSoup(xml_page,'lxml')
+    soup_page = bs4.BeautifulSoup(xml_page,'xml')
     news_list = soup_page.find_all("item")
     for news in news_list:
         title = news.title.text
