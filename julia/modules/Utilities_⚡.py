@@ -278,7 +278,7 @@ async def ping(event):
         "PONG!!\n"
         "<b>Time Taken:</b> <code>{}</code>\n"
         "<b>Service uptime:</b> <code>{}</code>".format(telegram_ping, uptime),
-        parse_mode=ParseMode.HTML,
+        parse_mode="html",
     )
 
 
