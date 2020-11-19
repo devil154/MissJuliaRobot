@@ -5,6 +5,7 @@ from julia.modules.sql import BASE, SESSION
 
 class NOTES(BASE):
     __tablename__ = "notes"
+    chat_id = Column(String(14), primary_key=True)
     note = Column(UnicodeText, primary_key=True)
     reply = Column(UnicodeText)
     note_type = Column(Numeric)
@@ -14,6 +15,7 @@ class NOTES(BASE):
 
     def __init__(
         self,
+        chat_id,
         note,
         reply,
         note_type,
@@ -21,6 +23,8 @@ class NOTES(BASE):
         media_access_hash=None,
         media_file_reference=None,
     ):
+        self.chat_id = chat_id
+        self.keyword = keyword
         self.note = note
         self.reply = reply
         self.note_type = note_type
@@ -32,9 +36,9 @@ class NOTES(BASE):
 NOTES.__table__.create(checkfirst=True)
 
 
-def get_notes(keyword):
+def get_notes(chat_id, keyword):
     try:
-        return SESSION.query(NOTES).get(keyword)
+        return SESSION.query(NOTES).get((str(chat_id), keyword))
     except:
         return None
     finally:
@@ -43,7 +47,7 @@ def get_notes(keyword):
 
 def get_all_notes():
     try:
-        return SESSION.query(NOTES).all()
+        SESSION.query(NOTES).filter(NOTES.chat_id == str(chat_id)).all()
     except:
         return None
     finally:
@@ -68,8 +72,14 @@ def add_note(
     SESSION.commit()
 
 
-def remove_note(keyword):
-    note = SESSION.query(NOTES).filter(NOTES.note == keyword)
-    if note:
-        note.delete()
+def remove_note(chat_id, keyword):
+    saved_note = SESSION.query(NOTES).get((str(chat_id), keyword))
+    if saved_note:
+        SESSION.delete(saved_note)
+        SESSION.commit()
+
+def remove_all_notes(chat_id):
+    saved_note = SESSION.query(NOTES).filter(NOTES.chat_id == str(chat_id))
+    if saved_note:
+        saved_note.delete()
         SESSION.commit()
