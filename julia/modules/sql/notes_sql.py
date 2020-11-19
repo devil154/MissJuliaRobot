@@ -6,9 +6,8 @@ from julia.modules.sql import BASE, SESSION
 class NOTES(BASE):
     __tablename__ = "notes"
     chat_id = Column(String(14), primary_key=True)
-    note = Column(UnicodeText, primary_key=True)
     reply = Column(UnicodeText)
-    keyword = Column(UnicodeText)
+    keyword = Column(UnicodeText, primary_key=True)
 
     def __init__(
         self,
