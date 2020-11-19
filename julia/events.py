@@ -196,4 +196,3 @@ for name in files:
         logging.basicConfig(
           format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
           level=logging.DEBUG)
-        LOGS = getLogger(__name__)
