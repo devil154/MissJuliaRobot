@@ -17,9 +17,11 @@ class NOTES(BASE):
         self,
         chat_id,
         keyword,
+        reply,
     ):
         self.chat_id = chat_id
         self.keyword = keyword
+        self.reply = reply
 
 NOTES.__table__.create(checkfirst=True)
 
@@ -33,7 +35,7 @@ def get_notes(chat_id, keyword):
         SESSION.close()
 
 
-def get_all_notes():
+def get_all_notes(event.chat_id):
     try:
         SESSION.query(NOTES).filter(NOTES.chat_id == str(chat_id)).all()
     except:
@@ -42,12 +44,13 @@ def get_all_notes():
         SESSION.close()
 
 
-def add_note(chat_id, keyword):
+def add_note(chat_id, keyword, reply):
     adder = SESSION.query(NOTES).get(chat_id, keyword)
     if adder:
         adder.keyword = keyword
+        adder.reply = reply
     else:
-        adder = NOTES(chat_id, keyword)
+        adder = NOTES(chat_id, keyword, reply)
     SESSION.add(adder)
     SESSION.commit()
 
