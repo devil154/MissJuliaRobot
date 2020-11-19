@@ -16,22 +16,10 @@ class NOTES(BASE):
     def __init__(
         self,
         chat_id,
-        note,
-        reply,
-        note_type,
-        media_id=None,
-        media_access_hash=None,
-        media_file_reference=None,
+        keyword,
     ):
         self.chat_id = chat_id
         self.keyword = keyword
-        self.note = note
-        self.reply = reply
-        self.note_type = note_type
-        self.media_id = media_id
-        self.media_access_hash = media_access_hash
-        self.media_file_reference = media_file_reference
-
 
 NOTES.__table__.create(checkfirst=True)
 
@@ -54,20 +42,12 @@ def get_all_notes():
         SESSION.close()
 
 
-def add_note(
-    keyword, reply, note_type, media_id, media_access_hash, media_file_reference
-):
-    adder = SESSION.query(NOTES).get(keyword)
+def add_note(chat_id, keyword):
+    adder = SESSION.query(NOTES).get(chat_id, keyword)
     if adder:
-        adder.reply = reply
-        adder.note_type = note_type
-        adder.media_id = media_id
-        adder.media_access_hash = media_access_hash
-        adder.media_file_reference = media_file_reference
+        adder.keyword = keyword
     else:
-        adder = NOTES(
-            keyword, reply, note_type, media_id, media_access_hash, media_file_reference
-        )
+        adder = NOTES(chat_id, keyword)
     SESSION.add(adder)
     SESSION.commit()
 
