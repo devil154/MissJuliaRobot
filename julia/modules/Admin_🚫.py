@@ -765,7 +765,7 @@ async def banme(bon):
     chat = await bon.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-    sender = event.sender_id
+    sender = bon.sender_id
 
     if not bon.is_group:  
         return
@@ -791,7 +791,7 @@ async def kickme(bon):
         return
 
     try:
-        await tbot.kick_participant(bon.chat_id, event.sender_id)
+        await tbot.kick_participant(bon.chat_id, bon.sender_id)
         await bon.reply("Ok Banned !")
 
     except Exception as e:
