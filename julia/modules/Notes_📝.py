@@ -36,26 +36,11 @@ async def can_change_info(message):
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def on_note(event):
     name = event.pattern_match.group(1)
-    note = get_notes(name)
-    if note:
-        if note.note_type == TYPE_PHOTO:
-            media = types.InputPhoto(
-                int(note.media_id),
-                int(note.media_access_hash),
-                note.media_file_reference,
-            )
-        elif note.note_type == TYPE_DOCUMENT:
-            media = types.InputDocument(
-                int(note.media_id),
-                int(note.media_access_hash),
-                note.media_file_reference,
-            )
-        else:
-            media = None
-        message_id = event.sender_id
-        if event.reply_to_msg_id:
-            message_id = event.reply_to_msg_id
-        await event.reply(note.reply, reply_to=message_id, file=media)
+    note = get_notes(event.chat_id, name)
+    message_id = event.sender_id
+    if event.reply_to_msg_id:
+       message_id = event.reply_to_msg_id
+    await event.reply(note.keyword, reply_to=message_id)
 
 
 @register(pattern="^/addnote(?: |$)(.*)")
@@ -68,26 +53,11 @@ async def _(event):
     name = event.pattern_match.group(1)
     msg = await event.get_reply_message()
     if msg:
-        note = {"type": TYPE_TEXT, "text": msg.message or ""}
-        if msg.media:
-            media = None
-            if isinstance(msg.media, types.MessageMediaPhoto):
-                media = utils.get_input_photo(msg.media.photo)
-                note["type"] = TYPE_PHOTO
-            elif isinstance(msg.media, types.MessageMediaDocument):
-                media = utils.get_input_document(msg.media.document)
-                note["type"] = TYPE_DOCUMENT
-            if media:
-                note["id"] = media.id
-                note["hash"] = media.access_hash
-                note["fr"] = media.file_reference
+        note = message.text
         add_note(
+            event.chat_id,
             name,
-            note["text"],
-            note["type"],
-            note.get("id"),
-            note.get("hash"),
-            note.get("fr"),
+            note
         )
         await event.reply(
             "Note **{name}** saved successfully. Get it with #{name}".format(name=name)
@@ -98,7 +68,7 @@ async def _(event):
 
 @register(pattern="^/notes$")
 async def on_note_list(event):
-    all_notes = get_all_notes()
+    all_notes = get_all_notes(event.chat_id)
     OUT_STR = "**Available notes:**\n"
     if len(all_notes) > 0:
         for a_note in all_notes:
@@ -128,7 +98,7 @@ async def on_note_delete(event):
     else:
         return
     name = event.pattern_match.group(1)
-    remove_note(name)
+    remove_note(event.chat_id, name)
     await event.reply("Note **{}** deleted successfully".format(name))
 
 
