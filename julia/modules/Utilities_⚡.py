@@ -274,10 +274,10 @@ async def ping(event):
     await message.edit("Pinging ...")
     end_time = datetime.datetime.now()
     pingtime = end_time - start_time
-    telegram_ping = str(pingtime.total_seconds())      
+    telegram_ping = str(pingtime.total_seconds()) +"s"    
     uptime = get_readable_time((time.time() - StartTime))
     await message.edit(
-        "PONG!!\n"
+        "PONG !\n"
         "<b>Time Taken:</b> <code>{}</code>\n"
         "<b>Service uptime:</b> <code>{}</code>".format(telegram_ping, uptime),
         parse_mode="html",
