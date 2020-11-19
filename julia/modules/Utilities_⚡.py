@@ -269,7 +269,9 @@ def get_readable_time(seconds: int) -> str:
 @register(pattern="^/ping$")
 async def ping(event):
     start_time = time.time()
-    message = await event.reply("Pinging...")
+    message = await event.reply("Pinging .")
+    await message.edit("Pinging ..")
+    await message.edit("Pinging ...")
     end_time = time.time()
     pingtime = start_time - end_time
     telegram_ping = time.strftime("%S", time.gmtime(pingtime)) + "s"
