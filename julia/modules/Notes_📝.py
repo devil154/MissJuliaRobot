@@ -9,12 +9,8 @@ from julia.modules.sql.notes_sql import (
     get_all_notes,
     get_notes,
     remove_note,
+    remove_all_notes,
 )
-
-TYPE_TEXT = 0
-TYPE_PHOTO = 1
-TYPE_DOCUMENT = 2
-
 
 from telethon import events
 from telethon.tl import functions
@@ -40,7 +36,7 @@ async def on_note(event):
     message_id = event.sender_id
     if event.reply_to_msg_id:
        message_id = event.reply_to_msg_id
-    await event.reply(note.keyword, reply_to=message_id)
+    await event.reply(note.reply, reply_to=message_id)
 
 
 @register(pattern="^/addnote(?: |$)(.*)")
