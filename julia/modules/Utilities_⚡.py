@@ -274,7 +274,7 @@ async def ping(event):
     await message.edit("Pinging ...")
     end_time = time.time()
     pingtime = start_time - end_time
-    telegram_ping = time.strftime("%S", time.gmtime(pingtime)) + "s"
+    telegram_ping = time.strftime("%S.%f", time.gmtime(pingtime)) + "s"
     uptime = get_readable_time((time.time() - StartTime))
 
     await message.edit(
