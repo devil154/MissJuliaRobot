@@ -53,11 +53,11 @@ async def _(event):
     name = event.pattern_match.group(1)
     msg = await event.get_reply_message()
     if msg:
-        note = message.text
+        note = msg.text
         add_note(
-            event.chat_id,
-            name,
-            note
+            event.chat_id,  
+            name, 
+            note,
         )
         await event.reply(
             "Note **{name}** saved successfully. Get it with #{name}".format(name=name)
