@@ -14,6 +14,13 @@ from pymongo import MongoClient
 from julia import MONGO_DB_URI, OWNER_ID
 from telethon import types
 from telethon.tl import functions
+from logging import basicConfig
+from logging import DEBUG
+from logging import getLogger
+from logging import INFO
+
+from telethon import TelegramClient
+from telethon.sessions import StringSession
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
@@ -156,6 +163,10 @@ def load_module(shortname):
     if shortname.startswith("__"):
         pass
     elif shortname.endswith("_"):
+        logging.basicConfig(
+          format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+          level=logging.DEBUG)
+        LOGS = getLogger(__name__)
         import importlib
         import julia.events
         path = Path(f"julia/modules/{shortname}.py")
@@ -165,6 +176,10 @@ def load_module(shortname):
         spec.loader.exec_module(mod)
         print("Successfully imported " + shortname)
     else:
+        logging.basicConfig(
+          format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+          level=logging.DEBUG)
+        LOGS = getLogger(__name__)
         import importlib
         import julia.events
         path = Path(f"julia/modules/{shortname}.py")
