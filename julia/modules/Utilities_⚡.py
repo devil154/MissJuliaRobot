@@ -11,6 +11,7 @@ from telethon.tl.types import *
 
 from julia import *
 
+from julia import StartTime
 from julia.events import register
 
 client = MongoClient()
