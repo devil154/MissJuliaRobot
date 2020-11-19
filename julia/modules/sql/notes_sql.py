@@ -1,4 +1,4 @@
-from sqlalchemy import Column, LargeBinary, Numeric, UnicodeText
+from sqlalchemy import Column, LargeBinary, Numeric, UnicodeText, String
 
 from julia.modules.sql import BASE, SESSION
 
