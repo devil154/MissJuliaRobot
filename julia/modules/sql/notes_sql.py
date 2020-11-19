@@ -32,7 +32,7 @@ def get_notes(chat_id, keyword):
         SESSION.close()
 
 
-def get_all_notes(event.chat_id):
+def get_all_notes(chat_id):
     try:
         SESSION.query(NOTES).filter(NOTES.chat_id == str(chat_id)).all()
     except:
