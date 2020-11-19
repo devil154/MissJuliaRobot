@@ -1,6 +1,6 @@
 import io
 import sys
-import traceback, random, time
+import traceback, random, time, datetime
 from time import sleep
 import pyfiglet
 from pymongo import MongoClient
@@ -268,13 +268,13 @@ def get_readable_time(seconds: int) -> str:
 
 @register(pattern="^/ping$")
 async def ping(event):
-    start_time = time.time()
+    start_time = datetime.datetime.now()
     message = await event.reply("Pinging .")
     await message.edit("Pinging ..")
     await message.edit("Pinging ...")
-    end_time = time.time()
+    end_time = datetime.datetime.now()
     pingtime = start_time - end_time
-    telegram_ping = time.strftime("%S.%f", time.gmtime(pingtime)) + "s"
+    telegram_ping = pingtime.strftime("%S.%f") + "s"
     uptime = get_readable_time((time.time() - StartTime))
 
     await message.edit(
