@@ -8,10 +8,7 @@ class NOTES(BASE):
     chat_id = Column(String(14), primary_key=True)
     note = Column(UnicodeText, primary_key=True)
     reply = Column(UnicodeText)
-    note_type = Column(Numeric)
-    media_id = Column(UnicodeText)
-    media_access_hash = Column(UnicodeText)
-    media_file_reference = Column(LargeBinary)
+    keyword = Column(UnicodeText)
 
     def __init__(
         self,
