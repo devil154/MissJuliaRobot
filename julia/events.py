@@ -162,11 +162,7 @@ def juliabot(**args):
 def load_module(shortname):
     if shortname.startswith("__"):
         pass
-    elif shortname.endswith("_"):
-        logging.basicConfig(
-          format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-          level=logging.DEBUG)
-        LOGS = getLogger(__name__)
+    elif shortname.endswith("_"):        
         import importlib
         import julia.events
         path = Path(f"julia/modules/{shortname}.py")
@@ -176,10 +172,6 @@ def load_module(shortname):
         spec.loader.exec_module(mod)
         print("Successfully imported " + shortname)
     else:
-        logging.basicConfig(
-          format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-          level=logging.DEBUG)
-        LOGS = getLogger(__name__)
         import importlib
         import julia.events
         path = Path(f"julia/modules/{shortname}.py")
@@ -201,3 +193,7 @@ for name in files:
         path1 = Path(f.name)
         shortname = path1.stem
         load_module(shortname.replace(".py", ""))
+        logging.basicConfig(
+          format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+          level=logging.DEBUG)
+        LOGS = getLogger(__name__)
