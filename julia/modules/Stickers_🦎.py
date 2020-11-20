@@ -410,6 +410,46 @@ def find_instance(items, class_or_tuple):
             return item
     return None
 
+import os
+import re
+import math
+import requests
+import urllib.request as urllib
+from PIL import Image
+from html import escape
+from bs4 import BeautifulSoup as bs
+
+@register(pattern="^/searchsticker (.*)")
+async def _(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+    if not event.is_reply:
+        await event.reply("Reply to a photo to add to your personal sticker pack.")
+        return
+    input_str = event.pattern_match.group(1)
+    text = requests.get(combot_stickers_url + input_str
+    soup = bs(text, 'lxml')
+    results = soup.find_all("a", {'class': "sticker-pack__btn"})
+    titles = soup.find_all("div", "sticker-pack__title")
+    if not results:
+        await event.reply('No results found :(.')
+        return
+    reply = f"Stickers for *{split[1]}*:"
+    for result, title in zip(results, titles):
+        link = result['href']
+        reply += f"\n• [{title.get_text()}]({link})"
+    await event.reply(reply, parse_mode="markdown")
+
+
 import inspect
 import logging
 import re, os
@@ -426,6 +466,7 @@ __help__ = """
  - /packinfo: Reply to a sticker to get it's pack info
  - /getsticker: Uploads the .png of the sticker you've replied to
  - /kang <emoji for sticker>: Reply to a sticker to add it to your pack or makes a new one if it doesn't exist
+ - /searchsticker <text>: Find stickers for given term on combot sticker catalogue
 """
 
 CMD_HELP.update({
