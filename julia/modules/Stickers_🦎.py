@@ -116,7 +116,7 @@ async def _(event):
         with BytesIO(file) as mem_file, BytesIO() as sticker:
             resize_image(mem_file, sticker)
             sticker.seek(0)
-            uploaded_sticker = await tbot.upload_file(
+            uploaded_sticker = await ubot.upload_file(
                 sticker, file_name=file_ext_ns_ion
             )
 
