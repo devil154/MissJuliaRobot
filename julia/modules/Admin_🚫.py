@@ -1243,6 +1243,7 @@ __help__ = """
  - /kick: kicks a user
  - /settitle <title>: sets a custom title for an admin. If no <title> provided defaults to "Admin"
  - /setdescription <text>: set group description
+ - /setgrouptitle <text>: set group title
  - /setgpic: reply to an image to set as group photo
  - /setsticker: reply to a sticker pack to set as group stickers
  - /delgpic: deletes the current group photo
