@@ -895,6 +895,7 @@ async def locks(event):
     gpoll = None
     adduser = None
     cpin = None
+    emlink = None
     changeinfo = None
     if input_str == "msg":
         msg = True
@@ -994,6 +995,7 @@ async def rem_locks(event):
     gpoll = None
     adduser = None
     cpin = None
+    emlink = None
     changeinfo = None
     if input_str == "msg":
         msg = False
