@@ -407,7 +407,7 @@ async def set_group_photo(gpic):
         except ImageProcessFailedError:
             await gpic.reply(PP_ERROR)
 
-@tbot.on(events.NewMessage(pattern="^/settitle ?(.*)"))
+@register(pattern="^/settitle ?(.*)")
 async def settitle(promt):
     textt = promt.pattern_match.group(1)
     thatuser = textt.split(" ")[0]
@@ -437,8 +437,15 @@ async def settitle(promt):
             pass    
 
     try:
+        result = await tbot(functions.channels.GetParticipantRequest(
+            channel=event.chat_id,
+            user_id=user.id,
+        ))
+        p = result.participant
+
         await tbot(
-            EditAdminRequest(promt.chat_id, user.id, title_admin))
+            EditAdminRequest(event.chat_id, user_id=user.id, admin_rights=p.admin_rights, rank=title_admin))
+   
         await promt.reply("Title set successfully !")
 
     except Exception:
