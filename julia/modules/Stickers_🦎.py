@@ -441,7 +441,7 @@ async def _(event):
     if not results:
         await event.reply('No results found :(')
         return
-    reply = f"Stickers for *{input_str}*:"
+    reply = f"Stickers for **{input_str}**:"
     for result, title in zip(results, titles):
         link = result['href']
         reply += f"\n• [{title.get_text()}]({link})"
