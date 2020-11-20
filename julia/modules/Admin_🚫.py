@@ -1238,7 +1238,7 @@ async def set_group_sticker(gpic):
         stickerset=types.InputStickerSetID(
             id=id,
             access_hash=access_hash)))
-     await event.reply("Group sticker pack successfully set !")
+     await gpic.reply("Group sticker pack successfully set !")
     except Exception as e:
         print(e)
         await gpic.reply("Failed to set group sticker pack.")
