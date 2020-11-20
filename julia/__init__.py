@@ -18,7 +18,7 @@ LOAD_PLUG = {}
 # enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    level=logging.DEBUG)
+    level=logging.INFO)
 
 LOGGER = logging.getLogger(__name__)
 ENV = bool(os.environ.get("ENV", True))
@@ -95,7 +95,7 @@ if ENV:
     UPSTREAM_REPO_URL = os.environ.get("UPSTREAM_REPO_URL", "https://github.com/MainTeraHer0/MissLillyRobot.git")
     TEMPORARY_DATA = os.environ.get("TEMPORARY_DATA", None)
 
-    CONSOLE_LOGGER_VERBOSE = os.environ.get("CONSOLE_LOGGER_VERBOSE", "True")
+    CONSOLE_LOGGER_VERBOSE = os.environ.get("CONSOLE_LOGGER_VERBOSE", "False")
 
     if CONSOLE_LOGGER_VERBOSE:
         basicConfig(
