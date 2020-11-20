@@ -133,18 +133,18 @@ async def _(event):
             else:
                 response = await silently_send_message(bot_conv, "/newpack")
             if "Yay!" not in response.text:
-                await tbot.send_message(event.chat_id,f"**FAILED**! @Stickers replied: {response.text}")
+                await tbot.send_message(event.chat_id,f"**FAILED**! @Stickers replied: {response.text}", reply_to=event.sender_id)
                 return
             response = await silently_send_message(bot_conv, packname)
             if not response.text.startswith("Alright!"):
-                await tbot.send_message(event.chat_id,f"**FAILED**! @Stickers replied: {response.text}")
+                await tbot.send_message(event.chat_id,f"**FAILED**! @Stickers replied: {response.text}", reply_to=event.sender_id)
                 return
             w = await bot_conv.send_file(
                 file=uploaded_sticker, allow_cache=False, force_document=True
             )
             response = await bot_conv.get_response()
             if "Sorry" in response.text:
-                await tbot.send_message(event.chat_id,f"**FAILED**! @Stickers replied: {response.text}")
+                await tbot.send_message(event.chat_id,f"**FAILED**! @Stickers replied: {response.text}", reply_to=event.sender_id)
                 return
             await silently_send_message(bot_conv, sticker_emoji)
             await silently_send_message(bot_conv, "/publish")
@@ -152,7 +152,7 @@ async def _(event):
             await silently_send_message(bot_conv, "/skip")
             response = await silently_send_message(bot_conv, packshortname)
             if response.text == "Sorry, this short name is already taken.":
-                await tbot.send_message(event.chat_id,f"**FAILED**! @Stickers replied: {response.text}")
+                await tbot.send_message(event.chat_id,f"**FAILED**! @Stickers replied: {response.text}", reply_to=event.sender_id)
                 return
         else:
             await silently_send_message(bot_conv, "/cancel")
@@ -166,20 +166,15 @@ async def _(event):
                 while response.text == FILLED_UP_DADDY:
                     pack += 1
                     prevv = int(pack) - 1
-                    packname = f"{DEFAULTUSER}'s IndianBot Vol.{pack}"
+                    packname = f"{first_name}'s Sticker Vol.{pack}"
                     packshortname = f"Vol_{pack}_with_{userid}"
-                    # if userid == 948408212:
-                    # packname = f"{user.first_name}'s IndianBot Vol.{pack}"
-                    # packshortname = "Vol._{pack}_IndianBhai_ke_locker_me"
-                    # else:
-                    # packname = f"Vol._{pack}_IndianBot{userid}"
-                    # packshortname = f"Vol._{pack}_IndianBot_{userid}_ns"
+
                     if not await stickerset_exists(bot_conv, packshortname):
                         await tbot.send_message(event.chat_id,
                             "**Pack No. **"
                             + str(prevv)
                             + "** full! Making a new Pack, Vol. **"
-                            + str(pack)
+                            + str(pack), reply_to=event.sender_id,
                         )
                         if is_a_s:
                             response = await silently_send_message(
@@ -189,13 +184,13 @@ async def _(event):
                             response = await silently_send_message(bot_conv, "/newpack")
                         if "Yay!" not in response.text:
                             await tbot.send_message(event.chat_id,
-                                f"**FAILED**! @Stickers replied: {response.text}"
+                                f"**FAILED**! @Stickers replied: {response.text}", reply_to=event.sender_id,
                             )
                             return
                         response = await silently_send_message(bot_conv, packname)
                         if not response.text.startswith("Alright!"):
                             await tbot.send_message(event.chat_id,
-                                f"**FAILED**! @Stickers replied: {response.text}"
+                                f"**FAILED**! @Stickers replied: {response.text}", reply_to=event.sender_id,
                             )
                             return
                         w = await bot_conv.send_file(
@@ -206,7 +201,7 @@ async def _(event):
                         response = await bot_conv.get_response()
                         if "Sorry" in response.text:
                             await tbot.send_message(event.chat_id,
-                                f"**FAILED**! @Stickers replied: {response.text}"
+                                f"**FAILED**! @Stickers replied: {response.text}", reply_to=event.sender_id,
                             )
                             return
                         await silently_send_message(bot_conv, sticker_emoji)
@@ -218,7 +213,7 @@ async def _(event):
                         response = await silently_send_message(bot_conv, packshortname)
                         if response.text == "Sorry, this short name is already taken.":
                             await tbot.send_message(event.chat_id,
-                                f"**FAILED**! @Stickers replied: {response.text}"
+                                f"**FAILED**! @Stickers replied: {response.text}", reply_to=event.sender_id,
                             )
                             return
                     else:
@@ -226,7 +221,7 @@ async def _(event):
                             "Pack No. "
                             + str(prevv)
                             + " full! Switching to Vol. "
-                            + str(pack)
+                            + str(pack), reply_to=event.sender_id,                            
                         )
                         await silently_send_message(bot_conv, "/addsticker")
                         await silently_send_message(bot_conv, packshortname)
@@ -238,14 +233,14 @@ async def _(event):
                         response = await bot_conv.get_response()
                         if "Sorry" in response.text:
                             await tbot.send_message(event.chat_id,
-                                f"**FAILED**! @Stickers replied: {response.text}"
+                                f"**FAILED**! @Stickers replied: {response.text}", reply_to=event.sender_id,
                             )
                             return
                         await silently_send_message(bot_conv, sticker_emoji)
                         await silently_send_message(bot_conv, "/done")
             else:
                 if "Sorry" in response.text:
-                    await tbot.send_message(event.chat_id,f"**FAILED**! @Stickers replied: {response.text}")
+                    await tbot.send_message(event.chat_id,f"**FAILED**! @Stickers replied: {response.text}", reply_to=event.sender_id)
                     return
                 await silently_send_message(bot_conv, response)
                 await silently_send_message(bot_conv, sticker_emoji)
