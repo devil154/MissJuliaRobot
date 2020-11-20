@@ -17,7 +17,7 @@ from time import sleep
 
 from telethon import *
 from telethon import events
-from telethon.errors import FloodWaitError
+from telethon.errors import FloodWaitError, ChatNotModifiedError
 from telethon.errors import UserAdminInvalidError
 from telethon.tl import functions
 from telethon.tl import types
@@ -970,8 +970,8 @@ async def locks(event):
             EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=lock_rights)
         )
         await event.reply(f"Locked Successfully !")
-    except Exception as e:
-        await event.reply(e)
+    except ChatNotModifiedError:
+        await event.reply("Failed to lock that.")
         return
 
 
@@ -1070,12 +1070,12 @@ async def rem_locks(event):
     try:
         await tbot(EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=unlock_rights))
         await event.reply(f"Unlocked Successfully !")
-    except Exception as e:
-        print(e)
+    except ChatNotModifiedError:
+        await event.reply("Failed to unlock that.")
         return
 
 
-@register(pattern="^/locktypes$")
+@register(pattern="^/chatlocktypes$")
 async def ltypes(event):
     if not event.is_group:  
         return
@@ -1084,7 +1084,7 @@ async def ltypes(event):
                 return
     await event.reply("**These are the valid lock types:**\n\nmsg\nmedia\nurl\nsticker\ngif\ngame\ninline\npoll\ninvite\npin\ninfo\nall")
 
-@register(pattern="^/locks$")
+@register(pattern="^/chatlocks$")
 async def clocks(event):
     if not event.is_group:  
         return
@@ -1098,7 +1098,7 @@ async def clocks(event):
      return
 
 
-@tbot.on(events.NewMessage(pattern="^/purge$"))
+@register(pattern="^/purge$")
 async def purge_messages(event):
     if event.sender_id is None:
         return
@@ -1134,7 +1134,7 @@ async def purge_messages(event):
     await event.respond(text, parse_mode="markdown")
 
 
-@tbot.on(events.NewMessage(pattern="^/del$"))
+@register(pattern="^/del$")
 async def delete_messages(event):
     if event.sender_id is None:
         return
@@ -1254,8 +1254,8 @@ __help__ = """
  - /del: deletes the message replied to
  - /lock <item(s)>: lock the usage of "item" for non-admins
  - /unlock <item(s)>: unlock "item". Everyone can use them again
- - /locks: gives the lock status of the chat
- - /locktypes: gets a list of all things that can be locked
+ - /chatlocks: gives the lock status of the chat
+ - /chatlocktypes: gets a list of all things that can be locked
  - /unbanall: Unbans all in the chat
  - /unmuteall: Unmutes all in the chat
  - /users: list all the users in the chat
