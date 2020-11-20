@@ -312,9 +312,10 @@ async def _(event):
         else:
             return
     if not event.is_reply:
-        await event.reply("Reply to a photo to add to my personal sticker pack.")
+        await event.reply("Reply to a sticker to extract image from it.")
         return
     reply_message = await event.get_reply_message()
+    file_ext_ns_ion = "@MissJuliaRobot.png"
     file = await tbot.download_file(reply_message.media)
     is_a_s = is_it_animated_sticker(reply_message)
     if is_a_s:
@@ -326,10 +327,10 @@ async def _(event):
         with BytesIO(file) as mem_file, BytesIO() as sticker:
             resize_image(mem_file, sticker)
             sticker.seek(0)
-            await tbot.send_file(
+            uploaded_sticker = await tbot.upload_file(
                 sticker, file_name=file_ext_ns_ion
             )
-            return
+        await tbot.send_file(event.chat_id, file=uploaded_sticker, allow_cache=False, force_document=True, reply_to=event.sender_id)
 
 
 def is_it_animated_sticker(message):
