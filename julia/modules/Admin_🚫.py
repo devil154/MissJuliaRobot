@@ -412,15 +412,12 @@ async def settitle(promt):
     textt = promt.pattern_match.group(1)
     thatuser = textt.split(" ")[0]
     title_admin = textt.split(" ")[1]
-    print(thatuser)
-    print(title_admin)
+    #print(thatuser)
+    #print(title_admin)
     if thatuser:
       user = await tbot.get_entity(thatuser)
-    elif promt.reply_to_msg_id:
-      previous_message = await prompt.get_reply_message()
-      user = await tbot.get_entity(previous_message.sender_id)
-    else:  
-      await promt.reply("Pass the user's username, id or reply!")
+    else:
+      await promt.reply("Pass the user's username or id or followed by title !")
       return
   
     if promt.is_group:
@@ -438,13 +435,13 @@ async def settitle(promt):
 
     try:
         result = await tbot(functions.channels.GetParticipantRequest(
-            channel=event.chat_id,
+            channel=promt.chat_id,
             user_id=user.id,
         ))
         p = result.participant
 
         await tbot(
-            EditAdminRequest(event.chat_id, user_id=user.id, admin_rights=p.admin_rights, rank=title_admin))
+            EditAdminRequest(promt.chat_id, user_id=user.id, admin_rights=p.admin_rights, rank=title_admin))
    
         await promt.reply("Title set successfully !")
 
