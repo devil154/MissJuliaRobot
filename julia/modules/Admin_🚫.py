@@ -405,57 +405,42 @@ async def set_group_photo(gpic):
         except ImageProcessFailedError:
             await gpic.reply(PP_ERROR)
 
-@register(pattern="^/settitle ?(.*)")
+@register(pattern="^/settitle ?(.*) ?(.*)")
 async def promote(promt):
-    if not promt.reply_to_msg_id:
-        await event.reply("Reply to a user with `/settitle <title>` to set his/her title.")
-        return
-    # Get targeted chat
-    chat = await promt.get_chat()
-    # Grab admin status or creator in a chat
-    admin = chat.admin_rights
-    creator = chat.creator
-    title_admin = promt.pattern_match.group(1)
+
+    thatuser = promt.pattern_match.group(1)
+    title_admin = promt.pattern_match.group(2)
+
+    if thatuser:
+      user = await tbot.get_entity(thatuser)
+    elif event.reply_to_msg_id:
+      previous_message = await event.get_reply_message()
+      user = await tbot.get_entity(previous_message.sender_id)
+    else:  
+      await event.reply("Pass the user's username, id or reply!")
+      return
+      
     if not title_admin:
       title_admin = "Admin"
-
+  
     if promt.is_group:
         if not await can_promote_users(message=promt):
             return
     else:
         return
-   
-        
-    user = await get_user_from_event(promt)        
+       
     if promt.is_group:
         if not await is_register_admin(promt.input_chat, user.id):
             await promt.reply("How can i set title of a non-admin ?")
             return
         else:
-            pass
-    else:
-      return    
+            pass    
 
-    new_rights = ChatAdminRights(add_admins=True,
-                                 invite_users=True,
-                                 change_info=True,
-                                 ban_users=True,
-                                 delete_messages=True,
-                                 pin_messages=True)
-
-    if user:
-        pass
-    else:
-        return
-
-    # Try to promote if current user is admin or creator
     try:
         await tbot(
-            EditAdminRequest(promt.chat_id, user.id, new_rights, title_admin))
+            EditAdminRequest(promt.chat_id, user.id, title_admin))
         await promt.reply("Title set successfully !")
 
-    # If Telethon spit BadRequestError, assume
-    # we don't have Promote permission
     except Exception:
         await event.reply("Failed to set title for that user !")
         return
