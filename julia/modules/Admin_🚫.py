@@ -1,8 +1,10 @@
 from julia import tbot
 from telethon.errors import (ChatAdminRequiredError, ImageProcessFailedError,
                              PhotoCropSizeSmallError)
+
 from telethon.tl.functions.channels import (EditAdminRequest,
                                             EditPhotoRequest)
+
 from telethon.tl.functions.messages import UpdatePinnedMessageRequest
 from telethon.tl.types import (ChannelParticipantsAdmins, ChatAdminRights,
                                ChatBannedRights, MessageEntityMentionName,
@@ -406,7 +408,7 @@ async def set_group_photo(gpic):
             await gpic.reply(PP_ERROR)
 
 @tbot.on(events.NewMessage(pattern="^/settitle ?(.*)"))
-async def promote(promt):
+async def settitle(promt):
     textt = promt.pattern_match.group(1)
     thatuser = textt.split(" ")[0]
     title_admin = textt.split(" ")[1]
@@ -414,11 +416,11 @@ async def promote(promt):
     print(title_admin)
     if thatuser:
       user = await tbot.get_entity(thatuser)
-    elif event.reply_to_msg_id:
+    elif promt.reply_to_msg_id:
       previous_message = await prompt.get_reply_message()
       user = await tbot.get_entity(previous_message.sender_id)
     else:  
-      await prompt.reply("Pass the user's username, id or reply!")
+      await promt.reply("Pass the user's username, id or reply!")
       return
   
     if promt.is_group:
@@ -440,7 +442,7 @@ async def promote(promt):
         await promt.reply("Title set successfully !")
 
     except Exception:
-        await event.reply("Failed to set title for that user !")
+        await promt.reply("Failed to set title for that user !")
         return
 
 @register(pattern="^/users$")
