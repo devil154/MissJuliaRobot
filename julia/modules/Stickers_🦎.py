@@ -1,4 +1,4 @@
-from julia import tbot, ubot
+from julia import tbot, ubot, MONGO_DB_URI
 
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import (
