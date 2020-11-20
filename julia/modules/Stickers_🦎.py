@@ -425,7 +425,6 @@ __help__ = """
  - /packinfo: Reply to a sticker to get it's pack info
  - /getsticker: Uploads the .png of the sticker you've replied to
  - /kang <emoji for sticker>: Reply to a sticker to add it to your pack or makes a new one if it doesn't exist
- - /
 """
 
 CMD_HELP.update({
