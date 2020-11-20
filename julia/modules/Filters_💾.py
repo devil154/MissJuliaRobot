@@ -90,8 +90,8 @@ async def on_snip(event):
 
                 if "|" in snip.reply:
                       filter, options= snip.reply.split("|")
-                      try:
-                        button = options.strip()
+                      try:                        
+                        button = [options.strip()]
                       except:
                         button = None
                 print(f"await event.reply({snip.reply}, buttons={button}, file={media})")
