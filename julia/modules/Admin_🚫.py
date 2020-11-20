@@ -650,9 +650,11 @@ async def ban(bon):
     # Here laying the sanity check
      
     if not bon.is_group:  
+        print ("1")
         return
     if bon.is_group:
             if not await can_ban_users(message=bon):
+                print ("2")
                 return
 
     chat = await bon.get_chat()
