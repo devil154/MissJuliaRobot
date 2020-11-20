@@ -1162,9 +1162,8 @@ async def delete_messages(event):
         return
 
 
-@register(pattern="^/setgrouptitle ?(.*)")
+@register(pattern="^/setgrouptitle (.*)")
 async def set_group_title(gpic):
-    replymsg = await gpic.get_reply_message()
     input_str = gpic.pattern_match.group(1)
 
     if gpic.is_group:
@@ -1173,25 +1172,14 @@ async def set_group_title(gpic):
     else:
         return
         
-    if replymsg and replymsg.text:
-       try:
-        result = await tbot(functions.messages.EditChatTitleRequest(
-        chat_id=event.chat_id,
-        title=replymsg.text))
-        result = await tbot(functions.channels.EditTitleRequest(
-        channel=event.chat_id,
-        title=replymsg.text))
-        await event.reply("Successfully set new group title.")
-       except Exception:
-           await event.reply("Failed to set group title.")
-    if input_str and input_str.text:
+    if input_str:
        try:
         await tbot(functions.messages.EditChatTitleRequest(
         chat_id=event.chat_id,
-        title=input_str.text))
+        title=input_str))
         await tbot(functions.channels.EditTitleRequest(
         channel=event.chat_id,
-        title=input_str.text))
+        title=input_str))
         await event.reply("Successfully set new group title.")
        except Exception:
            await event.reply("Failed to set group title.")
