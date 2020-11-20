@@ -370,6 +370,28 @@ async def stop(event):
     else:
         await event.reply("This isn't a poll")
 
+@register(pattern="^/forgotpollid$")
+async def stop(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+    allpoll = poll_id.find({})
+    for c in allpoll:
+      if event.sender_id == c["user"]:
+         poll_id.delete_one({"user": event.sender_id})
+         pollid = msg.poll.poll.id
+         await event.reply("Done you can now create a new poll.")             
+      await event.reply("Seems like you haven't created any poll yet !")
+    
+
 
 import os
 from julia import CMD_HELP
@@ -401,6 +423,9 @@ Here is how you can do it:
 
 **To stop a poll**
 Reply to the poll with `/stoppoll <poll-id>` to stop the poll
+
+**NOTE**
+If you have forgotten your poll id or deleted the poll so that you can't stop the previous poll type `/forgotpollid`, this will reset the poll id
 """
 
 CMD_HELP.update({
