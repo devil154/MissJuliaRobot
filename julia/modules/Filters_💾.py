@@ -91,11 +91,11 @@ async def on_snip(event):
                 if "|" in snip.reply:
                       filter, options= snip.reply.split("|")
                       try:
-                        buttons = options.strip()
+                        button = options.strip()
                       except:
-                        buttons = None
+                        button = None
                 print(buttons)
-                await event.reply(snip.reply, buttons=buttons, file=media)
+                await event.reply(snip.reply, buttons=button, file=media)
 
                 if event.chat_id not in last_triggered_filters:
 
@@ -229,7 +229,7 @@ file_helpo=  file_help.replace("_", " ")
 __help__ = """
 **Admin Only**
  - /savefilter <word> <message>: Every time someone says "word", the bot will reply with "message"
-You can also include buttons in filters, example send `/savefilter google` in reply to `Click Here To Open Google | buttons=[Button.url('Google', 'google.com')]`
+You can also include buttons in filters, example send `/savefilter google` in reply to `Click Here To Open Google | buttons=[[Button.url('Google', url='google.com')]]`
  - /stopfilter <word>: Stop that filter.
 
 **Admin+Non-Admin**
