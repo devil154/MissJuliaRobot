@@ -970,7 +970,7 @@ async def locks(event):
             EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=lock_rights)
         )
         await event.reply(f"Locked Successfully !")
-    except ChatNotModifiedError:
+    except Exception:
         await event.reply("Failed to lock that.")
         return
 
@@ -1070,7 +1070,7 @@ async def rem_locks(event):
     try:
         await tbot(EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=unlock_rights))
         await event.reply(f"Unlocked Successfully !")
-    except ChatNotModifiedError:
+    except Exception:
         await event.reply("Failed to unlock that.")
         return
 
