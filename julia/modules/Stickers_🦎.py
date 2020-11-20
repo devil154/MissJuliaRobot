@@ -129,7 +129,7 @@ async def _(event):
         else:
             return
     if not event.is_reply:
-        await event.reply("Reply to a photo to add to my personal sticker pack.")
+        await event.reply("Reply to a photo to add to your personal sticker pack.")
         return
     reply_message = await event.get_reply_message()
     sticker_emoji = "🔥"
@@ -298,6 +298,38 @@ async def _(event):
         f"Sticker added! Your pack can be found [here](t.me/addstickers/{packshortname})"
     )
 
+@register(pattern="^/getsticker$")
+async def _(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+    if not event.is_reply:
+        await event.reply("Reply to a photo to add to my personal sticker pack.")
+        return
+    reply_message = await event.get_reply_message()
+    file = await tbot.download_file(reply_message.media)
+    is_a_s = is_it_animated_sticker(reply_message)
+    if is_a_s:
+        await event.reply("I can't extract image from animated stickers")
+    elif not is_message_image(reply_message):
+        await event.reply("Invalid message type")
+        return
+    else:
+        with BytesIO(file) as mem_file, BytesIO() as sticker:
+            resize_image(mem_file, sticker)
+            sticker.seek(0)
+            await tbot.send_file(
+                sticker, file_name=file_ext_ns_ion
+            )
+            return
 
 
 def is_it_animated_sticker(message):
@@ -382,4 +414,5 @@ __help__ = """
  - /packinfo: Reply to a sticker to get it's pack info
  - /getsticker: Uploads the .png of the sticker you've replied to
  - /kang <emoji for sticker>: Reply to a sticker to add it to your pack or makes a new one if it doesn't exist
+ - /
 """
