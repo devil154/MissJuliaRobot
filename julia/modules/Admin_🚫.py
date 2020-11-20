@@ -1231,11 +1231,14 @@ async def set_group_sticker(gpic):
     try:
      id=stickerset_attr.stickerset.id
      access_hash=stickerset_attr.stickerset.access_hash
+     print(id)
+     print (access_hash)
      await tbot(functions.channels.SetStickersRequest(
         channel=gpic.chat_id,
         stickerset=types.InputStickerSetID(
             id=id,
             access_hash=access_hash)))
+     await event.reply("Group sticker pack successfully set !")
     except Exception as e:
         print(e)
         await gpic.reply("Failed to set group sticker pack.")
