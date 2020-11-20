@@ -18,7 +18,7 @@ LOAD_PLUG = {}
 # enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    level=logging.INFO)
+    level=logging.WARNING)
 
 LOGGER = logging.getLogger(__name__)
 ENV = bool(os.environ.get("ENV", True))
@@ -100,12 +100,11 @@ if ENV:
     if CONSOLE_LOGGER_VERBOSE:
         basicConfig(
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            level=DEBUG,
-        )
+            level=DEBUG)
     else:
         basicConfig(
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            level=INFO)
+            level=WARNING)
 
     LOGS = getLogger(__name__)
     BOTLOG = os.environ.get("BOTLOG") == "True"
