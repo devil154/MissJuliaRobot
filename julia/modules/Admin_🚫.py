@@ -1174,15 +1174,15 @@ async def set_group_title(gpic):
        
     try:
         await tbot(functions.messages.EditChatTitleRequest(
-        chat_id=event.chat_id,
+        chat_id=gpic.chat_id,
         title=input_str))
         await tbot(functions.channels.EditTitleRequest(
-        channel=event.chat_id,
+        channel=gpic.chat_id,
         title=input_str))
-        await event.reply("Successfully set new group title.")
+        await gpic.reply("Successfully set new group title.")
     except Exception as e:
         print(e)
-        await event.reply("Failed to set group title.")
+        await gpic.reply("Failed to set group title.")
        
 
 
