@@ -94,19 +94,20 @@ async def _(event):
         user.first_name = user.id
     pack = 1
     userid = event.sender_id
-    packname = f"{DEFAULTUSER}'s Sticker Vol.{pack}"
-    packshortname = f"Julia_{userid}_kang"
+    first_name = user.first_name
+    packname = f"{first_name}'s Sticker Vol.{pack}"
+    packshortname = f"{userid}_kang"
     kanga = await event.reply(
         "`Kanging .`"
     )
     is_a_s = is_it_animated_sticker(reply_message)
     file_ext_ns_ion = "@MissJuliaRobot.png"
-    file = await tbot.download_file(reply_message.media)
+    file = await ubot.download_file(reply_message.media)
     uploaded_sticker = None
     if is_a_s:
         file_ext_ns_ion = "AnimatedSticker.tgs"
-        uploaded_sticker = await tbot.upload_file(file, file_name=file_ext_ns_ion)
-        packname = f"{DEFAULTUSER}'s Animated Sticker Vol.{pack}"
+        uploaded_sticker = await ubot.upload_file(file, file_name=file_ext_ns_ion)
+        packname = f"{first_name}'s Animated Sticker Vol.{pack}"
         packshortname = f"MissJuliaRobot_{userid}"  # format: Uni_tbot_userid
     elif not is_message_image(reply_message):
         await kanga.edit("Invalid message type")
