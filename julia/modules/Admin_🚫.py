@@ -405,11 +405,12 @@ async def set_group_photo(gpic):
         except ImageProcessFailedError:
             await gpic.reply(PP_ERROR)
 
-@register(pattern="^/settitle ?(.*) ?(.*)")
+@register(pattern="^/settitle ?(.*)")
 async def promote(promt):
 
-    thatuser = promt.pattern_match.group(1)
-    title_admin = promt.pattern_match.group(2)
+    textt = promt.pattern_match.group(1)
+    thatuser = textt.split(" ")[0]
+    title_admin = textt.split(" ")[1]
 
     if thatuser:
       user = await tbot.get_entity(thatuser)
