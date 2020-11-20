@@ -387,9 +387,9 @@ async def stop(event):
     for c in allpoll:
       if event.sender_id == c["user"]:
          poll_id.delete_one({"user": event.sender_id})
-         pollid = msg.poll.poll.id
-         await event.reply("Done you can now create a new poll.")             
-      await event.reply("Seems like you haven't created any poll yet !")
+         await event.reply("Done you can now create a new poll.")       
+      else:     
+         await event.reply("Seems like you haven't created any poll yet !")
     
 
 
