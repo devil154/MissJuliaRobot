@@ -207,6 +207,11 @@ async def get_user_from_event(event):
 
     return user_obj
 
+def find_instance(items, class_or_tuple):
+    for item in items:
+        if isinstance(item, class_or_tuple):
+            return item
+    return None
 
 @register(pattern="^/promote(?: |$)(.*)")
 async def promote(promt):
@@ -1203,6 +1208,37 @@ async def set_group_des(gpic):
         await gpic.reply("Successfully set new group description.")
     except:
         await gpic.reply("Failed to set group description.")
+       
+
+
+@register(pattern="^/setsticker$")
+async def set_group_sticker(gpic):
+    if gpic.is_group:
+        if not await can_change_info(message=gpic):
+            return
+    else:
+        return
+       
+    rep_msg = await gpic.get_reply_message()
+    if not rep_msg.document:
+        await gpic.reply("Reply to any sticker plox.")
+        return
+    stickerset_attr_s = rep_msg.document.attributes
+    stickerset_attr = find_instance(stickerset_attr_s, DocumentAttributeSticker)
+    if not stickerset_attr.stickerset:
+        await gpic.reply("Sticker does not belong to a pack.")
+        return
+    try:
+     id=stickerset_attr.stickerset.id
+     access_hash=stickerset_attr.stickerset.access_hash
+     await tbot(functions.channels.SetStickersRequest(
+        channel=gpic.chat_id,
+        stickerset=types.InputStickerSetID(
+            id=id,
+            access_hash=access_hash)))
+    except Exception as e:
+        print(e)
+        await gpic.reply("Failed to set group sticker pack.")
        
 
 global __help__
