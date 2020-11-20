@@ -435,7 +435,7 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     combot_stickers_url = "https://combot.org/telegram/stickers?q="
     text = requests.get(combot_stickers_url + input_str)
-    soup = bs(text, 'lxml')
+    soup = bs(text.text, 'lxml')
     results = soup.find_all("a", {'class': "sticker-pack__btn"})
     titles = soup.find_all("div", "sticker-pack__title")
     if not results:
