@@ -419,8 +419,6 @@ from PIL import Image
 from html import escape
 from bs4 import BeautifulSoup as bs
 
-combot_stickers_url = "https://combot.org/telegram/stickers?q="
-
 @register(pattern="^/searchsticker (.*)")
 async def _(event):
     approved_userss = approved_users.find({})
@@ -435,18 +433,19 @@ async def _(event):
         else:
             return
     input_str = event.pattern_match.group(1)
+    combot_stickers_url = "https://combot.org/telegram/stickers?q="
     text = requests.get(combot_stickers_url + input_str)
     soup = bs(text, 'lxml')
     results = soup.find_all("a", {'class': "sticker-pack__btn"})
     titles = soup.find_all("div", "sticker-pack__title")
     if not results:
-        await event.reply('No results found :(.')
+        await event.reply('No results found :(')
         return
     reply = f"Stickers for *{input_str}*:"
     for result, title in zip(results, titles):
         link = result['href']
         reply += f"\n• [{title.get_text()}]({link})"
-    await event.reply(reply, parse_mode="markdown")
+    await event.reply(reply)
 
 
 import inspect
