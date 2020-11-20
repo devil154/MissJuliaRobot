@@ -438,7 +438,7 @@ async def _(event):
         await event.reply("Reply to a photo to add to your personal sticker pack.")
         return
     input_str = event.pattern_match.group(1)
-    text = requests.get(combot_stickers_url + input_str
+    text = requests.get(combot_stickers_url + input_str)
     soup = bs(text, 'lxml')
     results = soup.find_all("a", {'class': "sticker-pack__btn"})
     titles = soup.find_all("div", "sticker-pack__title")
