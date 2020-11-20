@@ -27,6 +27,10 @@ client = MongoClient(MONGO_DB_URI)
 dbb = client["missjuliarobot"]
 leechers = dbb.leecher
 
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO)
+
 
 def register(**args):
     """ Registers a new message. """
