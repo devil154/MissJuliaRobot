@@ -29,9 +29,6 @@ leechers = dbb.leecher
 
 
 def register(**args):
-    logging.basicConfig(
-     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-     level=logging.INFO)
     pattern = args.get('pattern')
     r_pattern = r'^[/]'
     if pattern is not None and not pattern.startswith('(?i)'):
@@ -97,9 +94,6 @@ def register(**args):
     return decorator
 
 def juliabot(**args):
-    logging.basicConfig(
-     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-     level=logging.INFO)
     pattern = args.get('pattern', None)
     disable_edited = args.get('disable_edited', False)
     ignore_unsafe = args.get('ignore_unsafe', False)
