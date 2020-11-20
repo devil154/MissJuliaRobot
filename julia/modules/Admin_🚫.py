@@ -878,7 +878,7 @@ async def spiderr(spdr):
     except:
         return await spdr.reply("Couldn't fetch that user !")
 
-@register(pattern="^/lock ?(.*)")
+@tbot.on(events.NewMessage(pattern="^/lock ?(.*)"))
 async def locks(event):
     if not event.is_group:
         return
@@ -974,7 +974,7 @@ async def locks(event):
         return
 
 
-@register(pattern="^/unlock ?(.*)")
+@tbot.on(events.NewMessage(pattern="^/unlock ?(.*)"))
 async def rem_locks(event):
     if not event.is_group:  
         return
