@@ -434,9 +434,6 @@ async def _(event):
             pass
         else:
             return
-    if not event.is_reply:
-        await event.reply("Reply to a photo to add to your personal sticker pack.")
-        return
     input_str = event.pattern_match.group(1)
     text = requests.get(combot_stickers_url + input_str)
     soup = bs(text, 'lxml')
