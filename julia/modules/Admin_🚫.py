@@ -989,6 +989,7 @@ async def rem_locks(event):
         return
     if event.is_group:
             if not await can_change_info(message=event):
+                print ("not enough perms")
                 return
     input_str = event.pattern_match.group(1).lower()
     #print(input_str)
