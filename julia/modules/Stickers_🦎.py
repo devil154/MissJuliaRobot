@@ -419,6 +419,8 @@ from PIL import Image
 from html import escape
 from bs4 import BeautifulSoup as bs
 
+combot_stickers_url = "https://combot.org/telegram/stickers?q="
+
 @register(pattern="^/searchsticker (.*)")
 async def _(event):
     approved_userss = approved_users.find({})
