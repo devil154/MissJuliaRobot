@@ -663,6 +663,7 @@ async def ban(bon):
     if user:
         pass
     else:
+        print("user not found")
         return
 
     if bon.is_group:
@@ -672,6 +673,7 @@ async def ban(bon):
         else:
             pass
     else:
+      print("i don't work in channels")
       return
 
     try:
