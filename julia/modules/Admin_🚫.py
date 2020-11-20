@@ -887,17 +887,14 @@ async def spiderr(spdr):
     except:
         return await spdr.reply("Couldn't fetch that user !")
 
-
-
 @register(pattern="^/lock ?(.*)")
 async def locks(event):
-    if not event.is_group:  
+    if not event.is_group:
         return
     if event.is_group:
-            if not await can_change_info(message=event):
-                return
+        if not await can_change_info(message=event):
+            return
     input_str = event.pattern_match.group(1).lower()
-    peer_id = event.chat_id
     msg = None
     media = None
     sticker = None
@@ -974,14 +971,16 @@ async def locks(event):
         send_polls=gpoll,
         invite_users=adduser,
         pin_messages=cpin,
-        change_info=changeinfo)
+        change_info=changeinfo,
+    )
     try:
-        await tbot(EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=lock_rights))
+        await tbot(
+            EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=lock_rights)
+        )
         await event.reply(f"Locked Successfully !")
     except Exception as e:
         await event.reply(e)
         return
-
 
 
 @register(pattern="^/unlock ?(.*)")
