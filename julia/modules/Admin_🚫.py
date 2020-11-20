@@ -975,7 +975,7 @@ async def locks(event):
         return
 
 
-@register((pattern="^/unlock ?(.*)")
+@register(pattern="^/unlock ?(.*)")
 async def rem_locks(event):
     if not event.is_group:  
         return
