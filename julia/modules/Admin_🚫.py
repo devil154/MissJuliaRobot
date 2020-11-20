@@ -1071,8 +1071,8 @@ async def rem_locks(event):
         pin_messages=cpin,
         change_info=changeinfo)
 
-    print(input_str)
-    print (unlock_rights)
+    # print(input_str)
+    # print (unlock_rights)
     try:
         await tbot(EditChatDefaultBannedRightsRequest(event.chat_id, banned_rights=unlock_rights))
         await event.reply(f"Unlocked Successfully !")
@@ -1182,7 +1182,7 @@ async def set_group_title(gpic):
 
     if gpic.chat.title == input_str:
         await gpic.reply("Successfully set new group title.")
-      else:
+    else:
         await gpic.reply("Failed to set group title.")
        
 @register(pattern="^/setdescription (.*)")
