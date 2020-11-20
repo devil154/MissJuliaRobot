@@ -1180,8 +1180,9 @@ async def set_group_title(gpic):
         channel=event.chat_id,
         title=input_str))
         await event.reply("Successfully set new group title.")
-    except Exception:
-           await event.reply("Failed to set group title.")
+    except Exception as e:
+        print(e)
+        await event.reply("Failed to set group title.")
        
 
 
