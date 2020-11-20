@@ -409,6 +409,17 @@ def find_instance(items, class_or_tuple):
             return item
     return None
 
+import inspect
+import logging
+import re, os
+from pathlib import Path
+from julia import tbot, CMD_HELP
+global __help__
+global file_helpo
+file_help = os.path.basename(__file__)
+file_help = file_help.replace(".py", "")
+file_helpo=  file_help.replace("_", " ")
+
 
 __help__ = """
  - /packinfo: Reply to a sticker to get it's pack info
@@ -416,3 +427,10 @@ __help__ = """
  - /kang <emoji for sticker>: Reply to a sticker to add it to your pack or makes a new one if it doesn't exist
  - /
 """
+
+CMD_HELP.update({
+    file_helpo: [
+        file_helpo,
+        __help__
+    ]
+})
