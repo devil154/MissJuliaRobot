@@ -352,7 +352,7 @@ async def stop(event):
     if msg.poll:
             allpoll = poll_id.find({})
             for c in allpoll:
-                if not event.sender_id == c["user"] and secret == c["pollid"]:
+                if not event.sender_id == c["user"] and not secret == c["pollid"]:
                    await event.reply("Oops, either you haven't created this poll or you have given wrong poll id")
                    return
             if msg.poll.poll.closed:
