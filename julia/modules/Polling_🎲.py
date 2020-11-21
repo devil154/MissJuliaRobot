@@ -348,6 +348,7 @@ async def stop(event):
             "I can't do this operation on this poll.\nProbably it's not created by me"
         )
         return
+    print(secret)
     if msg.poll:
             allpoll = poll_id.find({})
             for c in allpoll:
