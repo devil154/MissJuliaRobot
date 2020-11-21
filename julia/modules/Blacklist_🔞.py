@@ -137,9 +137,8 @@ __help__ = """
  - /rmblacklist <trigger> : stop blacklisting a certain blacklist trigger
  - /listblacklist: list all active blacklist filters
 
-**Examples:**
- - /addblacklist "the admins suck": This will remove the text everytime someone types it
- - /addblacklist "bit.ly/*": This will remove the link everytime someone sends it matching bit.ly
+**Example:**
+ - /addblacklist the admins suck: This will remove the "the admins suck" everytime some non admin types it types it
 """
 
 CMD_HELP.update({
