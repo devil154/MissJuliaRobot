@@ -386,10 +386,11 @@ async def stop(event):
     allpoll = poll_id.find({})
     for c in allpoll:
       if event.sender_id == c["user"]:
-        poll_id.delete_one({"user": event.sender_id})
-        await event.reply("Done you can now create a new poll.")       
-        return
-      await event.reply("Seems like you haven't created any poll yet !")
+        try:
+          poll_id.delete_one({"user": event.sender_id})
+          await event.reply("Done you can now create a new poll.")       
+        except Exception:
+          await event.reply("Seems like you haven't created any poll yet !")
 
 
 import os
