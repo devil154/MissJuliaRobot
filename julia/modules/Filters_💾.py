@@ -99,7 +99,7 @@ async def on_snip(event):
 
                 print(f"await event.reply({filter}, buttons={button}, file={media})")
     
-                await event.reply(filter, buttons=button, file=media)
+                await event.reply(f"{filter}", buttons=button, file=media)
 
                 if event.chat_id not in last_triggered_filters:
 
