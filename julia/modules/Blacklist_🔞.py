@@ -138,7 +138,7 @@ __help__ = """
  - /listblacklist: list all active blacklist filters
 
 **Example:**
- - /addblacklist the admins suck: This will remove the "the admins suck" everytime some non admin types it types it
+ - /addblacklist the admins suck: This will remove "the admins suck" everytime some non-admin types it
 """
 
 CMD_HELP.update({
