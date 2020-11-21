@@ -91,7 +91,7 @@ async def on_snip(event):
                 if "|" in snip.reply:
                       filter, options= snip.reply.split("|")
                       try:             
-                        filter = filters.strip()     
+                        filter = filter.strip()     
                         button = [options.strip()]
                       except:
                         filter = filters.strip()
@@ -160,88 +160,4 @@ async def on_snip_save(event):
             snip.get("fr"),
         )
 
-        await event.reply(f"Filter {name} saved successfully. Get it with {name}")
-
-    else:
-
-        await event.reply(
-            "Reply to a message with /savefilter keyword to save the filter"
-        )
-
-
-@register(pattern="^/listfilters$")
-async def on_snip_list(event):
-    all_snips = get_all_filters(event.chat_id)
-
-    OUT_STR = "Available Filters in the Current Chat:\n"
-
-    if len(all_snips) > 0:
-
-        for a_snip in all_snips:
-
-            OUT_STR += f"👉{a_snip.keyword} \n"
-
-    else:
-
-        OUT_STR = "No Filters. Start Saving using /savefilter"
-
-    if len(OUT_STR) > 4096:
-
-        with io.BytesIO(str.encode(OUT_STR)) as out_file:
-
-            out_file.name = "filters.text"
-
-            await tbot.send_file(
-                event.chat_id,
-                out_file,
-                force_document=True,
-                allow_cache=False,
-                caption="Available Filters in the Current Chat",
-                reply_to=event,
-            )
-
-            await event.delete()
-
-    else:
-
-        await event.reply(OUT_STR)
-
-
-@register(pattern="^/stopfilter (.*)")
-async def on_snip_delete(event):
-    if event.is_group:
-        if not await can_change_info(message=event):
-            return
-    else:
-        return
-    name = event.pattern_match.group(1)
-
-    remove_filter(event.chat_id, name)
-
-    await event.reply(f"Filter **{name}** deleted successfully")
-
- 
-import os
-from julia import CMD_HELP
-global __help__
-global file_helpo
-file_help = os.path.basename(__file__)
-file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
-
-__help__ = """
-**Admin Only**
- - /savefilter <word> <message>: Every time someone says "word", the bot will reply with "message"
-You can also include buttons in filters, example send `/savefilter google` in reply to `Click Here To Open Google | buttons=[Button.url('Google', 'google.com')]`
- - /stopfilter <word>: Stop that filter.
-
-**Admin+Non-Admin**
- - /listfilters: List all active filters in the chat
-"""
-
-CMD_HELP.update({
-    file_helpo: [
-        file_helpo,
-        __help__
-    ]
-})
+        await event.reply(f"Filter 
