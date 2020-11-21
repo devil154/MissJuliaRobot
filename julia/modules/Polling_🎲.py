@@ -428,7 +428,7 @@ Here is how you can do it:
 Reply to the poll with `/stoppoll <poll-id>` to stop the poll
 
 **NOTE**
-If you have forgotten your poll id or deleted the poll so that you can't stop the previous poll type `/forgotpollid`, this will reset the poll id
+If you have forgotten your poll id or deleted the poll so that you can't stop the previous poll type `/forgotpollid`, this will reset the poll id, you will have no access to the previous poll !
 """
 
 CMD_HELP.update({
