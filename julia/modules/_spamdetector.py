@@ -57,7 +57,7 @@ async def leechers(event):
     else:
         VALID = False
         spamtimecheck=None
-        spamcounter=None
+        spamcounter=0
         starttimer=None
         return
 
@@ -82,5 +82,5 @@ async def leechers(event):
             pass
 
     spamtimecheck=None
-    spamcounter=None
+    spamcounter=0
     starttimer=None
