@@ -1182,7 +1182,7 @@ async def set_group_title(gpic):
     else:
         await gpic.reply("Failed to set group title.")
        
-@register(pattern="^/setdescription (.*)")
+@register(pattern="^/setdescription ([\s\S]*)")
 async def set_group_des(gpic):
     input_str = gpic.pattern_match.group(1)
     # print(input_str)
