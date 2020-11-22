@@ -76,7 +76,3 @@ async def leechers(event):
             await dev.edit(final + "\nYou are now muted !")
     except Exception:
             pass
-
-    del spamtimecheck
-    del spamcounter
-    del starttimer
