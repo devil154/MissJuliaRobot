@@ -247,42 +247,6 @@ async def scam(results, lim):
 
     return imglinks
 
-@register(pattern="^/img (.*)")
-async def img_sampler(event):
-    if event.fwd_from:
-        return
-    approved_userss = approved_users.find({})
-    for ch in approved_userss:
-        iid = ch["id"]
-        userss = ch["user"]
-    if event.is_group:
-        if await is_register_admin(event.input_chat, event.message.sender_id):
-            pass
-        elif event.chat_id == iid and event.sender_id == userss:
-            pass
-        else:
-            return
-    query = event.pattern_match.group(1)
-    jit = f'"{query}"'
-    downloader.download(
-        jit,
-        limit=5,
-        output_dir="store",
-        adult_filter_off=False,
-        force_replace=False,
-        timeout=60,
-    )
-    os.chdir(f'./store/"{query}"')
-    types = ("*.png", "*.jpeg", "*.jpg")  # the tuple of file types
-    files_grabbed = []
-    for files in types:
-        files_grabbed.extend(glob.glob(files))
-    await tbot.send_file(event.chat_id,
-                                 files_grabbed,
-                                 reply_to=event.id)
-    os.chdir("/app/MissJuliaRobot/MissJuliaRobot")
-    os.system("rm -rf store")
-
 
 @register(pattern="^/app (.*)")
 async def apk(e):
