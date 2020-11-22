@@ -241,7 +241,7 @@ async def msg(event):
             return
     rtex = await event.get_reply_message()
     rtext = rtex.text
-    if rtext is none:
+    if rtext is None:
         await event.reply("Reply to a message to make meme.")
         return
     else:
@@ -297,7 +297,7 @@ async def msg(event):
             return
     rtex = await event.get_reply_message()
     rtext = rtex.text
-    if rtext is none:
+    if rtext is None:
         await event.reply("Reply to a message to make meme.")
         return
     else:   
@@ -320,7 +320,7 @@ async def msg(event):
             return
     rtex = await event.get_reply_message()
     rtext = rtex.text
-    if rtext is none:
+    if rtext is None:
         await event.reply("Reply to a message to make meme.")
         return
     else:
@@ -343,7 +343,7 @@ async def msg(event):
     await event.reply(reply_text)
 
 
-@register(pattern="^/shout$")
+@register(pattern="^/shout (.*)")
 async def msg(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
@@ -356,9 +356,10 @@ async def msg(event):
             pass
         else:
             return
+
     rtext = event.pattern_match.group(1)
     
-    args = rtext.text
+    args = rtext
     
     if len(args) == 0:
         await event.reply("Where is text?")
@@ -392,7 +393,7 @@ async def msg(event):
             return
     rtex = await event.get_reply_message()
     rtext = rtex.text
-    if rtext is none:
+    if rtext is None:
         await event.reply("Reply to a message to make meme.")
         return
     reply_text = "😡 "
@@ -420,7 +421,7 @@ async def msg(event):
             return
     rtex = await event.get_reply_message()
     rtext = rtex.text
-    if rtext is none:
+    if rtext is None:
         await event.reply("Reply to a message to make meme.")
         return
     reply_text = "😭 "
