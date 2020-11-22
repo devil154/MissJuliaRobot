@@ -52,7 +52,7 @@ async def is_register_admin(chat, user):
     return None
 
 
-@tbot.on(events.NewMessage(pattern="^/owu$"))
+@register(pattern="^/owu$")
 async def msg(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
@@ -118,7 +118,8 @@ async def msg(event):
             pass
         else:
             return
-    rtext = await event.get_reply_message()
+    rtex = await event.get_reply_message()
+    rtext = rtex.text
     if rtext is None:
         await event.reply("Reply to a message tto make meme.")
         return
@@ -185,7 +186,8 @@ async def msg(event):
             pass
         else:
             return
-    rtext = await event.get_reply_message()
+    rtex = await event.get_reply_message()
+    rtext = rtex.text
     if rtext is None:
         await event.reply("Reply to a message to make meme.")
         return
@@ -211,7 +213,8 @@ async def msg(event):
             pass
         else:
             return
-    rtext = await event.get_reply_message()
+    rtex = await event.get_reply_message()
+    rtext = rtex.text
     if rtext is None:
         await event.reply("Reply to a message to make meme.")
         return
@@ -236,7 +239,8 @@ async def msg(event):
             pass
         else:
             return
-    rtext = await event.get_reply_message()
+    rtex = await event.get_reply_message()
+    rtext = rtex.text
     if rtext is none:
         await event.reply("Reply to a message to make meme.")
         return
@@ -264,7 +268,8 @@ async def msg(event):
             return
    
     
-    rtext = await event.get_reply_message()
+    rtex = await event.get_reply_message()
+    rtext = rtex.text
     if rtext:
         data = rtext
     else:
@@ -290,7 +295,8 @@ async def msg(event):
             pass
         else:
             return
-    rtext = await event.get_reply_message()
+    rtex = await event.get_reply_message()
+    rtext = rtex.text
     if rtext is none:
         await event.reply("Reply to a message to make meme.")
         return
@@ -312,7 +318,8 @@ async def msg(event):
             pass
         else:
             return
-    rtext = await event.get_reply_message()
+    rtex = await event.get_reply_message()
+    rtext = rtex.text
     if rtext is none:
         await event.reply("Reply to a message to make meme.")
         return
@@ -351,7 +358,7 @@ async def msg(event):
             return
     rtext = event.pattern_match.group(1)
     
-    args = rtext
+    args = rtext.text
     
     if len(args) == 0:
         await event.reply("Where is text?")
@@ -383,7 +390,8 @@ async def msg(event):
             pass
         else:
             return
-    rtext = await event.get_reply_message()
+    rtex = await event.get_reply_message()
+    rtext = rtex.text
     if rtext is none:
         await event.reply("Reply to a message to make meme.")
         return
@@ -410,7 +418,8 @@ async def msg(event):
             pass
         else:
             return
-    rtext = await event.get_reply_message()
+    rtex = await event.get_reply_message()
+    rtext = rtex.text
     if rtext is none:
         await event.reply("Reply to a message to make meme.")
         return
@@ -422,6 +431,7 @@ async def msg(event):
             reply_text += i
     reply_text += " 😭"
     await event.reply(reply_text)
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
@@ -532,29 +542,6 @@ client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
 
-
-async def is_register_admin(chat, user):
-    if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-
-        return isinstance(
-            (
-                await tbot(functions.channels.GetParticipantRequest(chat, user))
-            ).participant,
-            (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
-        )
-    if isinstance(chat, types.InputPeerChat):
-
-        ui = await tbot.get_peer_id(user)
-        ps = (
-            await tbot(functions.messages.GetFullChatRequest(chat.chat_id))
-        ).full_chat.participants.participants
-        return isinstance(
-            next((p for p in ps if p.user_id == ui), None),
-            (types.ChatParticipantAdmin, types.ChatParticipantCreator),
-        )
-    return None
-
-
 @register(pattern="^/deepfry(?: |$)(.*)")
 async def deepfryer(event):
     approved_userss = approved_users.find({})
@@ -659,28 +646,6 @@ client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
-
-
-async def is_register_admin(chat, user):
-    if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-
-        return isinstance(
-            (
-                await tbot(functions.channels.GetParticipantRequest(chat, user))
-            ).participant,
-            (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
-        )
-    if isinstance(chat, types.InputPeerChat):
-
-        ui = await tbot.get_peer_id(user)
-        ps = (
-            await tbot(functions.messages.GetFullChatRequest(chat.chat_id))
-        ).full_chat.participants.participants
-        return isinstance(
-            next((p for p in ps if p.user_id == ui), None),
-            (types.ChatParticipantAdmin, types.ChatParticipantCreator),
-        )
-    return None
 
 
 @register(pattern="^/type (.*)")
