@@ -173,7 +173,7 @@ async def msg(event):
         await event.reply(reply_text)
 
 
-@register(pattern="^/bmoji$"))
+@register(pattern="^/bmoji$")
 async def msg(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
