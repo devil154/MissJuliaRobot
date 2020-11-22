@@ -1185,7 +1185,7 @@ async def set_group_title(gpic):
 @register(pattern="^/setdescription (.*)")
 async def set_group_des(gpic):
     input_str = gpic.pattern_match.group(1)
-
+    print(input_str)
     if gpic.is_group:
         if not await can_change_info(message=gpic):
             return
@@ -1195,7 +1195,7 @@ async def set_group_des(gpic):
     try:
         await tbot(functions.messages.EditChatAboutRequest(
         peer=gpic.chat_id,
-        about=input_str))
+        about="{input_str}"))
         await gpic.reply("Successfully set new group description.")
     except:
         await gpic.reply("Failed to set group description.")
