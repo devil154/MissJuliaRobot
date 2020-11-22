@@ -44,7 +44,7 @@ async def leechers(event):
         and event.sender_id == USERSPAM[0]
         and (time.strftime("%S", time.gmtime(spamtimecheck))) <= "03"
     ):
-        VALID = True
+        
         spamcounter = 0
         if senderr.username == None:
             st = senderr.first_name
@@ -55,7 +55,7 @@ async def leechers(event):
             final = f"@{st} you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"
             pass
     else:
-        VALID = False
+        
         spamtimecheck=None
         spamcounter=0
         starttimer=None
