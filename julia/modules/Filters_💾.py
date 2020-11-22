@@ -93,13 +93,12 @@ async def on_snip(event):
                       try:             
                         filter = filter.strip()     
                         button = options.strip()
+                        params = re.findall(r'\'(.*)\'',button)                
+                        butto = [Button.url(*params)]
                       except:
                         filter = filter.strip()
                         button = None
-                params = re.findall(r'\'(.*)\'',button)
                 
-                butto = [Button.url(*params)]
-
                 await event.reply(filter, buttons=butto, file=media)
 
                 if event.chat_id not in last_triggered_filters:
