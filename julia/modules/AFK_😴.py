@@ -127,7 +127,9 @@ async def _(event):
     sender = event.sender_id
     msg = str(event.text)
     global let
-    global userid
+    global userid 
+    userid=None
+    let=None
     if event.reply_to_msg_id:
        reply = await event.get_reply_message()
        userid = reply.sender_id 
@@ -144,9 +146,7 @@ async def _(event):
         userid = let.id       
      except Exception:
        return
-
-    if not userid:
-       return
+    
     if sender == userid:
        return
 
