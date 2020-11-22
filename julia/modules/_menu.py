@@ -67,7 +67,9 @@ async def start(event):
               [Button.url('Add To Group  👥', 't.me/MissJuliaRobot?startgroup=true'),
               Button.url('Support Group 🎙️', 'https://t.me/MissJuliaRobotSupport')],
               [Button.inline('Commands ❓', data='help_menu'),
-              Button.url('Source 🌐', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],
+              Button.url('Source 📀', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],        
+              [Button.url('Webiste 🌐', 't.me/MissJuliaRobot?startgroup=true'),
+              Button.url('Donate 💲', 'https://t.me/MissJuliaRobotSupport'),
               [Button.inline('Close Menu 🔒', f'start_again')]])
     else:
         await event.reply("I am Alive ^_^")
@@ -88,8 +90,10 @@ async def reopen_again(event):
               [Button.url('Add To Group  👥', 't.me/MissJuliaRobot?startgroup=true'),
               Button.url('Support Group 🎙️', 'https://t.me/MissJuliaRobotSupport')],
               [Button.inline('Commands ❓', data='help_menu'),
-              Button.url('Source 🌐', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],
-              [Button.inline('Close Menu 🔒', f'start_again')]])            
+              Button.url('Source 🌐', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],                          
+              [Button.url('Webiste 🌐', 't.me/MissJuliaRobot?startgroup=true'),
+              Button.url('Donate 💲', 'https://t.me/MissJuliaRobotSupport'),
+              [Button.inline('Close Menu 🔒', f'start_again')]])
     else:
         await event.reply("I am Alive ^_^")
 
