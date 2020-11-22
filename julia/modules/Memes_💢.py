@@ -193,9 +193,7 @@ async def msg(event):
         return
     else:
         b_char = random.choice(rtext).lower()
-        reply_text = rtext(b_char, "🅱️").replace(
-            b_char.upper(), "🅱️"
-        )
+        reply_text = rtext.replace(b_char, "🅱️").replace(b_char.upper(), "🅱️")
         await event.reply(reply_text)
 
 
@@ -324,7 +322,7 @@ async def msg(event):
         await event.reply("Reply to a message to make meme.")
         return
     else:
-        data = ""
+        data = rtext
 
     data = data.lower()
     accidentals = ["VB", "VBD", "VBG", "VBN"]
