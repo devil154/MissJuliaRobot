@@ -93,7 +93,7 @@ async def on_snip(event):
                       try:             
                         filter = filter.strip()     
                         button = options.strip()
-                        params = re.findall(r'\'(.*)\'',button)                
+                        params = re.findall(r'\'(.*?)\'',button)                
                         butto = [Button.url(*params)]
                       except:
                         filter = filter.strip()
