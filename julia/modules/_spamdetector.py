@@ -54,7 +54,8 @@ async def leechers(event):
             st = senderr.username
             final = f"@{st} you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"
             pass
-    else:        
+    else: 
+        spamcounter = 0       
         return
 
     dev = await event.respond(final)
@@ -76,3 +77,4 @@ async def leechers(event):
             await dev.edit(final + "\nYou are now muted !")
     except Exception:
             pass
+    spamcounter = 0
