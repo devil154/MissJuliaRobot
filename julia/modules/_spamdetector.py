@@ -9,11 +9,6 @@ from julia.events import register
 from telethon import types, events
 from telethon.tl import functions
 
-client = MongoClient()
-client = MongoClient(MONGO_DB_URI)
-db = client["missjuliarobot"]
-leechers = db.leecher
-
 # MADE BY @MISSJULIA_ROBOT
 
 global spamcounter
@@ -30,7 +25,6 @@ async def leechers(event):
     sender = event.sender_id
     senderr = await event.get_sender()
     USERSPAM = []
-    check = sender
     if len(USERSPAM) >= 1:
         if event.sender_id == USERSPAM[0]:
             pass
@@ -52,31 +46,33 @@ async def leechers(event):
                 final = f"[{st}](tg://user?id={hh}) you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"
             else:
                 st = senderr.username
-                final = f"@{st} you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"           
+                final = f"@{st} you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"         
+                pass  
     else:
             VALID = False
             del spamtimecheck 
             del spamcounter 
             del starttimer 
 
-    if VALID == True:
-            dev = await event.respond(final)
-            users = leechers.find({})
-            for c in users:
-                if USERSPAM[0] == c["id"]:
-                    return
-            timerr = time.time()
-            leechers.insert_one({"id": USERSPAM[0], "time": timerr})
-            try:
-                    MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
-                    await tbot(
-                        EditBannedRequest(event.chat_id, event.sender_id, MUTE_RIGHTS)
-                    )
-                    await dev.edit(final + "\nYou are now muted !")
-            except Exception as e:
-                    print(e)
-                    pass 
+    dev = await event.respond(final)
 
-            del spamtimecheck 
-            del spamcounter 
-            del starttimer 
+    client = MongoClient(MONGO_DB_URI)
+    db = client["missjuliarobot"]
+    leechers = db.leecher
+
+    users = leechers.find({})
+    for c in users:
+      if USERSPAM[0] == c["id"]:
+         return
+      timerr = time.time()
+      leechers.insert_one({"id": USERSPAM[0], "time": timerr})
+      try:
+         MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
+         await tbot(EditBannedRequest(event.chat_id, event.sender_id, MUTE_RIGHTS))
+         await dev.edit(final + "\nYou are now muted !")
+      except Exception:
+             pass 
+
+      del spamtimecheck 
+      del spamcounter 
+      del starttimer
