@@ -70,6 +70,7 @@ async def leechers(event):
     users = leechers.find({})
     for c in users:
         if USERSPAM[0] == c["id"]:
+            print ("spammers never die")
             return
     timerr = time.time()
     leechers.insert_one({"id": USERSPAM[0], "time": timerr})
