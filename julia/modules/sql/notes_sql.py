@@ -6,9 +6,9 @@ from julia.modules.sql import BASE, SESSION
 class NOTES(BASE):
     __tablename__ = "notes"
     chat_id = Column(String(14), primary_key=True)
-    reply = Column(UnicodeText)
     keyword = Column(UnicodeText, primary_key=True)
-
+    reply = Column(UnicodeText)
+    
     def __init__(
         self,
         chat_id,
@@ -33,7 +33,7 @@ def get_notes(chat_id, keyword):
 
 def get_all_notes(chat_id):
     try:
-        SESSION.query(NOTES).filter(NOTES.chat_id == str(chat_id)).all()
+        return SESSION.query(NOTES).filter(NOTES.chat_id == str(chat_id)).all()
     except:
         return None
     finally:
@@ -41,12 +41,16 @@ def get_all_notes(chat_id):
 
 
 def add_note(chat_id, keyword, reply):
-    adder = SESSION.query(NOTES).get(chat_id, keyword)
-    if adder:
-        adder.keyword = keyword
+    adder = SESSION.query(NOTES).get((str(chat_id), keyword))
+    if adder:        
         adder.reply = reply
     else:
         adder = NOTES(chat_id, keyword, reply)
+        adder = NOTES(
+            chat_id,
+            keyword,
+            reply,
+        )
     SESSION.add(adder)
     SESSION.commit()
 
