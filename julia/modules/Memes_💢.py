@@ -19,7 +19,7 @@ nltk.download("averaged_perceptron_tagger")
 WIDE_MAP = {i: i + 0xFEE0 for i in range(0x21, 0x7F)}
 WIDE_MAP[0x20] = 0x3000
 
-from telethon import types
+from telethon import types, events
 from telethon.tl import functions
 
 from pymongo import MongoClient
@@ -52,7 +52,7 @@ async def is_register_admin(chat, user):
     return None
 
 
-@register(pattern="^/owu$")
+@tbot.on(events.NewMessage(pattern="^/owu$"))
 async def msg(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
