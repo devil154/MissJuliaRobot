@@ -80,33 +80,3 @@ async def leechers(event):
             del spamtimecheck 
             del spamcounter 
             del starttimer 
-
-import inspect
-import logging
-import re, os
-from pathlib import Path
-from julia import tbot, CMD_HELP
-global __help__
-global file_helpo
-file_help = os.path.basename(__file__)
-file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
-
-__help__ = """
- - /setflood <number/off>: set the number of messages to take action on a user for flooding
- - /setfloodmode <mute/ban/kick/tban/tmute>: select the valid action eg. /setfloodmode tmute 5m
- - /flood: gets the current antiflood settings
- - /cleanservice <on/off>: clean telegram's join/left message
- - /cleanbluetext <on/off/yes/no>: clean commands from non-admins after sending
- - /ignorecleanbluetext <word>: prevent auto cleaning of the command
- - /unignorecleanbluetext <word>: remove prevent auto cleaning of the command
- - /listcleanbluetext: list currently whitelisted commands
- - /profanity on/off: filters all explict/abusive words sent by non admins also filters explicit/porn images
-"""
-
-CMD_HELP.update({
-    file_helpo: [
-        file_helpo,
-        __help__
-    ]
-})
