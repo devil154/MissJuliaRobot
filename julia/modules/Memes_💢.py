@@ -173,7 +173,7 @@ async def msg(event):
         await event.reply(reply_text)
 
 
-@register(pattern="^/bmoji$")
+@tbot.on(events.NewMessage(pattern="^/bmoji$"))
 async def msg(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
@@ -226,7 +226,7 @@ async def msg(event):
 
 
 
-@register(pattern="^/stretch$")
+@tbot.on(events.NewMessage(pattern="^/stretch$"))
 async def msg(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
