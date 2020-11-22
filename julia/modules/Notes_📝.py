@@ -36,6 +36,8 @@ async def on_note(event):
     message_id = event.sender_id
     if event.reply_to_msg_id:
        message_id = event.reply_to_msg_id
+    if note is None:
+       return
     await event.reply(note.reply, reply_to=message_id)
 
 
