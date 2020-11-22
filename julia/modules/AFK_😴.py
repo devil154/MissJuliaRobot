@@ -146,7 +146,9 @@ async def _(event):
         userid = let.id       
      except Exception:
        return
-    
+
+    if not userid:
+       return
     if sender == userid:
        return
 
