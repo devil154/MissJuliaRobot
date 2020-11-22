@@ -44,7 +44,7 @@ async def leechers(event):
     
     if spamcounter > 4 and event.sender_id == USERSPAM[0]:
      spamtimecheck = time.time() - starttimer
-     if str(time.strftime("%S", time.gmtime(spamtimecheck))) <= "03": 
+     if (time.strftime("%S", time.gmtime(spamtimecheck))) <= "03": 
             print(time.strftime("%S", time.gmtime(spamtimecheck)))
             VALID = True
             spamcounter = 0
