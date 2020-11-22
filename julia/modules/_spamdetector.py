@@ -59,6 +59,7 @@ async def leechers(event):
         del spamtimecheck
         del spamcounter
         del starttimer
+        return
 
     dev = await event.respond(final)
 
