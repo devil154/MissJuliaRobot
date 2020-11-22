@@ -90,7 +90,7 @@ async def reopen_again(event):
               [Button.url('Add To Group  👥', 't.me/MissJuliaRobot?startgroup=true'),
               Button.url('Support Group 🎙️', 'https://t.me/MissJuliaRobotSupport')],
               [Button.inline('Commands ❓', data='help_menu'),
-              Button.url('Source 🌐', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],                          
+              Button.url('Source 📀', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],                          
               [Button.url('Webiste 🌐', 'missjuliarobot.unaux.com'),
               Button.url('Donate 💲', 'https://ko-fi.com/missjuliarobot')],
               [Button.inline('Close Menu 🔒', f'start_again')]])
