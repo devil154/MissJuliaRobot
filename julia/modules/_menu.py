@@ -44,7 +44,7 @@ async def is_register_admin(chat, user):
 
 
 PM_START_TEXT = """
-[Julia Beta](https://telegra.ph/MissJulieRobot-10-24)
+[Julia](https://telegra.ph/MissJulieRobot-10-24)
 """
 
 
