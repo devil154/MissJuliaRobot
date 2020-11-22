@@ -12,24 +12,23 @@ from telethon.tl import functions
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
-global leechers
 leechers = db.leecher
 
 # MADE BY @MISSJULIA_ROBOT
 
-global spamcounter
 spamcounter=0
+global spamcounter
 
 @tbot.on(events.NewMessage(pattern=None))
 async def leechers(event):
+    if str(event.sender_id) in str(OWNER_ID):
+      return
     global spamcounter
     global starttimer
     starttimer=time.time()   
     spamcounter += 1
-    if str(event.sender_id) in str(OWNER_ID):
-      return
     sender = event.sender_id
-    senderr = await tbot.get_entity(sender)
+    senderr = await event.get_sender()
     USERSPAM = []
     check = sender
     if len(USERSPAM) >= 1:
