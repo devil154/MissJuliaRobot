@@ -16,14 +16,13 @@ leechers = db.leecher
 
 # MADE BY @MISSJULIA_ROBOT
 
-spamcounter=0
 global spamcounter
+spamcounter=0
 
 @tbot.on(events.NewMessage(pattern=None))
 async def leechers(event):
     if str(event.sender_id) in str(OWNER_ID):
       return
-    global spamcounter
     global starttimer
     starttimer=time.time()   
     spamcounter += 1
