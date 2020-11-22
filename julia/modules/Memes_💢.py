@@ -65,7 +65,8 @@ async def msg(event):
             pass
         else:
             return
-    reply_text = await event.get_reply_message().text
+    reply_tex = await event.get_reply_message()
+    reply_text = reply_tex.text
     if reply_text is None:
         await event.reply("Reply to a message to make meme.")
         return
