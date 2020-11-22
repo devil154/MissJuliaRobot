@@ -71,15 +71,15 @@ async def leechers(event):
     for c in users:
         if USERSPAM[0] == c["id"]:
             return
-        timerr = time.time()
-        leechers.insert_one({"id": USERSPAM[0], "time": timerr})
-        try:
+    timerr = time.time()
+    leechers.insert_one({"id": USERSPAM[0], "time": timerr})
+    try:
             MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
             await tbot(EditBannedRequest(event.chat_id, event.sender_id, MUTE_RIGHTS))
             await dev.edit(final + "\nYou are now muted !")
-        except Exception:
+    except Exception:
             pass
 
-        del spamtimecheck
-        del spamcounter
+    del spamtimecheck
+    del spamcounter
         del starttimer
