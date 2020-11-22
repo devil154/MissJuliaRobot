@@ -69,7 +69,7 @@ async def start(event):
               [Button.inline('Commands ❓', data='help_menu'),
               Button.url('Source 📀', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],        
               [Button.url('Webiste 🌐', 'missjuliarobot.unaux.com'),
-              Button.url('Donate 💲', 'https://ko-fi.com/missjuliarobot'),
+              Button.url('Donate 💲', 'https://ko-fi.com/missjuliarobot')],
               [Button.inline('Close Menu 🔒', f'start_again')]])
     else:
         await event.reply("I am Alive ^_^")
@@ -92,7 +92,7 @@ async def reopen_again(event):
               [Button.inline('Commands ❓', data='help_menu'),
               Button.url('Source 🌐', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],                          
               [Button.url('Webiste 🌐', 'missjuliarobot.unaux.com'),
-              Button.url('Donate 💲', 'https://ko-fi.com/missjuliarobot'),
+              Button.url('Donate 💲', 'https://ko-fi.com/missjuliarobot')],
               [Button.inline('Close Menu 🔒', f'start_again')]])
     else:
         await event.reply("I am Alive ^_^")
