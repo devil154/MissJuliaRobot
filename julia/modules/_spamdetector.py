@@ -83,4 +83,4 @@ async def leechers(event):
 
     del spamtimecheck
     del spamcounter
-        del starttimer
+    del starttimer
