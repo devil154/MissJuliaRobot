@@ -42,10 +42,9 @@ async def leechers(event):
         USERSPAM = []
         USERSPAM.append(check)  
     
-    if spamcounter > 4 and event.sender_id == USERSPAM[0]:
-     spamtimecheck = time.time() - starttimer
-     if (time.strftime("%S", time.gmtime(spamtimecheck))) <= "03": 
-            print(time.strftime("%S", time.gmtime(spamtimecheck)))
+    if spamcounter > 4 :
+       spamtimecheck = time.time() - starttimer 
+    if spamcounter > 4 and event.sender_id == USERSPAM[0] and (time.strftime("%S", time.gmtime(spamtimecheck))) <= "03":
             VALID = True
             spamcounter = 0
             if senderr.username == None:
@@ -67,21 +66,21 @@ async def leechers(event):
             for c in users:
                 if USERSPAM[0] == c["id"]:
                     return
-                timerr = time.time()
-                leechers.insert_one({"id": USERSPAM[0], "time": timerr})
-                try:
+            timerr = time.time()
+            leechers.insert_one({"id": USERSPAM[0], "time": timerr})
+            try:
                     MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
                     await tbot(
                         EditBannedRequest(event.chat_id, event.sender_id, MUTE_RIGHTS)
                     )
                     await dev.edit(final + "\nYou are now muted !")
-                except Exception as e:
+            except Exception as e:
                     print(e)
                     pass 
 
-                del spamtimecheck 
-                del spamcounter 
-                del starttimer 
+            del spamtimecheck 
+            del spamcounter 
+            del starttimer 
 
 import inspect
 import logging
