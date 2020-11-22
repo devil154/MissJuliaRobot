@@ -2,6 +2,8 @@
 
 > ⭐ Thanks to everyone who has starred the project, your star motivates me to bring more new features to the bot and keep working on the project 😀
 
+##### Its a request to everyone who is using this free software and maintaining their own forks/imports from this repository to strictly comply with the LICENCE associated with this repository !
+
 [![AGPLv3 license](https://img.shields.io/github/license/MissJuliaRobot/MissJuliaRobot)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bcc0521bc1f543d793daba6415fba933)](https://app.codacy.com/gh/MissJuliaRobot/MissJuliaRobot?utm_source=github.com&utm_medium=referral&utm_content=MissJuliaRobot/MissJuliaRobot&utm_campaign=Badge_Grade)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
