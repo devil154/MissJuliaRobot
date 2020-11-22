@@ -19,8 +19,7 @@ class NOTES(BASE):
         self.keyword = keyword
         self.reply = reply
 
-NOTES.__table__.create(checkfirst=True)
-
+NOTES.__table__.drop()
 
 def get_notes(chat_id, keyword):
     try:
