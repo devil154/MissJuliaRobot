@@ -56,9 +56,9 @@ async def leechers(event):
             pass
     else:
         VALID = False
-        del spamtimecheck
-        del spamcounter
-        del starttimer
+        spamtimecheck=None
+        spamcounter=None
+        starttimer=None
         return
 
     dev = await event.respond(final)
@@ -81,6 +81,6 @@ async def leechers(event):
     except Exception:
             pass
 
-    del spamtimecheck
-    del spamcounter
-    del starttimer
+    spamtimecheck=None
+    spamcounter=None
+    starttimer=None
