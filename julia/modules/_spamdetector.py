@@ -23,6 +23,7 @@ spamcounter=0
 async def leechers(event):
     if str(event.sender_id) in str(OWNER_ID):
       return
+    global spamcounter
     global starttimer
     starttimer=time.time()   
     spamcounter += 1
