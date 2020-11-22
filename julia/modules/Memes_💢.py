@@ -173,7 +173,7 @@ async def msg(event):
         await event.reply(reply_text)
 
 
-@tbot.on(events.NewMessage(pattern="^/bmoji$"))
+@register(pattern="^/bmoji$"))
 async def msg(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
@@ -226,7 +226,7 @@ async def msg(event):
 
 
 
-@tbot.on(events.NewMessage(pattern="^/stretch$"))
+@register(pattern="^/stretch$")
 async def msg(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
@@ -455,7 +455,6 @@ async def carbon_api(e):
             pass
         else:
             return
-    
 
     jj = "`Processing..`"
     gg = await e.reply(jj)
@@ -662,17 +661,19 @@ __help__ = """
  - /vapor: owo vapor dis
  - /shout <text>: Write anything that u want it to should
  - /zalgofy: reply to a message to g̫̞l̼̦i̎͡tͫ͢c̘ͭh̛̗ it out!
- - /table : get flip/unflip :v.
- - /decide : Randomly answers yes/no/maybe
- - /toss : Tosses A coin
- - /abuse : Abuses the cunt
- - /insult : Insult the cunt
- - /slap : Slaps the cunt
- - /roll : Roll a dice.
- - /rlg : Join ears,nose,mouth and create an emo ;-;
- - /react : Check on your own
- - /happy : Check on your own
- - /amgery : Check on your own
+ - /table: get flip/unflip :v.
+ - /decide: Randomly answers yes/no/maybe
+ - /toss: Tosses A coin
+ - /abuse: Abuses the cunt
+ - /insult: Insult the cunt
+ - /slap: Slaps the cunt
+ - /roll: Roll a dice.
+ - /rlg: Join ears,nose,mouth and create an emo ;-;
+ - /react: Check on your own
+ - /happy: Check on your own
+ - /amgery: Check on your own
+ - /angrymoji: Check on your own
+ - /crymoji: Check on your own
  - /cowsay | /tuxsay | /milksay | /kisssay | /wwwsay | /defaultsay | /bunnysay | /moosesay | /sheepsay | /rensay | /cheesesay | /ghostbusterssay | /skeletonsay <text>: Returns a stylish art text from the given text
  - /deepfry: Type this in reply to an image/sticker to roast the image/sticker
  - /figlet: Another Style art
