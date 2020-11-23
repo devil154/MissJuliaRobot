@@ -66,3 +66,5 @@ howdoi==2.0.7
 nudepy==0.5
 better_profanity==0.7.0
 heroku3==4.2.3
+validators==0.18.1
+youtube-search-python==1.3.2
