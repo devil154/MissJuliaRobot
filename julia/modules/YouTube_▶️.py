@@ -156,6 +156,8 @@ async def download_video(v_url):
             ],
         )
         os.remove(f"{ytdl_data['id']}.mp3")
+        os.system("rm -rf *.mp3")
+        os.system("rm -rf *.webp")
     elif video:
         await lmao.edit(
             f"`Preparing to upload video:`\
@@ -169,6 +171,9 @@ async def download_video(v_url):
             caption=ytdl_data["title"],
         )
         os.remove(f"{ytdl_data['id']}.mp4")
+        os.system("rm -rf *.mp4")
+        os.system("rm -rf *.webp")
+
 from julia import CMD_HELP
 global __help__
 global file_helpo
