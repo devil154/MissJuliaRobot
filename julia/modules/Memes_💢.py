@@ -1416,6 +1416,32 @@ async def stickerizer(event):
     os.remove(bara)
     await randika.delete()
 
+@register(pattern="^/dice$")
+async def _(event):
+    if event.fwd_from:
+        return
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+    input_str = print(randrange(7))
+    r = await event.reply(file=InputMediaDice(""))
+    if input_str:
+        try:
+            required_number = int(input_str)
+            while not r.media.value == required_number:
+                await r.delete()
+                r = await event.reply(file=InputMediaDice(""))
+        except BaseException:
+            pass
+
 
 from julia import CMD_HELP
 global __help__
