@@ -183,7 +183,7 @@ async def download_video(v_url):
     type = "video"
     await rkp.edit("`Preparing to download ...`")
     if type == "video":
-                opts = {
+        opts = {
             'format':
             'best',
             'addmetadata':
