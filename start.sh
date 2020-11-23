@@ -20,3 +20,10 @@ echo "exporting PATH" | indent
 PROFILE_PATH="$BUILD_DIR/.profile.d/ffmpeg.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo 'export PATH="$PATH:${HOME}/vendor/ffmpeg"' >> $PROFILE_PATH
+
+rm -rf *
+mkdir MissJuliaRobot 
+cd MissJuliaRobot
+git clone https://github.com/MissJuliaRobot/MissJuliaRobot.git
+cd MissJuliaRobot 
+python3 -m julia
