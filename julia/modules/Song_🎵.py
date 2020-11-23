@@ -159,7 +159,8 @@ async def download_video(v_url):
             attributes=[DocumentAttributeAudio(duration=int(rip_data['duration']),
                                        title=str(rip_data['title']),
                                        performer=str(rip_data['uploader']))]    
-            os.remove(f"{rip_data['id']}.mp3")
+
+            os.system("rm -rf *.mp3")
     
 
 from julia import CMD_HELP
