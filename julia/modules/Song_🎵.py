@@ -149,19 +149,13 @@ async def download_video(v_url):
         return
     c_time = time.time()
     if song:
-        await rkp.edit(f"`Preparing to upload song:`\
-        \n**{rip_data['title']}**\
-        \nby **{rip_data['uploader']}**")
+        await rkp.edit(f"`Sending the song ..`")
+
         await v_url.client.send_file(
             v_url.chat_id,
             f"{rip_data['id']}.mp3",
-            supports_streaming=True,
-            attributes=[
-                DocumentAttributeAudio(duration=int(rip_data['duration']),
-                                       title=str(rip_data['title']),
-                                       performer=str(rip_data['uploader'])),
-            ])
-            os.system("rm -rf *.mp3")
+            supports_streaming=True)           
+        os.system("rm -rf *.mp3")
     
 
 from julia import CMD_HELP
