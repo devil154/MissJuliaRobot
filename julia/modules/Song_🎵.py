@@ -156,10 +156,11 @@ async def download_video(v_url):
             v_url.chat_id,
             f"{rip_data['id']}.mp3",
             supports_streaming=True,
-            attributes=[DocumentAttributeAudio(duration=int(rip_data['duration']),
+            attributes=[
+                DocumentAttributeAudio(duration=int(rip_data['duration']),
                                        title=str(rip_data['title']),
-                                       performer=str(rip_data['uploader']))]    
-
+                                       performer=str(rip_data['uploader']))
+            ]
             os.system("rm -rf *.mp3")
     
 
