@@ -1442,6 +1442,25 @@ async def _(event):
         except BaseException:
             pass
 
+@register(pattern="^/fortune$")
+async def fortunate(event):
+    if event.fwd_from:
+        return
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+    jit = subprocess.check_output(["python", "fortune"])
+    pit = jit.decode()
+    await event.reply(pit)
+
 
 from julia import CMD_HELP
 global __help__
