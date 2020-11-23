@@ -51,7 +51,6 @@ python-dotenv==0.15.0
 we-get==1.0.1
 coffeehouse
 html2text==2020.1.16
-spotdl==3.1.4
 fortune==1.1.0
 python-barcode==0.13.1
 PyDictionary==2.0.1
