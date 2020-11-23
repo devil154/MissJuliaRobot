@@ -84,7 +84,7 @@ async def download_video(v_url):
     except:
     	return await rkp.edit("`Failed to find that song`")
     type = "audio"
-    await rkp.edit("`Preparing to download...`")
+    await rkp.edit("`Preparing to download ...`")
     if type == "audio":
         opts = {
             'format':
@@ -116,7 +116,7 @@ async def download_video(v_url):
         video = False
         song = True    
     try:
-        await rkp.edit("`Fetching data, please wait..`")
+        await rkp.edit("`Fetching data, please wait ...`")
         with YoutubeDL(opts) as rip:
             rip_data = rip.extract_info(url)
     except DownloadError as DE:
@@ -150,7 +150,7 @@ async def download_video(v_url):
         return
     c_time = time.time()
     if song:
-        await rkp.edit(f"`Sending the song ..`")
+        await rkp.edit(f"`Sending the song ...`")
 
         await v_url.client.send_file(
             v_url.chat_id,
