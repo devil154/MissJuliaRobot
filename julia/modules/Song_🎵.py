@@ -69,7 +69,7 @@ async def is_register_admin(chat, user):
     return None
 
 
-@register(pattern="^/song (.*)")
+@tbot.on(events.NewMessage(pattern="^/song (.*)"))
 async def download_video(v_url):
     url = v_url.pattern_match.group(1)
     rkp = await rkp.reply("`Processing ...`")
