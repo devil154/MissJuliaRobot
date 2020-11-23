@@ -72,7 +72,7 @@ async def is_register_admin(chat, user):
 @tbot.on(events.NewMessage(pattern="^/song (.*)"))
 async def download_video(v_url):
     url = v_url.pattern_match.group(1)
-    rkp = await rkp.reply("`Processing ...`")
+    rkp = await v_url.reply("`Processing ...`")
     if not url:
        await rkp.edit("`Error \nusage song <song name>`")
     search = SearchVideos(url, offset = 1, mode = "json", max_results = 1)
