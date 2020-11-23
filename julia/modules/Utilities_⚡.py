@@ -284,29 +284,6 @@ async def ping(event):
         parse_mode="html",
     )
 
-
-@register(pattern="^/figlet (.*)")
-async def figlet(event):
-    if event.fwd_from:
-        return
-    approved_userss = approved_users.find({})
-    for ch in approved_userss:
-        iid = ch["id"]
-        userss = ch["user"]
-    if event.is_group:
-        if await is_register_admin(event.input_chat, event.message.sender_id):
-            pass
-        elif event.chat_id == iid and event.sender_id == userss:
-            pass
-        else:
-            return
-    input_str = event.pattern_match.group(1)
-    result = pyfiglet.figlet_format(input_str)
-    await event.respond("`{}`".format(result))
-
-
-
-
 @register(pattern="^/eval")
 async def _(event):
     check = event.message.sender_id
@@ -436,39 +413,9 @@ async def _(event):
 
 __help__ = """
  - /userid: If replied to user's message gets that user's id.
- - /chatid: get the current chat id. 
- - /runs: reply a random string from an array of replies.
- - /slap: slap a user, or get slapped if not a reply.
- - /info: get information about a user.
- - /paste: Create a paste or a shortened url using del.dog
- - /getpaste: Get the content of a paste or shortened url from del.dog
- - /pastestats: Get stats of a paste or shortened url from del.dog
- - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
- - /shrug: try and check it out yourself.
- - /news: Returns today's Indian Headlines (ONLY WORKS IN PM)
- - /stt: Type in reply to a voice message(english only) to extract text from it.
- - /torrent <text>: Search for torrent links
-If you are still messed up send `/helptorrent` in pm for the tutorial !
- - /wall <topic>: Searches best wallpaper on the given topic and returns them
- - /weather <city>: Get weather info in a particular place
- - /wttr <city>: Advanced weather module, usage same as /weather
- - /wttr moon: Get the current status of moon
- - /wiki <text>: Returns search from wikipedia for the input text
- - /yt <text>: perform a youtube search
- - /ytaudio <link> or /ytvideo <link>: Downlods a video or audio from a youtube video to the bots local server
- - /zip: reply to a telegram file to compressing in .zip format
- - /unzip: reply to a telegram file to decompress it from the .zip format
- - /git <username>: Returns info about a GitHub user or organization.
- - /repo <username>: Return the GitHub user or organization repository list
- - /app <appname>: Search for an app in playstore
- - /magisk: Get the latest Magisk releases
- - /device <codename>: Get info about an Android device
- - /codename <brand> <device>: Search for Android device codename
- - /specs <brand> <device>: Get device specifications info
- - /twrp <codename>: Get the latest TWRP download for an Android device
- - /song <songname artist(optional)>: uploads the song in it's best quality available
- - /lyrics <songname artist (optional)>: get the lyrics of a song
- - /barcode <text>: makes a barcode out of the text, crop the barcode if you don't want to reveal the text
+ - /chatid: Get the current chat id. 
+ - /runs: Reply a random string from an array of replies.
+ - /info: Get information about a user.
  - /savefile: Gives you a permanent link of a file so that you can download it later anytime
 """
 
