@@ -1,4 +1,3 @@
-# Created by @p_rinc_e
 from pathlib import Path
 import asyncio, time, io, math, os, logging, asyncio, shutil, re, subprocess, json
 from re import findall
@@ -69,8 +68,8 @@ async def is_register_admin(chat, user):
     return None
 
 
-@tbot.on(events.NewMessage(pattern="^/song (.*)"))
-async def download_video(v_url):
+@register(pattern="^/song (.*)")
+async def download_song(v_url):
     url = v_url.pattern_match.group(1)
     rkp = await v_url.reply("`Processing ...`")
     if not url:
@@ -166,6 +165,95 @@ async def download_video(v_url):
         os.system("rm -rf *.mp3")
         os.system("rm -rf *.webp")
     
+
+@register(pattern="^/video (.*)")
+async def download_video(v_url):
+    url = v_url.pattern_match.group(1)
+    rkp = await v_url.reply("`Processing ...`")
+    if not url:
+       await rkp.edit("`Error \nusage video <song name>`")
+    search = SearchVideos(url, offset = 1, mode = "json", max_results = 1)
+    test = search.result()
+    p = json.loads(test)
+    q = p.get('search_result')
+    try:
+       url = q[0]['link']
+    except:
+    	return await rkp.edit("`Failed to find that video song`")
+    type = "video"
+    await rkp.edit("`Preparing to download ...`")
+    if type == "video":
+                opts = {
+            'format':
+            'best',
+            'addmetadata':
+            True,
+            'key':
+            'FFmpegMetadata',
+            'prefer_ffmpeg':
+            True,
+            'geo_bypass':
+            True,
+            'nocheckcertificate':
+            True,
+            'postprocessors': [{
+                'key': 'FFmpegVideoConvertor',
+                'preferedformat': 'mp4'
+            }],
+            'outtmpl':
+            '%(id)s.mp4',
+            'logtostderr':
+            False,
+            'quiet':
+            True
+        }
+        song = False
+        video = True
+    try:
+        await rkp.edit("`Fetching data, please wait ...`")
+        with YoutubeDL(opts) as rip:
+            rip_data = rip.extract_info(url)
+    except DownloadError as DE:
+        await rkp.edit(f"`{str(DE)}`")
+        return
+    except ContentTooShortError:
+        await rkp.edit("`The download content was too short.`")
+        return
+    except GeoRestrictedError:
+        await rkp.edit(
+            "`Video is not available from your geographic location due to geographic restrictions imposed by a website.`"
+        )
+        return
+    except MaxDownloadsReached:
+        await rkp.edit("`Max-downloads limit has been reached.`")
+        return
+    except PostProcessingError:
+        await rkp.edit("`There was an error during post processing.`")
+        return
+    except UnavailableVideoError:
+        await rkp.edit("`Media is not available in the requested format.`")
+        return
+    except XAttrMetadataError as XAME:
+        await rkp.edit(f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
+        return
+    except ExtractorError:
+        await rkp.edit("`There was an error during info extraction.`")
+        return
+    except Exception as e:
+        await rkp.edit(f"{str(type(e)): {str(e)}}")
+        return
+    c_time = time.time()
+    if video:
+        await rkp.edit(f"`Sending the video song ...`")
+
+        await v_url.client.send_file(
+            v_url.chat_id,
+            f"{rip_data['id']}.mp4",
+            supports_streaming=True,
+            caption=rip_data['title'])
+        os.system("rm -rf *.mp4")
+        os.system("rm -rf *.webp")
+
 
 from julia import CMD_HELP
 global __help__
