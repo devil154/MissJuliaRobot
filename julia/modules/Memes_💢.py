@@ -12,6 +12,86 @@ from zalgo_text import zalgo
 
 from julia import tbot
 from julia.events import register
+import asyncio
+import glob
+import html
+import io
+import json
+import os
+import random
+import re
+import subprocess
+import sys
+import textwrap
+import time
+import traceback
+import urllib.request
+from contextlib import contextmanager
+from datetime import datetime
+from html import unescape
+from random import randrange
+from time import sleep
+from typing import List
+from typing import Optional
+from urllib.request import urlopen
+
+import aiohttp
+import barcode
+import bs4
+import emoji
+import html2text
+import nude
+import pyfiglet
+import requests
+import telegraph
+import text2emotion as machi
+from barcode.writer import ImageWriter
+from better_profanity import profanity
+from bing_image_downloader import downloader
+from cowpy import cow
+from fontTools.ttLib import TTFont
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from gtts import gTTS
+from gtts import gTTSError
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+from PIL import ImageOps
+from PyDictionary import PyDictionary
+from pymongo import MongoClient
+from requests import get
+from telegram import InlineKeyboardButton
+from telegram import InlineKeyboardMarkup
+from telegram import Message
+from telegram import MessageEntity
+from telegram import ParseMode
+from telegram import ReplyKeyboardRemove
+from telegram import Update
+from telegram.error import BadRequest
+from telegram.ext import CallbackContext
+from telegram.ext import CommandHandler
+from telegram.ext import Filters
+from telegram.ext import run_async
+from telegram.utils.helpers import escape_markdown
+from telegram.utils.helpers import mention_html
+from telegraph import Telegraph
+from telethon import *
+from telethon import events
+from telethon.errors import ChatAdminRequiredError
+from telethon.errors import FloodWaitError
+from telethon.errors import UserAdminInvalidError
+from telethon.errors import YouBlockedUserError
+from telethon.tl import functions
+from telethon.tl import types
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import *
+from tswift import Song
+from wikipedia import summary
+from wikipedia.exceptions import DisambiguationError
+from wikipedia.exceptions import PageError
+
+from julia import *
 
 nltk.download("punkt")
 nltk.download("averaged_perceptron_tagger")
@@ -639,6 +719,702 @@ async def typewriter(typew):
         await asyncio.sleep(2)
         await now.edit(old_text)
         await asyncio.sleep(2)
+
+@register(pattern="^/sticklet (.*)")
+async def sticklet(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+    R = random.randint(0, 256)
+    G = random.randint(0, 256)
+    B = random.randint(0, 256)
+
+    # get the input text
+    # the text on which we would like to do the magic on
+    sticktext = event.pattern_match.group(1)
+
+    # delete the userbot command,
+    # i don't know why this is required
+    # await event.delete()
+
+    # https://docs.python.org/3/library/textwrap.html#textwrap.wrap
+    sticktext = textwrap.wrap(sticktext, width=10)
+    # converts back the list to a string
+    sticktext = "\n".join(sticktext)
+
+    image = Image.new("RGBA", (512, 512), (255, 255, 255, 0))
+    draw = ImageDraw.Draw(image)
+    fontsize = 230
+
+    FONT_FILE = await get_font_file(ubot, "@IndianBot_Fonts")
+
+    font = ImageFont.truetype(FONT_FILE, size=fontsize)
+
+    while draw.multiline_textsize(sticktext, font=font) > (512, 512):
+        fontsize -= 3
+        font = ImageFont.truetype(FONT_FILE, size=fontsize)
+
+    width, height = draw.multiline_textsize(sticktext, font=font)
+    draw.multiline_text(((512 - width) / 2, (512 - height) / 2),
+                        sticktext,
+                        font=font,
+                        fill=(R, G, B))
+
+    image_stream = io.BytesIO()
+    image_stream.name = "@Julia.webp"
+    image.save(image_stream, "WebP")
+    image_stream.seek(0)
+
+    # finally, reply the sticker
+    await event.reply(file=image_stream,
+                      reply_to=event.message.reply_to_msg_id)
+    # replacing upper line with this to get reply tags
+
+    # cleanup
+    try:
+        os.remove(FONT_FILE)
+    except BaseException:
+        pass
+
+
+async def get_font_file(client, channel_id):
+    # first get the font messages
+    font_file_message_s = await client.get_messages(
+        entity=channel_id,
+        filter=InputMessagesFilterDocument,
+        # this might cause FLOOD WAIT,
+        # if used too many times
+        limit=None,
+    )
+    # get a random font from the list of fonts
+    # https://docs.python.org/3/library/random.html#random.choice
+    font_file_message = random.choice(font_file_message_s)
+    # download and return the file path
+    return await client.download_media(font_file_message)
+
+@register(pattern=r"^/(\w+)say (.*)")
+async def univsaye(cowmsg):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if cowmsg.is_group:
+        if await is_register_admin(cowmsg.input_chat,
+                                   cowmsg.message.sender_id):
+            pass
+        elif cowmsg.chat_id == iid and cowmsg.sender_id == userss:
+            pass
+        else:
+            return
+    """ For .cowsay module, uniborg wrapper for cow which says things. """
+    if not cowmsg.text[0].isalpha() and cowmsg.text[0] not in ("#", "@"):
+        arg = cowmsg.pattern_match.group(1).lower()
+        text = cowmsg.pattern_match.group(2)
+
+        if arg == "cow":
+            arg = "default"
+        if arg not in cow.COWACTERS:
+            return
+        cheese = cow.get_cow(arg)
+        cheese = cheese()
+
+        await cowmsg.reply(f"`{cheese.milk(text).replace('`', '´')}`")
+
+@register(pattern="^/basketball$")
+async def _(event):
+    if event.fwd_from:
+        return
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+    input_str = print(randrange(6))
+    r = await event.reply(file=InputMediaDice("🏀"))
+    if input_str:
+        try:
+            required_number = int(input_str)
+            while not r.media.value == required_number:
+                await r.delete()
+                r = await event.reply(file=InputMediaDice("🏀"))
+        except BaseException:
+            pass
+
+
+@register(pattern="^/dart$")
+async def _(event):
+    if event.fwd_from:
+        return
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+    input_str = print(randrange(7))
+    r = await event.reply(file=InputMediaDice("🎯"))
+    if input_str:
+        try:
+            required_number = int(input_str)
+            while not r.media.value == required_number:
+                await r.delete()
+                r = await event.reply(file=InputMediaDice("🎯"))
+        except BaseException:
+            pass
+
+# Oringinal Source from Nicegrill: https://github.com/erenmetesar/NiceGrill/
+# Ported to Lynda by: @pokurt
+
+COLORS = [
+    "#F07975",
+    "#F49F69",
+    "#F9C84A",
+    "#8CC56E",
+    "#6CC7DC",
+    "#80C1FA",
+    "#BCB3F9",
+    "#E181AC",
+]
+
+
+async def process(msg, user, client, reply, replied=None):
+    if not os.path.isdir("resources"):
+        os.mkdir("resources", 0o755)
+        urllib.request.urlretrieve(
+            "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Regular.ttf",
+            "resources/Roboto-Regular.ttf",
+        )
+        urllib.request.urlretrieve(
+            "https://github.com/erenmetesar/modules-repo/raw/master/Quivira.otf",
+            "resources/Quivira.otf",
+        )
+        urllib.request.urlretrieve(
+            "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Medium.ttf",
+            "resources/Roboto-Medium.ttf",
+        )
+        urllib.request.urlretrieve(
+            "https://github.com/erenmetesar/modules-repo/raw/master/DroidSansMono.ttf",
+            "resources/DroidSansMono.ttf",
+        )
+        urllib.request.urlretrieve(
+            "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Italic.ttf",
+            "resources/Roboto-Italic.ttf",
+        )
+
+    # Importıng fonts and gettings the size of text
+    font = ImageFont.truetype("resources/Roboto-Medium.ttf",
+                              43,
+                              encoding="utf-16")
+    font2 = ImageFont.truetype("resources/Roboto-Regular.ttf",
+                               33,
+                               encoding="utf-16")
+    mono = ImageFont.truetype("resources/DroidSansMono.ttf",
+                              30,
+                              encoding="utf-16")
+    italic = ImageFont.truetype("resources/Roboto-Italic.ttf",
+                                33,
+                                encoding="utf-16")
+    fallback = ImageFont.truetype("resources/Quivira.otf",
+                                  43,
+                                  encoding="utf-16")
+
+    # Splitting text
+    maxlength = 0
+    width = 0
+    text = []
+    for line in msg.split("\n"):
+        length = len(line)
+        if length > 43:
+            text += textwrap.wrap(line, 43)
+            maxlength = 43
+            if width < fallback.getsize(line[:43])[0]:
+                if "MessageEntityCode" in str(reply.entities):
+                    width = mono.getsize(line[:43])[0] + 30
+                else:
+                    width = fallback.getsize(line[:43])[0]
+            next
+        else:
+            text.append(line + "\n")
+            if width < fallback.getsize(line)[0]:
+                if "MessageEntityCode" in str(reply.entities):
+                    width = mono.getsize(line)[0] + 30
+                else:
+                    width = fallback.getsize(line)[0]
+            if maxlength < length:
+                maxlength = length
+
+    title = ""
+    try:
+        details = await client(
+            functions.channels.GetParticipantRequest(reply.chat_id, user.id))
+        if isinstance(details.participant, types.ChannelParticipantCreator):
+            title = details.participant.rank if details.participant.rank else "Creator"
+        elif isinstance(details.participant, types.ChannelParticipantAdmin):
+            title = details.participant.rank if details.participant.rank else "Admin"
+    except TypeError:
+        pass
+    titlewidth = font2.getsize(title)[0]
+
+    # Get user name
+    lname = "" if not user.last_name else user.last_name
+    tot = user.first_name + " " + lname
+
+    namewidth = fallback.getsize(tot)[0] + 10
+
+    if namewidth > width:
+        width = namewidth
+    width += titlewidth + 30 if titlewidth > width - namewidth else -(
+        titlewidth - 30)
+    height = len(text) * 40
+
+    # Profile Photo BG
+    pfpbg = Image.new("RGBA", (125, 600), (0, 0, 0, 0))
+
+    # Draw Template
+    top, middle, bottom = await drawer(width, height)
+    # Profile Photo Check and Fetch
+    yes = False
+    color = random.choice(COLORS)
+    async for photo in client.iter_profile_photos(user, limit=1):
+        yes = True
+    if yes:
+        pfp = await client.download_profile_photo(user)
+        paste = Image.open(pfp)
+        os.remove(pfp)
+        paste.thumbnail((105, 105))
+
+        # Mask
+        mask_im = Image.new("L", paste.size, 0)
+        draw = ImageDraw.Draw(mask_im)
+        draw.ellipse((0, 0, 105, 105), fill=255)
+
+        # Apply Mask
+        pfpbg.paste(paste, (0, 0), mask_im)
+    else:
+        paste, color = await no_photo(user, tot)
+        pfpbg.paste(paste, (0, 0))
+
+    # Creating a big canvas to gather all the elements
+    canvassize = (
+        middle.width + pfpbg.width,
+        top.height + middle.height + bottom.height,
+    )
+    canvas = Image.new("RGBA", canvassize)
+    draw = ImageDraw.Draw(canvas)
+
+    y = 80
+    if replied:
+        # Creating a big canvas to gather all the elements
+        replname = "" if not replied.sender.last_name else replied.sender.last_name
+        reptot = replied.sender.first_name + " " + replname
+        replywidth = font2.getsize(reptot)[0]
+        if reply.sticker:
+            sticker = await reply.download_media()
+            stimg = Image.open(sticker)
+            canvas = canvas.resize(
+                (stimg.width + pfpbg.width, stimg.height + 160))
+            top = Image.new("RGBA", (200 + stimg.width, 300),
+                            (29, 29, 29, 255))
+            draw = ImageDraw.Draw(top)
+            await replied_user(draw, reptot,
+                               replied.message.replace("\n", " "), 20)
+            top = top.crop((135, 70, top.width, 300))
+            canvas.paste(pfpbg, (0, 0))
+            canvas.paste(top, (pfpbg.width + 10, 0))
+            canvas.paste(stimg, (pfpbg.width + 10, 140))
+            os.remove(sticker)
+            return True, canvas
+        canvas = canvas.resize((canvas.width + 60, canvas.height + 120))
+        top, middle, bottom = await drawer(middle.width + 60, height + 105)
+        canvas.paste(pfpbg, (0, 0))
+        canvas.paste(top, (pfpbg.width, 0))
+        canvas.paste(middle, (pfpbg.width, top.height))
+        canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
+        draw = ImageDraw.Draw(canvas)
+        if replied.sticker:
+            replied.text = "Sticker"
+        elif replied.photo:
+            replied.text = "Photo"
+        elif replied.audio:
+            replied.text = "Audio"
+        elif replied.voice:
+            replied.text = "Voice Message"
+        elif replied.document:
+            replied.text = "Document"
+        await replied_user(
+            draw,
+            reptot,
+            replied.message.replace("\n", " "),
+            maxlength + len(title),
+            len(title),
+        )
+        y = 200
+    elif reply.sticker:
+        sticker = await reply.download_media()
+        stimg = Image.open(sticker)
+        canvas = canvas.resize(
+            (stimg.width + pfpbg.width + 30, stimg.height + 10))
+        canvas.paste(pfpbg, (0, 0))
+        canvas.paste(stimg, (pfpbg.width + 10, 10))
+        os.remove(sticker)
+        return True, canvas
+    elif reply.document and not reply.audio and not reply.audio:
+        docname = ".".join(
+            reply.document.attributes[-1].file_name.split(".")[:-1])
+        doctype = reply.document.attributes[-1].file_name.split(
+            ".")[-1].upper()
+        if reply.document.size < 1024:
+            docsize = str(reply.document.size) + " Bytes"
+        elif reply.document.size < 1048576:
+            docsize = str(round(reply.document.size / 1024, 2)) + " KB "
+        elif reply.document.size < 1073741824:
+            docsize = str(round(reply.document.size / 1024**2, 2)) + " MB "
+        else:
+            docsize = str(round(reply.document.size / 1024**3, 2)) + " GB "
+        docbglen = (font.getsize(docsize)[0]
+                    if font.getsize(docsize)[0] > font.getsize(docname)[0] else
+                    font.getsize(docname)[0])
+        canvas = canvas.resize((pfpbg.width + width + docbglen, 160 + height))
+        top, middle, bottom = await drawer(width + docbglen, height + 30)
+        canvas.paste(pfpbg, (0, 0))
+        canvas.paste(top, (pfpbg.width, 0))
+        canvas.paste(middle, (pfpbg.width, top.height))
+        canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
+        canvas = await doctype(docname, docsize, doctype, canvas)
+        y = 80 if text else 0
+    else:
+        canvas.paste(pfpbg, (0, 0))
+        canvas.paste(top, (pfpbg.width, 0))
+        canvas.paste(middle, (pfpbg.width, top.height))
+        canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
+        y = 85
+
+    # Writing User's Name
+    space = pfpbg.width + 30
+    namefallback = ImageFont.truetype("resources/Quivira.otf",
+                                      43,
+                                      encoding="utf-16")
+    for letter in tot:
+        if letter in emoji.UNICODE_EMOJI:
+            newemoji, mask = await emoji_fetch(letter)
+            canvas.paste(newemoji, (space, 24), mask)
+            space += 40
+        else:
+            if not await fontTest(letter):
+                draw.text((space, 20), letter, font=namefallback, fill=color)
+                space += namefallback.getsize(letter)[0]
+            else:
+                draw.text((space, 20), letter, font=font, fill=color)
+                space += font.getsize(letter)[0]
+
+    if title:
+        draw.text((canvas.width - titlewidth - 20, 25),
+                  title,
+                  font=font2,
+                  fill="#898989")
+
+    # Writing all separating emojis and regular texts
+    x = pfpbg.width + 30
+    bold, mono, italic, link = await get_entity(reply)
+    mdlength = 0
+    index = 0
+    emojicount = 0
+    textfallback = ImageFont.truetype("resources/Quivira.otf",
+                                      33,
+                                      encoding="utf-16")
+    textcolor = "white"
+    for line in text:
+        for letter in line:
+            index = (msg.find(letter)
+                     if emojicount == 0 else msg.find(letter) + emojicount)
+            for offset, length in bold.items():
+                if index in range(offset, length):
+                    font2 = ImageFont.truetype("resources/Roboto-Medium.ttf",
+                                               33,
+                                               encoding="utf-16")
+                    textcolor = "white"
+            for offset, length in italic.items():
+                if index in range(offset, length):
+                    font2 = ImageFont.truetype("resources/Roboto-Italic.ttf",
+                                               33,
+                                               encoding="utf-16")
+                    textcolor = "white"
+            for offset, length in mono.items():
+                if index in range(offset, length):
+                    font2 = ImageFont.truetype("resources/DroidSansMono.ttf",
+                                               30,
+                                               encoding="utf-16")
+                    textcolor = "white"
+            for offset, length in link.items():
+                if index in range(offset, length):
+                    font2 = ImageFont.truetype("resources/Roboto-Regular.ttf",
+                                               30,
+                                               encoding="utf-16")
+                    textcolor = "#898989"
+            if letter in emoji.UNICODE_EMOJI:
+                newemoji, mask = await emoji_fetch(letter)
+                canvas.paste(newemoji, (x, y - 2), mask)
+                x += 45
+                emojicount += 1
+            else:
+                if not await fontTest(letter):
+                    draw.text((x, y),
+                              letter,
+                              font=textfallback,
+                              fill=textcolor)
+                    x += textfallback.getsize(letter)[0]
+                else:
+                    draw.text((x, y), letter, font=font2, fill=textcolor)
+                    x += font2.getsize(letter)[0]
+            msg = msg.replace(letter, "¶", 1)
+        y += 40
+        x = pfpbg.width + 30
+    return True, canvas
+
+
+async def drawer(width, height):
+    # Top part
+    top = Image.new("RGBA", (width, 20), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(top)
+    draw.line((10, 0, top.width - 20, 0), fill=(29, 29, 29, 255), width=50)
+    draw.pieslice((0, 0, 30, 50), 180, 270, fill=(29, 29, 29, 255))
+    draw.pieslice((top.width - 75, 0, top.width, 50),
+                  270,
+                  360,
+                  fill=(29, 29, 29, 255))
+
+    # Middle part
+    middle = Image.new("RGBA", (top.width, height + 75), (29, 29, 29, 255))
+
+    # Bottom part
+    bottom = ImageOps.flip(top)
+
+    return top, middle, bottom
+
+
+async def fontTest(letter):
+    test = TTFont("resources/Roboto-Medium.ttf")
+    for table in test["cmap"].tables:
+        if ord(letter) in table.cmap.keys():
+            return True
+
+
+async def get_entity(msg):
+    bold = {0: 0}
+    italic = {0: 0}
+    mono = {0: 0}
+    link = {0: 0}
+    if not msg.entities:
+        return bold, mono, italic, link
+    for entity in msg.entities:
+        if isinstance(entity, types.MessageEntityBold):
+            bold[entity.offset] = entity.offset + entity.length
+        elif isinstance(entity, types.MessageEntityItalic):
+            italic[entity.offset] = entity.offset + entity.length
+        elif isinstance(entity, types.MessageEntityCode):
+            mono[entity.offset] = entity.offset + entity.length
+        elif isinstance(entity, types.MessageEntityUrl):
+            link[entity.offset] = entity.offset + entity.length
+        elif isinstance(entity, types.MessageEntityTextUrl):
+            link[entity.offset] = entity.offset + entity.length
+        elif isinstance(entity, types.MessageEntityMention):
+            link[entity.offset] = entity.offset + entity.length
+    return bold, mono, italic, link
+
+
+async def doctype(name, size, type, canvas):
+    font = ImageFont.truetype("resources/Roboto-Medium.ttf", 38)
+    doc = Image.new("RGBA", (130, 130), (29, 29, 29, 255))
+    draw = ImageDraw.Draw(doc)
+    draw.ellipse((0, 0, 130, 130), fill="#434343")
+    draw.line((66, 28, 66, 53), width=14, fill="white")
+    draw.polygon([(67, 77), (90, 53), (42, 53)], fill="white")
+    draw.line((40, 87, 90, 87), width=8, fill="white")
+    canvas.paste(doc, (160, 23))
+    draw2 = ImageDraw.Draw(canvas)
+    draw2.text((320, 40), name, font=font, fill="white")
+    draw2.text((320, 97), size + type, font=font, fill="#AAAAAA")
+    return canvas
+
+
+async def no_photo(reply, tot):
+    pfp = Image.new("RGBA", (105, 105), (0, 0, 0, 0))
+    pen = ImageDraw.Draw(pfp)
+    color = random.choice(COLORS)
+    pen.ellipse((0, 0, 105, 105), fill=color)
+    letter = "" if not tot else tot[0]
+    font = ImageFont.truetype("resources/Roboto-Regular.ttf", 60)
+    pen.text((32, 17), letter, font=font, fill="white")
+    return pfp, color
+
+
+async def emoji_fetch(emoji):
+    emojis = json.loads(
+        urllib.request.urlopen(
+            "https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt"
+        ).read().decode())
+    if emoji in emojis:
+        img = emojis[emoji]
+        return await transparent(
+            urllib.request.urlretrieve(img, "resources/emoji.png")[0])
+    else:
+        img = emojis["⛔"]
+        return await transparent(
+            urllib.request.urlretrieve(img, "resources/emoji.png")[0])
+
+
+async def transparent(emoji):
+    emoji = Image.open(emoji).convert("RGBA")
+    emoji.thumbnail((40, 40))
+
+    # Mask
+    mask = Image.new("L", (40, 40), 0)
+    draw = ImageDraw.Draw(mask)
+    draw.ellipse((0, 0, 40, 40), fill=255)
+    return emoji, mask
+
+
+async def replied_user(draw, tot, text, maxlength, title):
+    namefont = ImageFont.truetype("resources/Roboto-Medium.ttf", 38)
+    namefallback = ImageFont.truetype("resources/Quivira.otf", 38)
+    textfont = ImageFont.truetype("resources/Roboto-Regular.ttf", 32)
+    textfallback = ImageFont.truetype("resources/Roboto-Medium.ttf", 38)
+    maxlength = maxlength + 7 if maxlength < 10 else maxlength
+    text = text[:maxlength - 2] + ".." if len(text) > maxlength else text
+    draw.line((165, 90, 165, 170), width=5, fill="white")
+    space = 0
+    for letter in tot:
+        if not await fontTest(letter):
+            draw.text((180 + space, 86),
+                      letter,
+                      font=namefallback,
+                      fill="#888888")
+            space += namefallback.getsize(letter)[0]
+        else:
+            draw.text((180 + space, 86), letter, font=namefont, fill="#888888")
+            space += namefont.getsize(letter)[0]
+    space = 0
+    for letter in text:
+        if not await fontTest(letter):
+            draw.text((180 + space, 132),
+                      letter,
+                      font=textfallback,
+                      fill="#888888")
+            space += textfallback.getsize(letter)[0]
+        else:
+            draw.text((180 + space, 132), letter, font=textfont, fill="white")
+            space += textfont.getsize(letter)[0]
+
+
+@register(pattern="^/quotly$")
+async def _(event):
+    if event.fwd_from:
+        return
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+
+    reply = await event.get_reply_message()
+    msg = reply.message
+    repliedreply = await reply.get_reply_message()
+    user = (await event.client.get_entity(reply.forward.sender)
+            if reply.fwd_from else reply.sender)
+    res, canvas = await process(msg, user, event.client, reply, repliedreply)
+    if not res:
+        return
+    canvas.save("sticker.webp")
+    await event.client.send_file(event.chat_id,
+                                 "sticker.webp",
+                                 reply_to=event.reply_to_msg_id)
+    os.remove("sticker.webp")
+
+
+BOTLOG_CHATID = os.environ.get("BOTLOG_CHATID")
+
+EMOJI_PATTERN = re.compile(
+    "["
+    "\U0001F1E0-\U0001F1FF"  # flags (iOS)
+    "\U0001F300-\U0001F5FF"  # symbols & pictographs
+    "\U0001F600-\U0001F64F"  # emoticons
+    "\U0001F680-\U0001F6FF"  # transport & map symbols
+    "\U0001F700-\U0001F77F"  # alchemical symbols
+    "\U0001F780-\U0001F7FF"  # Geometric Shapes Extended
+    "\U0001F800-\U0001F8FF"  # Supplemental Arrows-C
+    "\U0001F900-\U0001F9FF"  # Supplemental Symbols and Pictographs
+    "\U0001FA00-\U0001FA6F"  # Chess Symbols
+    "\U0001FA70-\U0001FAFF"  # Symbols and Pictographs Extended-A
+    "\U00002702-\U000027B0"  # Dingbats
+    "]+")
+
+
+def deEmojify(inputString: str) -> str:
+    """Remove emojis and other non-safe characters from string"""
+    return re.sub(EMOJI_PATTERN, "", inputString)
+
+# Made By @MissJulia_Robot
+
+@juliabot(pattern="/animated")
+async def waifu(animu):
+    animus = [20, 32, 33, 40, 41, 42, 58]
+    sticcers = await animu.client.inline_query(
+        "stickerizerbot", f"#{random.choice(animus)}{(deEmojify(newtext))}")
+    null = await sticcers[0].download_media(TEMP_DOWNLOAD_DIRECTORY)
+    global bara
+    bara = str(null)
+
+    print("sticker downloaded successfully")
+
+
+@register(pattern="^/animate (.*)")
+async def stickerizer(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+
+    global newtext
+    newtext = event.pattern_match.group(1)
+    myid = int("-1009655116")
+    entity = await event.client.get_entity(OWNER_USERNAME)
+    randika = await event.client.send_message(entity, "/animated")
+    await asyncio.sleep(3)
+    await event.client.send_file(event.chat_id, bara, reply_to=event.id)
+    os.remove(bara)
+    await randika.delete()
 
 
 from julia import CMD_HELP
