@@ -176,6 +176,8 @@ file_helpo=  file_help.replace("_", " ")
 
 __help__ = """
  - /song <songname artist(optional)>: uploads the song in it's best quality available
+ - /videosong <songname artist(optional)>: uploads the video song in it's best quality available
+ - /lyrics <songname artist(optional)>: sends the complete lyrics of the song provided as input
 """
 
 CMD_HELP.update({
