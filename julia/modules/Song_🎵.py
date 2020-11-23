@@ -61,7 +61,7 @@ async def _(event):
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
     try:
-        subprocess.run(["spotdl", "-s", cmnd, "-q", "best"])
+        subprocess.run(["spotdl", cmnd])
         subprocess.run(
             'for f in *.opus; do      mv -- "$f" "${f%.opus}.mp3"; done', shell=True
         )
