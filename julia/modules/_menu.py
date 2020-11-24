@@ -87,7 +87,7 @@ async def start_again(event):
 @tbot.on(events.CallbackQuery(pattern=r'reopen_again'))
 async def reopen_again(event):
     if not event.is_group:
-           await event.edit(event.chat_id, PM_START_TEXT, buttons=[
+           await event.edit(PM_START_TEXT, buttons=[
               [Button.url('Add To Group  👥', 't.me/MissJuliaRobot?startgroup=true'),
               Button.url('Support Group 🎙️', 'https://t.me/MissJuliaRobotSupport')],
               [Button.inline('Commands ❓', data='help_menu'),
