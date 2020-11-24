@@ -34,7 +34,7 @@ async def _(event):
     await event.reply(reply, parse_mode="html")
 
 
-@register(pattern="^/warns$")
+@register(pattern="^/getwarns$")
 async def _(event):
     if event.fwd_from:
         return
