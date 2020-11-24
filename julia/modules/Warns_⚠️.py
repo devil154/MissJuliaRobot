@@ -7,11 +7,14 @@ from julia.events import register
 import julia.modules.sql.warns_sql as sql
 
 
-@register(pattern="^/warn (.*)")
+@register(pattern="^/warn ?(.*)")
 async def _(event):
     if event.fwd_from:
         return
     warn_reason = event.pattern_match.group(1)
+    if not warn_reason:
+      await event.reply("Please provide a reason for warning")
+      return
     reply_message = await event.get_reply_message()
     limit, soft_warn = sql.get_warn_setting(event.chat_id)
     num_warns, reasons = sql.warn_user(reply_message.sender_id, event.chat_id, warn_reason)
@@ -28,7 +31,7 @@ async def _(event):
         if warn_reason:
             reply += "\nReason for last warn:\n{}".format(html.escape(warn_reason))
     #
-    await event.edit(reply, parse_mode="html")
+    await event.reply(reply, parse_mode="html")
 
 
 @register(pattern="^/warns$")
@@ -44,17 +47,17 @@ async def _(event):
             text = "This user has {}/{} warnings, for the following reasons:".format(num_warns, limit)
             text += "\r\n"
             text += reasons
-            await event.edit(text)
+            await event.reply(text)
         else:
-            await event.edit("this user has {} / {} warning, but no reasons for any of them.".format(num_warns, limit))
+            await event.reply("this user has {} / {} warning, but no reasons for any of them.".format(num_warns, limit))
     else:
-        await event.edit("this user hasn't got any warnings!")
+        await event.reply("this user hasn't got any warnings!")
 
 
-@register(pattern="^/resetwarn$")
+@register(pattern="^/resetwarns$")
 async def _(event):
     if event.fwd_from:
         return
     reply_message = await event.get_reply_message()
     sql.reset_warns(reply_message.sender_id, event.chat_id)
-    await event.edit("Warns for this user have been reset!")
+    await event.reply("Warns for this user have been reset!")
