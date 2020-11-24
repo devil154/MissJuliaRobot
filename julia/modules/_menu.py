@@ -63,13 +63,13 @@ async def start(event):
             return
 
     if not event.is_group:
-            await tbot.send_message(event.chat_id, PM_START_TEXT, buttons=[
+           await tbot.send_message(event.chat_id, PM_START_TEXT, buttons=[
               [Button.url('Add To Group  👥', 't.me/MissJuliaRobot?startgroup=true'),
-              Button.url('Support Group 🎙️', 'https://t.me/MissJuliaRobotSupport'),
-              Button.url('News Channel  🗞️', 'https://t.me/MissJuliaRobotNews/2')],
+              Button.url('Support Group 🎙️', 'https://t.me/MissJuliaRobotSupport')],
               [Button.inline('Commands ❓', data='help_menu'),
-              Button.url('Source 📀', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],        
-              [Button.url('Webiste 🌐', 'missjuliarobot.unaux.com'),
+              Button.url('Source 📀', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],
+              [Button.url('Channel 🗞️', url='https://t.me/MissJuliaRobotNews/2'),
+              Button.url('Webiste 🌐', 'missjuliarobot.unaux.com'),
               Button.url('Donate 💲', 'https://ko-fi.com/missjuliarobot')],
               [Button.inline('Close Menu 🔒', f'start_again')]])
     else:
@@ -87,12 +87,13 @@ async def start_again(event):
 @tbot.on(events.CallbackQuery(pattern=r'reopen_again'))
 async def reopen_again(event):
     if not event.is_group:
+           await event.edit(event.chat_id, PM_START_TEXT, buttons=[
               [Button.url('Add To Group  👥', 't.me/MissJuliaRobot?startgroup=true'),
-              Button.url('Support Group 🎙️', 'https://t.me/MissJuliaRobotSupport'),
-              Button.url('News Channel  🗞️', 'https://t.me/MissJuliaRobotNews/2')],
+              Button.url('Support Group 🎙️', 'https://t.me/MissJuliaRobotSupport')],
               [Button.inline('Commands ❓', data='help_menu'),
-              Button.url('Source 📀', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],        
-              [Button.url('Webiste 🌐', 'missjuliarobot.unaux.com'),
+              Button.url('Source 📀', 'https://github.com/MissJuliaRobot/MissJuliaRobot')],
+              [Button.url('Channel 🗞️', url='https://t.me/MissJuliaRobotNews/2'),
+              Button.url('Webiste 🌐', 'missjuliarobot.unaux.com'),
               Button.url('Donate 💲', 'https://ko-fi.com/missjuliarobot')],
               [Button.inline('Close Menu 🔒', f'start_again')]])
     else:
