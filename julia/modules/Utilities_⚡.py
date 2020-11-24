@@ -269,7 +269,7 @@ def get_readable_time(seconds: int) -> str:
 
 @tbot.on(events.NewMessage(pattern="^/ping$"))
 async def ping(event):
-    start_time = datetime.datetime.now()
+    start_time = datetime.now()
     message = await event.reply("Pinging .")
     await message.edit("Pinging ..")
     await message.edit("Pinging ...")
