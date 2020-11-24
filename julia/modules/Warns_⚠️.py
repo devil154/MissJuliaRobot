@@ -29,7 +29,7 @@ async def _(event):
     else:
         reply = "<u><a href='tg://user?id={}'>user</a></u> has {}/{} warnings... watch out!".format(reply_message.sender_id, num_warns, limit)
         if warn_reason:
-            reply += "\nReason:\n{}".format(html.escape(warn_reason))
+            reply += "\nReason: {}".format(html.escape(warn_reason))
     #
     await event.reply(reply, parse_mode="html")
 
@@ -45,7 +45,7 @@ async def _(event):
         limit, soft_warn = sql.get_warn_setting(event.chat_id)
         if reasons:
             text = "This user has {}/{} warnings, for the following reasons:".format(num_warns, limit)
-            text += "\r\n"
+            text += "\n\n"
             text += reasons
             await event.reply(text)
         else:
