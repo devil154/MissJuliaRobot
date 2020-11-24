@@ -13,7 +13,7 @@ async def _(event):
         return
     warn_reason = event.pattern_match.group(1)
     if not warn_reason:
-      await event.reply("Please provide a reason for warning")
+      await event.reply("Please provide a reason for warning.")
       return
     reply_message = await event.get_reply_message()
     limit, soft_warn = sql.get_warn_setting(event.chat_id)
@@ -29,7 +29,7 @@ async def _(event):
     else:
         reply = "<u><a href='tg://user?id={}'>user</a></u> has {}/{} warnings... watch out!".format(reply_message.sender_id, num_warns, limit)
         if warn_reason:
-            reply += "\nReason for last warn:\n{}".format(html.escape(warn_reason))
+            reply += "\nReason:\n{}".format(html.escape(warn_reason))
     #
     await event.reply(reply, parse_mode="html")
 
@@ -49,9 +49,9 @@ async def _(event):
             text += reasons
             await event.reply(text)
         else:
-            await event.reply("this user has {} / {} warning, but no reasons for any of them.".format(num_warns, limit))
+            await event.reply("This user has {} / {} warning, but no reasons for any of them.".format(num_warns, limit))
     else:
-        await event.reply("this user hasn't got any warnings!")
+        await event.reply("This user hasn't got any warnings!")
 
 
 @register(pattern="^/resetwarns$")
