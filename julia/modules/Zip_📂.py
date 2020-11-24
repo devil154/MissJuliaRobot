@@ -234,7 +234,7 @@ file_help = file_help.replace(".py", "")
 file_helpo=  file_help.replace("_", " ")
 
 __help__ = """
- - /zip: reply to a telegram file to compressing in .zip format
+ - /zip: reply to a telegram file to compress it in .zip format
  - /unzip: reply to a telegram file to decompress it from the .zip format
 """
 
