@@ -9,11 +9,6 @@ import julia.modules.sql.warns_sql as sql
 from pymongo import MongoClient
 from julia import MONGO_DB_URI
 
-client = MongoClient()
-client = MongoClient(MONGO_DB_URI)
-db = client["missjuliarobot"]
-approved_users = db.approve
-
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -40,15 +35,12 @@ async def is_register_admin(chat, user):
 async def _(event):
     if event.fwd_from:
         return
-    approved_userss = approved_users.find({})
-    for ch in approved_userss:
-        iid = ch["id"]
-        userss = ch["user"]
+    if event.is_private:
+        return
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-        elif event.chat_id == iid and event.sender_id == userss:
-            pass
+        
         else:
             return
     warn_getter = event.text
@@ -79,15 +71,12 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
-    approved_userss = approved_users.find({})
-    for ch in approved_userss:
-        iid = ch["id"]
-        userss = ch["user"]
+    if event.is_private:
+        return
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-        elif event.chat_id == iid and event.sender_id == userss:
-            pass
+        
         else:
             return
     reply_message = await event.get_reply_message()
@@ -110,17 +99,36 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
-    approved_userss = approved_users.find({})
-    for ch in approved_userss:
-        iid = ch["id"]
-        userss = ch["user"]
+    if event.is_private:
+        return
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-        elif event.chat_id == iid and event.sender_id == userss:
-            pass
+ 
         else:
             return
     reply_message = await event.get_reply_message()
     sql.reset_warns(reply_message.sender_id, event.chat_id)
     await event.reply("Warns for this user have been reset!")
+
+from julia import CMD_HELP
+global __help__
+global file_helpo
+file_help = os.path.basename(__file__)
+file_help = file_help.replace(".py", "")
+file_helpo=  file_help.replace("_", " ")
+
+__help__ = """
+ - /warn: warn a user
+ - /removelastwarn: remove the last warn that a user has received
+ - /getwarns: list the warns that a user has received
+ - /resetwarns: reset all warns that a user has received
+ - /warnmode <kick/ban>: set the warn mode for the chat
+"""
+
+CMD_HELP.update({
+    file_helpo: [
+        file_helpo,
+        __help__
+    ]
+})
