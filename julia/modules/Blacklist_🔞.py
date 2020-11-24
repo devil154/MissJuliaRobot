@@ -5,7 +5,6 @@ import julia.modules.sql.blacklist_sql as sql
 from julia.events import register
 from telethon import types
 from telethon.tl import functions
-from julia import tbot
 
 
 async def can_change_info(message):

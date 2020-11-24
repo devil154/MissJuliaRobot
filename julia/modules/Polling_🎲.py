@@ -4,7 +4,6 @@ from telethon.tl import *
 from julia.events import register
 from pymongo import MongoClient
 from julia import MONGO_DB_URI
-from julia import tbot
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)

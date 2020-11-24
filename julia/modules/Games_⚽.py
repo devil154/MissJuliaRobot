@@ -8,7 +8,6 @@ from telethon.tl.types import *
 from julia import *
 
 from julia.events import register, juliabot
-from julia import tbot
 
 from pymongo import MongoClient
 from julia import MONGO_DB_URI

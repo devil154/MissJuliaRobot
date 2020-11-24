@@ -6,7 +6,7 @@ from math import ceil
 from telethon import custom, events, Button
 
 from julia.events import register
-from julia import tbot, CMD_HELP
+from julia import CMD_HELP
 
 from telethon import types
 from telethon.tl import functions

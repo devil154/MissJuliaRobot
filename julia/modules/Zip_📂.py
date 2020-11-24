@@ -4,7 +4,6 @@ import time
 import zipfile
 from telethon import types
 from telethon.tl import functions
-from julia import tbot
 from julia import TEMP_DOWNLOAD_DIRECTORY
 from julia.events import register
 

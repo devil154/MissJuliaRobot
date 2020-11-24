@@ -5,7 +5,6 @@ from julia import CASH_API_KEY
 
 from telethon import types
 from telethon.tl import functions
-from julia import tbot
 from julia.events import register
 
 from pymongo import MongoClient
