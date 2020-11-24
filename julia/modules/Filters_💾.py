@@ -19,7 +19,6 @@ TYPE_PHOTO = 1
 
 TYPE_DOCUMENT = 2
 
-global last_triggered_filters
 last_triggered_filters = {}  # pylint:disable=E0602
 from telethon.tl import functions
 from julia.events import register
@@ -86,15 +85,16 @@ async def on_snip(event):
                     event.reply_to_msg_id
 
                 if "|" in snip.reply:
-                      filter, options= snip.reply.split("|")
-                      try:             
-                        filter = filter.strip()     
-                        button = options.strip()
-                        params = re.findall(r'\'(.*?)\'',button)                
-                        butto = [Button.url(*params)]
-                      except:
-                        filter = filter.strip()
-                        button = None
+                    filter, options= snip.reply.split("|")
+
+                try:             
+                    filter = filter.strip()     
+                    button = options.strip()
+                    params = re.findall(r'\'(.*?)\'',button)                
+                    butto = [Button.url(*params)]
+                except:
+                    filter = filter.strip()
+                    button = None
                 
                 await event.reply(filter, buttons=butto, file=media)
 
