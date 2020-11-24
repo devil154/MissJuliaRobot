@@ -40,6 +40,17 @@ async def is_register_admin(chat, user):
 async def _(event):
     if event.fwd_from:
         return
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
     warn_getter = event.text
     warn_reason = warn_getter.split(" ", maxsplit=1)[1]
     if not warn_reason:
@@ -68,6 +79,17 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
     reply_message = await event.get_reply_message()
     result = sql.get_warns(reply_message.sender_id, event.chat_id)
     if result and result[0] != 0:
@@ -88,6 +110,17 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
     reply_message = await event.get_reply_message()
     sql.reset_warns(reply_message.sender_id, event.chat_id)
     await event.reply("Warns for this user have been reset!")
