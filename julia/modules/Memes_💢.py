@@ -1779,7 +1779,6 @@ def table(update, context):
         )
 
 
-
 from julia import CMD_HELP
 global __help__
 global file_helpo
@@ -1800,6 +1799,7 @@ __help__ = """
  - /zalgofy: reply to a message to g̫̞l̼̦i̎͡tͫ͢c̘ͭh̛̗ it out!
  - /table: get flip/unflip :v.
  - /decide: Randomly answers yes/no/maybe
+ - /bluetext: Must type for fun
  - /toss: Tosses A coin
  - /abuse: Abuses the cunt
  - /insult: Insult the cunt
