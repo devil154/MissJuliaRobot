@@ -415,7 +415,7 @@ async def saat(event):
     chat = "@FileToLinkTGbot"
     async with event.client.conversation(chat) as conv:
         try:
-            response = conv.wait_event(
+            response = await conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1011636686))
             await reply_message.forward_to(chat, debloat)
             response = await response
