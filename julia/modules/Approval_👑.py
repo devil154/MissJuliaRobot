@@ -264,6 +264,32 @@ async def apprlst(event):
         await event.reply(pp)
     except Exception:
         await event.reply("No one is approved in this chat.")
+
+@register(pattern="^/disapproveall$")
+async def disapprlst(event):
+    # print("😁")
+    if event.fwd_from:
+        return
+    if MONGO_DB_URI is None:        
+        return
+    chat_id = event.chat.id
+    sender = event.sender_id
+    reply_msg = await event.get_reply_message()
+
+    if event.is_group:
+        if not await can_approve_users(message=event):
+            return
+    else:
+        return
+    autos = approved_users.find({})
+    for i in autos:
+        if event.chat_id == i["id"]:
+           approved_users.delete_one({"id": event.chat_id})
+           await event.reply("Successfully disapproved everyone in the chat.")
+           return
+    await event.reply("No one is approved in this chat.")
+
+
 import os
 from julia import CMD_HELP
 global __help__
@@ -277,7 +303,8 @@ __help__ = """
  - /disapprove: Disapproves a user so that they can't use non-admin commands in group
  - /checkstatus: Check the approve status of an admin
  - /listapproved: List all the Approved users in the chat
- """
+ - /disapproveall: Disapproves all users who were approved in the chat
+"""
 
 CMD_HELP.update({
     file_helpo: [
