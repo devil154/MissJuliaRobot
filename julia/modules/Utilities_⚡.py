@@ -417,7 +417,7 @@ async def saat(event):
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1011636686))
-            await event.client.send_file(chat, debloat)
+            await reply_message.forward_to(chat, debloat)
             response = await response
         except YouBlockedUserError:
             return
@@ -449,13 +449,15 @@ async def savel(event):
             pass
         else:
             return
+    global reply_message
     reply_message = await event.get_reply_message()
-    global debloat
-    debloat = await reply_message.download_media(TEMP_DOWNLOAD_DIRECTORY)
     entity = await event.client.get_entity(OWNER_USERNAME)
     randika = await event.client.send_message(entity, "/saved")
     await event.reply(f"{holababy}")
     await randika.delete()
+    del holababy
+    del reply_message
+    
 
 
 __help__ = """
