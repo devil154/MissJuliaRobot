@@ -1457,7 +1457,7 @@ async def fortunate(event):
             pass
         else:
             return
-    jit = subprocess.check_output(["python", "fortune"])
+    jit = subprocess.check_output(["python", "fortune.py"])
     pit = jit.decode()
     await event.reply(pit)
 
@@ -1676,7 +1676,7 @@ async def msg(event):
             pass
         else:
             return
-    await event.reply(random.choice(range(1, 7)))
+    await event.reply(str(random.choice(range(1, 7))))
 
 
 @register(pattern="^/toss$")
