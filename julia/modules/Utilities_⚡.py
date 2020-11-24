@@ -12,7 +12,7 @@ from telethon.tl.types import *
 from julia import *
 
 from julia import StartTime
-from julia.events import register
+from julia.events import register, juliabot
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
@@ -267,7 +267,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-@tbot.on(events.NewMessage(pattern="^/ping$"))
+@register(pattern="^/ping$")
 async def ping(event):
     import datetime
     start_time = datetime.datetime.now()
@@ -410,6 +410,52 @@ async def _(event):
     else:
         await event.reply(final_output)
 
+@juliabot(pattern="/saved")
+async def saat(event):
+    chat = "@FileToLinkTGbot"
+    async with event.client.conversation(chat) as conv:
+        try:
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=1011636686))
+            await event.client.send_file(chat, debloat)
+            response = await response
+        except YouBlockedUserError:
+            return
+        if not response:
+            return
+        if response.text.startswith("🔗"):
+            #    my_string= response.text
+            #    p = re.compile(":(.*)")
+            #    global holababy
+            #    holababy = p.findall(my_string)
+            global holababy
+            holababy = response.text
+
+
+@register(pattern="^/savefile$")
+async def savel(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        return
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
+    reply_message = await event.get_reply_message()
+    global debloat
+    debloat = await reply_message.download_media(TEMP_DOWNLOAD_DIRECTORY)
+    entity = await event.client.get_entity(OWNER_USERNAME)
+    randika = await event.client.send_message(entity, "/saved")
+    await event.reply(f"{holababy}")
+    await randika.delete()
 
 
 __help__ = """
