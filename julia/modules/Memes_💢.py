@@ -2245,6 +2245,8 @@ __help__ = """
  - /roll: Roll a dice.
  - /rlg: Join ears,nose,mouth and create an emo ;-;
  - /react: Check on your own
+ - /rhappy: Check on your own
+ - /rangry: Check on your own
  - /angrymoji: Check on your own
  - /crymoji: Check on your own
  - /cowsay | /tuxsay | /milksay | /kisssay | /wwwsay | /defaultsay | /bunnysay | /moosesay | /sheepsay | /rensay | /cheesesay | /ghostbusterssay | /skeletonsay <text>: Returns a stylish art text from the given text
