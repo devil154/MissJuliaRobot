@@ -311,6 +311,12 @@ async def spam_update(event):
            await dev.delete()
            os.remove("nudes.jpg")
     		
+from julia import CMD_HELP
+global __help__
+global file_helpo
+file_help = os.path.basename(__file__)
+file_help = file_help.replace(".py", "")
+file_helpo=  file_help.replace("_", " ")
 
 __help__ = """
  - /cleanbluetext <on/off/yes/no>: clean commands from non-admins after sending
@@ -319,3 +325,10 @@ __help__ = """
  - /listcleanbluetext: list currently whitelisted commands
  - /profanity on/off: filters all explict/abusive words sent by non admins also filters explicit/porn images
 """
+
+CMD_HELP.update({
+    file_helpo: [
+        file_helpo,
+        __help__
+    ]
+})
