@@ -86,10 +86,12 @@ async def on_snip(event):
 
                 filter = ""
                 options = ""
-                buttons=None
+                butto=None
+
                 if "|" in snip.reply:
                     filter, options= snip.reply.split("|")
-                
+                else:
+                    filter = str(snip.reply)
                 try:             
                     filter = filter.strip()     
                     button = options.strip()
