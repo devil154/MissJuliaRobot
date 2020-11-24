@@ -62,7 +62,7 @@ from telegram.ext import run_async
 from telegram.utils.helpers import escape_markdown
 from telegram.utils.helpers import mention_html
 from telegraph import Telegraph
-from telethon import **
+from telethon import *
 from telethon import events
 from telethon.errors import ChatAdminRequiredError
 from telethon.errors import FloodWaitError
@@ -71,7 +71,7 @@ from telethon.errors import YouBlockedUserError
 from telethon.tl import functions
 from telethon.tl import types
 from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import **
+from telethon.tl.types import *
 from tswift import Song
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError
