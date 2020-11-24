@@ -1,4 +1,5 @@
-import inspect, time
+import inspect
+import time
 import logging
 import re
 from pathlib import Path

@@ -4,7 +4,8 @@ from julia.events import register
 from telethon import *
 from telethon.tl import functions
 from pymongo import MongoClient
-import os, subprocess
+import os
+import subprocess
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
