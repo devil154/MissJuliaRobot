@@ -163,8 +163,6 @@ async def howdoi(event):
     pit = jit.decode()
     await event.reply(pit)
 from julia import CMD_HELP
-global __help__
-global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
 file_helpo=  file_help.replace("_", " ")
