@@ -167,3 +167,22 @@ async def _(event):
     for i in range(len(usr)):
         reply_text += f"[{usr[i]['name']}]({usr[i]['html_url']})\n"
     await event.reply(reply_text, link_preview=False)
+
+from julia import CMD_HELP
+global __help__
+global file_helpo
+file_help = os.path.basename(__file__)
+file_help = file_help.replace(".py", "")
+file_helpo=  file_help.replace("_", " ")
+
+__help__ = """
+ - /git <username>: Returns info about a GitHub user or organization.
+ - /repo <username>: Return the GitHub user or organization repository list
+"""
+
+CMD_HELP.update({
+    file_helpo: [
+        file_helpo,
+        __help__
+    ]
+})
