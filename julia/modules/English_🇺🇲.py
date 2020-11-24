@@ -2,84 +2,32 @@ from translate import Translator
 from julia import tbot
 import json
 import requests
-from emoji import UNICODE_EMOJI
-from telegram.ext import CommandHandler
-from telegram.ext import run_async
 from julia import CMD_HELP, MONGO_DB_URI
 from julia.events import register
 from telethon import *
 from telethon.tl import functions
 from pymongo import MongoClient
-import os, subprocess
-import asyncio
-import glob
-import html
-import io
+import os
 import random
 import re
-import sys
-import textwrap
 import time
-import traceback
 import urllib.request
-from contextlib import contextmanager
-from datetime import datetime
-from html import unescape
-from random import randrange
-from time import sleep
 from typing import List
 from typing import Optional
-from urllib.request import urlopen
 
 import aiohttp
-import barcode
 import bs4
-import emoji
-import html2text
-import nude
-import pyfiglet
-import telegraph
 import text2emotion as machi
-from barcode.writer import ImageWriter
 from better_profanity import profanity
-from bing_image_downloader import downloader
 from cowpy import cow
-from fontTools.ttLib import TTFont
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-from gtts import gTTS
-from gtts import gTTSError
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
-from PIL import ImageOps
 from PyDictionary import PyDictionary
-from requests import get
-from telegram import InlineKeyboardButton
-from telegram import InlineKeyboardMarkup
 from telegram import Message
 from telegram import MessageEntity
-from telegram import ParseMode
-from telegram import ReplyKeyboardRemove
-from telegram import Update
-from telegram.error import BadRequest
-from telegram.ext import CallbackContext
-from telegram.ext import Filters
-from telegram.utils.helpers import escape_markdown
-from telegram.utils.helpers import mention_html
-from telegraph import Telegraph
-from telethon import events
 from telethon.errors import ChatAdminRequiredError
-from telethon.errors import FloodWaitError
 from telethon.errors import UserAdminInvalidError
-from telethon.errors import YouBlockedUserError
 from telethon.tl import types
-from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import *
 from tswift import Song
-from wikipedia import summary
-from wikipedia.exceptions import DisambiguationError
-from wikipedia.exceptions import PageError
 
 
 

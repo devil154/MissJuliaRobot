@@ -119,8 +119,6 @@ async def _(event):
         except BaseException:
             return
 
-from telethon.tl.types import MessageEntityMention
-
 @tbot.on(events.NewMessage(pattern=None))
 async def _(event):
     send = await event.get_sender()
