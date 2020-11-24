@@ -8,7 +8,6 @@ from coffeehouse.lydia import LydiaAI
 from julia import LYDIA_API_KEY, OWNER_ID
 from telethon import types
 from telethon.tl import functions
-from julia import tbot
 from julia.events import register
 from telethon import events
 

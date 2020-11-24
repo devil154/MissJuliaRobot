@@ -7,7 +7,6 @@ import bs4
 import requests
 from telethon import types
 from telethon.tl import functions
-from julia import tbot
 from julia.events import register
 
 langi = "en"

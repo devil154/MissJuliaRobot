@@ -162,7 +162,7 @@ async def howdoi(event):
     jit = subprocess.check_output(["howdoi", f"{str}"])
     pit = jit.decode()
     await event.reply(pit)
-from julia import tbot, CMD_HELP
+from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)

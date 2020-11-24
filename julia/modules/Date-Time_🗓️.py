@@ -124,7 +124,7 @@ async def _(event):
     await send_message.edit(result, parse_mode="html")
 
 import os
-from julia import tbot, CMD_HELP
+from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)

@@ -72,10 +72,6 @@ async def asciiart(event):
             os.remove(os.path.join(directory, item))
         elif item.endswith(".jpeg"):
             os.remove(os.path.join(directory, item))
-
-
-import os
-from julia import tbot
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)

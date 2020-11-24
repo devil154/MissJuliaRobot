@@ -9,8 +9,6 @@ import string
 import nltk  
 from PIL import Image
 from zalgo_text import zalgo
-
-from julia import tbot
 from julia.events import register
 import asyncio
 import glob

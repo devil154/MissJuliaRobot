@@ -24,7 +24,6 @@ global last_triggered_filters
 
 last_triggered_filters = {}  # pylint:disable=E0602
 from telethon.tl import functions
-from julia import tbot
 from julia.events import register
 
 async def can_change_info(message):

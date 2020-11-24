@@ -6,7 +6,7 @@ import sys
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 import heroku3
-from julia import OWNER_ID, tbot
+from julia import OWNER_ID
 import os
 from telethon import events
 

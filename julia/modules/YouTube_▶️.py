@@ -13,7 +13,6 @@ from youtube_dl.utils import MaxDownloadsReached
 from youtube_dl.utils import PostProcessingError
 from youtube_dl.utils import UnavailableVideoError
 from youtube_dl.utils import XAttrMetadataError
-from julia import tbot
 from julia.events import register
 
 from pymongo import MongoClient
