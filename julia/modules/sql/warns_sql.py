@@ -2,7 +2,7 @@ import threading
 
 from sqlalchemy import Integer, Column, String, UnicodeText, func, distinct, Boolean
 
-from sql_helpers import SESSION, BASE
+from julia.modules.sql import SESSION, BASE
 
 
 class Warns(BASE):
