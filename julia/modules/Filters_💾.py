@@ -19,9 +19,6 @@ TYPE_PHOTO = 1
 
 TYPE_DOCUMENT = 2
 
-
-global last_triggered_filters
-
 last_triggered_filters = {}  # pylint:disable=E0602
 from telethon.tl import functions
 from julia.events import register

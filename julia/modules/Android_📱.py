@@ -304,7 +304,6 @@ async def twrp(request):
 import os
 from julia import CMD_HELP
 global __help__
-global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
 file_helpo=  file_help.replace("_", " ")
