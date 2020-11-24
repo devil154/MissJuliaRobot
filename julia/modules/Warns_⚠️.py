@@ -7,11 +7,12 @@ from julia.events import register
 import julia.modules.sql.warns_sql as sql
 
 
-@register(pattern="^/warn ?(.*)")
+@register(pattern="^/warn(.*)")
 async def _(event):
     if event.fwd_from:
         return
-    warn_reason = event.pattern_match.group(1)
+    warn_getter = event.text
+    warn_reason = 
     if not warn_reason:
       await event.reply("Please provide a reason for warning.")
       return
@@ -45,7 +46,7 @@ async def _(event):
         limit, soft_warn = sql.get_warn_setting(event.chat_id)
         if reasons:
             text = "This user has {}/{} warnings, for the following reasons:".format(num_warns, limit)
-            text += "\n"
+            text += "\r\n"
             text += reasons
             await event.reply(text)
         else:
