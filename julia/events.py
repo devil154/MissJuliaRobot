@@ -31,11 +31,10 @@ leechers = dbb.leecher
 def register(**args):
     pattern = args.get('pattern')
     r_pattern = r'^[/]'
-    disable_edited = args.get('disable_edited', False)
+    
     if pattern is not None and not pattern.startswith('(?i)'):
         args['pattern'] = '(?i)' + pattern
-    if "disable_edited" in args:
-        del args['disable_edited']
+  
     args['pattern'] = pattern.replace('^/', r_pattern, 1)
     stack = inspect.stack()
     previous_stack_frame = stack[1]
@@ -91,8 +90,6 @@ def register(**args):
             else:
                 pass
 
-        if not disable_edited:
-            tbot.add_event_handler(wrapper, events.MessageEdited(**args))
         tbot.add_event_handler(wrapper, events.NewMessage(**args))
         return wrapper
   
