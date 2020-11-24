@@ -10,6 +10,12 @@ from telethon.tl import types
 from telethon.tl.types import *
 from telethon.errors import *
 from julia import *
+import os
+
+from telethon.tl.functions.photos import GetUserPhotosRequest
+from telethon.tl.functions.users import GetFullUserRequest
+from telethon.tl.types import MessageEntityMentionName
+from telethon.utils import get_input_location
 
 from julia import StartTime
 from julia.events import register, juliabot
@@ -62,6 +68,7 @@ async def who(event):
             pass
         else:
             return
+
     if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
 
@@ -74,11 +81,24 @@ async def who(event):
     if not message_id_to_reply:
         message_id_to_reply = None
 
-    await event.reply(caption, parse_mode="html")
+    try:
+        await event.client.send_file(event.chat_id,
+                                     photo,
+                                     caption=caption,
+                                     link_preview=False,
+                                     force_document=False,
+                                     reply_to=message_id_to_reply,
+                                     parse_mode="html")
+
+        if not photo.startswith("http"):
+            os.remove(photo)
+        await event.delete()
+
+    except TypeError:
+        await event.edit(caption, parse_mode="html")
 
 
 async def get_user(event):
-    """ Get the user from argument or replied message. """
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         replied_user = await tbot(
@@ -113,7 +133,24 @@ async def get_user(event):
 
 
 async def fetch_info(replied_user, event):
-    """ Get details from the User object. """
+    replied_user_profile_photos = await event.client(
+        GetUserPhotosRequest(user_id=replied_user.user.id,
+                             offset=42,
+                             max_id=0,
+                             limit=80))
+    replied_user_profile_photos_count = "Person needs help with uploading profile picture."
+    try:
+        replied_user_profile_photos_count = replied_user_profile_photos.count
+    except AttributeError as e:
+        pass
+    user_id = replied_user.user.id
+    first_name = replied_user.user.first_name
+    last_name = replied_user.user.last_name
+    try:
+        dc_id, location = get_input_location(replied_user.profile_photo)
+    except Exception as e:
+        dc_id = "Couldn't fetch DC ID!"
+        location = str(e)
     user_id = replied_user.user.id
     first_name = replied_user.user.first_name
     last_name = replied_user.user.last_name
@@ -122,6 +159,11 @@ async def fetch_info(replied_user, event):
     is_bot = replied_user.user.bot
     restricted = replied_user.user.restricted
     verified = replied_user.user.verified
+    photo = await event.client.download_profile_photo(user_id,
+                                                      TEMP_DOWNLOAD_DIRECTORY +
+                                                      str(user_id) + ".jpg",
+                                                      download_big=True)
+
     first_name = first_name.replace(
         "\u2060", "") if first_name else ("This User has no First Name")
     last_name = last_name.replace(
@@ -134,6 +176,7 @@ async def fetch_info(replied_user, event):
     caption += f"First Name: {first_name} \n"
     caption += f"Last Name: {last_name} \n"
     caption += f"Username: {username} \n"
+    caption += f"Data Centre ID: {dc_id}\n"
     caption += f"Is Bot: {is_bot} \n"
     caption += f"Is Restricted: {restricted} \n"
     caption += f"Is Verified by Telegram: {verified} \n"
@@ -157,7 +200,7 @@ async def fetch_info(replied_user, event):
     if event.chat_id == iid and event.sender_id == userss:
        caption += f"\n\n<b>This person is approved in this chat.</b>"
 
-    return caption
+    return photo, caption
 
 @register(pattern="^/userid$")
 async def useridgetter(target):
