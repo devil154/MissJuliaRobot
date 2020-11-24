@@ -459,6 +459,12 @@ async def savel(event):
     del reply_message
     
 
+from julia import CMD_HELP
+global __help__
+global file_helpo
+file_help = os.path.basename(__file__)
+file_help = file_help.replace(".py", "")
+file_helpo=  file_help.replace("_", " ")
 
 __help__ = """
  - /userid: If replied to user's message gets that user's id.
@@ -467,4 +473,9 @@ __help__ = """
  - /info: Get information about a user.
  - /savefile: Gives you a permanent link of a file so that you can download it later anytime
 """
-
+CMD_HELP.update({
+    file_helpo: [
+        file_helpo,
+        __help__
+    ]
+})
