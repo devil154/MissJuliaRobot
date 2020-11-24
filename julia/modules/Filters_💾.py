@@ -84,9 +84,11 @@ async def on_snip(event):
 
                     event.reply_to_msg_id
 
+                filter = ""
+                options = ""
                 if "|" in snip.reply:
                     filter, options= snip.reply.split("|")
-
+                
                 try:             
                     filter = filter.strip()     
                     button = options.strip()
