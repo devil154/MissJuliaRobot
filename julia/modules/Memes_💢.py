@@ -1757,7 +1757,19 @@ async def _(event):
     await event.reply(repl)
 
 
-def decide(update, context):
+@register(pattern="^/decide$")
+async def _(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
     r = randint(1, 100)
     if r <= 65:
         await event.reply("Yes.")
@@ -1767,16 +1779,27 @@ def decide(update, context):
         await event.reply("Maybe.")
 
 
-def table(update, context):
+@register(pattern="^/table$")
+async def _(event):
+    approved_userss = approved_users.find({})
+    for ch in approved_userss:
+        iid = ch["id"]
+        userss = ch["user"]
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            pass
+        elif event.chat_id == iid and event.sender_id == userss:
+            pass
+        else:
+            return
     r = randint(1, 100)
     if r <= 45:
         await event.reply("(╯°□°）╯彡 ┻━┻")
     elif r <= 90:
-        await event.reply("Send money bsdk to buy new table to flip")
+        await event.reply("Send money to buy new table to flip")
     else:
         await event.reply(
-            "Go do some work instead of flippin tables you helpless fagit."
-        )
+            "Go do some work instead of flipping tables ma boy.")
 
 import random
 from telegram.ext import CommandHandler
