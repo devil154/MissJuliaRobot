@@ -264,7 +264,6 @@ async def sticklet(event):
         return
 
 import nude
-from nude import Nude
 
 @tbot.on(events.NewMessage(pattern=None))      
 async def spam_update(event):
