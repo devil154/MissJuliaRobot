@@ -45,7 +45,7 @@ async def rules(event):
          await event.edit("Click on the below button to get this group's rules 👇", buttons=[[Button.inline('Sorry link has expired 😔', data="nothing_here_bro")]])
 
        except Exception:
-          await event.answer("I can't send you the rules as you haven't started me in PM, first start me !", alert=False)
+          await event.answer("I can't send you the rules as you haven't started me in PM, first start me !", alert=True)
        
 @register(pattern="^/setrules")
 async def _(event):
