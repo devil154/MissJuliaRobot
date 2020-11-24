@@ -1713,7 +1713,7 @@ async def msg(event):
         replyto = reply.sender_id
     else:
         replyto = event.sender_id
-    await event.reply(random.choice(ABUSE_STRINGS), reply_to=replyto)
+    await reply.reply(random.choice(ABUSE_STRINGS), reply_to=replyto)
 
 
 @register(pattern="^/bluetext$")
@@ -1734,7 +1734,7 @@ async def msg(event):
         replyto = reply.sender_id
     else:
         replyto = event.sender_id
-    await event.reply("BLUE TEXT\n MUST CLICK\n I AM A STUPID ANIMAL THAT IS ATTRACTED TO COLORS", reply_to=replyto)
+    await reply.reply("BLUE TEXT\n MUST CLICK\n I AM A STUPID ANIMAL THAT IS ATTRACTED TO COLORS", reply_to=replyto)
 
 
 @register(pattern="^/rlg$")
@@ -1876,7 +1876,6 @@ SFW_STRINGS = (
 )
 
 
-
 @register(pattern="^/insult$")
 async def _(event):
     approved_userss = approved_users.find({})
@@ -1895,7 +1894,7 @@ async def _(event):
         replyto = reply.sender_id
     else:
         replyto = event.sender_id
-    await event.reply(random.choice(SFW_STRINGS), reply_to=replyto)
+    await reply.reply(random.choice(SFW_STRINGS), reply_to=replyto)
 
 import random
 from telegram import Update
