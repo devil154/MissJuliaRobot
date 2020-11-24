@@ -77,7 +77,7 @@ from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError
 from wikipedia.exceptions import PageError
 
-from julia import **
+from julia import *
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
