@@ -68,7 +68,8 @@ def register(**args):
         async def wrapper(check):
             if check.edit_date:
                 return
-
+            if check.fwd_from:
+                return
             if check.is_group or check.is_private:
                 pass
             else:
