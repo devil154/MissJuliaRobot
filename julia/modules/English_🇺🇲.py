@@ -11,23 +11,12 @@ from telethon import *
 from telethon.tl import functions
 from pymongo import MongoClient
 import os
-import random
-import re
-import time
 import urllib.request
 from typing import List
 from typing import Optional
-
-import aiohttp
 import bs4
 import text2emotion as machi
-from better_profanity import profanity
-from cowpy import cow
 from PyDictionary import PyDictionary
-from telegram import Message
-from telegram import MessageEntity
-from telethon.errors import ChatAdminRequiredError
-from telethon.errors import UserAdminInvalidError
 from telethon.tl import types
 from telethon.tl.types import *
 from tswift import Song
