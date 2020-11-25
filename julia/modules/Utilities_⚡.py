@@ -96,10 +96,10 @@ async def who(event):
 
         if not photo.startswith("http"):
             os.remove(photo)
-        await event.delete()
+        # await event.delete()
 
     except TypeError:
-        await event.edit(caption, parse_mode="html")
+        await event.reply(caption, parse_mode="html")
 
 
 async def get_user(event):
