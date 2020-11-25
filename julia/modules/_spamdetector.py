@@ -25,7 +25,6 @@ async def leechers(event):
     if event.sender_id == USERSPAM[0]:
             pass
     else:
-            spamcounter = 0
             USERSPAM = []
             USERSPAM.append(check)
 
@@ -62,6 +61,7 @@ async def leechers(event):
             return
     timerr = time.time()
     leechers.insert_one({"id": USERSPAM[0], "time": timerr})
+    
     try:
         MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
         await tbot(EditBannedRequest(event.chat_id, event.sender_id, MUTE_RIGHTS))
