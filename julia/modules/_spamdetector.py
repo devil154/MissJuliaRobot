@@ -25,6 +25,7 @@ async def leechers(event):
         if event.sender_id == USERSPAM[0]:
             pass
         else:
+            spamcounter = 0
             USERSPAM = []
             USERSPAM.append(check)
     else:
