@@ -12,16 +12,7 @@ import sys
 from julia import ubot
 
 from pymongo import MongoClient
-from julia import MONGO_DB_URI, OWNER_ID
-from telethon import types
-from telethon.tl import functions
-from logging import basicConfig
-from logging import DEBUG
-from logging import getLogger
-from logging import INFO
-
-from telethon import TelegramClient
-from telethon.sessions import StringSession
+from julia import MONGO_DB_URI
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
