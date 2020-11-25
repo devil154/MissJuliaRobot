@@ -21,12 +21,16 @@ async def leechers(event):
     senderr = await event.get_sender()
     check = sender
     USERSPAM = []
-    
-    if event.sender_id == USERSPAM[0]:
+
+    if len(USERSPAM) >= 1:
+        if event.sender_id == USERSPAM[0]:
             pass
-    else:
+        else:
             USERSPAM = []
             USERSPAM.append(check)
+    else:
+        USERSPAM = []
+        USERSPAM.append(check)
 
     print (spamcounter)
     if spamcounter > 4:
