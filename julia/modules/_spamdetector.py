@@ -6,16 +6,14 @@ from pymongo import MongoClient
 from julia import MONGO_DB_URI, OWNER_ID
 from telethon import events
 
-# MADE BY @MISSJULIA_ROBOT
-
 global spamcounter
 spamcounter = 0
-
 
 @tbot.on(events.NewMessage(pattern=None))
 async def leechers(event):
     if str(event.sender_id) in str(OWNER_ID):
         return
+
     global spamcounter
     global starttimer
     starttimer = time.time()
@@ -24,16 +22,19 @@ async def leechers(event):
     senderr = await event.get_sender()
     check = sender
     USERSPAM = []
+    
     if len(USERSPAM) >= 1:
         if event.sender_id == USERSPAM[0]:
             pass
         else:
+            spamcounter = 0
             USERSPAM = []
             USERSPAM.append(check)
     else:
+        spamcounter = 0
         USERSPAM = []
         USERSPAM.append(check)
-
+        
     if spamcounter > 4:
         spamtimecheck = time.time() - starttimer
     if (
@@ -42,7 +43,6 @@ async def leechers(event):
         and (time.strftime("%S", time.gmtime(spamtimecheck))) <= "03"
     ):
 
-        spamcounter = 0
         if senderr.username is None:
             st = senderr.first_name
             hh = senderr.id
@@ -52,7 +52,6 @@ async def leechers(event):
             final = f"@{st} you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"
             pass
     else:
-        spamcounter = 0
         return
 
     dev = await event.respond(final)
@@ -74,4 +73,3 @@ async def leechers(event):
         await dev.edit(final + "\nYou are now muted !")
     except Exception:
         pass
-    spamcounter = 0
