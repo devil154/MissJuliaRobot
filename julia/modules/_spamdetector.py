@@ -14,7 +14,6 @@ async def leechers(event):
     if str(event.sender_id) in str(OWNER_ID):
         return
     global spamcounter
-    global starttimer
     starttimer = time.time()
     spamcounter += 1
     sender = event.sender_id
@@ -35,12 +34,13 @@ async def leechers(event):
     print (spamcounter)
     if spamcounter > 4:
         spamtimecheck = time.time() - starttimer
+
     if (
         spamcounter > 4
         and event.sender_id == USERSPAM[0]
         and (time.strftime("%S", time.gmtime(spamtimecheck))) <= "03"
     ):
-
+        spamcounter = 0  
         if senderr.username is None:
             st = senderr.first_name
             hh = senderr.id
