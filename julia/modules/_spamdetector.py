@@ -20,7 +20,7 @@ async def leechers(event):
     sender = event.sender_id
     senderr = await event.get_sender()
     check = sender
-    USERSPAM = [1234]
+    USERSPAM = []
     
     if event.sender_id == USERSPAM[0]:
             pass
