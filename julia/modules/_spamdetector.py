@@ -28,7 +28,6 @@ async def leechers(event):
             spamcounter = 0
             USERSPAM = []
             USERSPAM.append(check)
-            return
 
     print (spamcounter)
     if spamcounter > 4:
