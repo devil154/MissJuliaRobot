@@ -55,7 +55,7 @@ from julia.events import register
 TMP_DOWNLOAD_DIRECTORY = "./"
 
 
-@register(pattern="^/info(?: |$)(.*)")
+@tbot.on(events.NewMessage(pattern="^/info(?: |$)(.*)"))
 async def who(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
