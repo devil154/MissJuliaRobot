@@ -1,3 +1,4 @@
+from julia import CMD_HELP
 import asyncio
 import glob
 import html
@@ -104,7 +105,8 @@ async def is_register_admin(chat, user):
         )
     else:
         return None
-        
+
+
 @register(pattern="^/git")
 async def _(event):
     if event.fwd_from:
@@ -135,7 +137,7 @@ async def _(event):
 **Public Repos:** `{usr['public_repos']}`
 **Public Gists:** `{usr['public_gists']}`
 **Email:** `{usr['email']}`
-**Company:** `{usr['company']}`         
+**Company:** `{usr['company']}`
 **Website:** `{usr['blog']}`
 **Last updated:** `{usr['updated_at']}`
 **Account created at:** `{usr['created_at']}`
@@ -143,7 +145,6 @@ async def _(event):
     else:
         reply_text = "User not found. Make sure you entered valid username!"
     await event.reply(reply_text)
-
 
 
 @register(pattern="^/repo")
@@ -168,12 +169,11 @@ async def _(event):
         reply_text += f"[{usr[i]['name']}]({usr[i]['html_url']})\n"
     await event.reply(reply_text, link_preview=False)
 
-from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /git <username>: Returns info about a GitHub user or organization.

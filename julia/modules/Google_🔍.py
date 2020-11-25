@@ -1,3 +1,6 @@
+from julia import CMD_HELP
+from bs4 import BeautifulSoup
+import urllib
 from julia import tbot
 import glob
 import io
@@ -25,6 +28,7 @@ client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
 
+
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
 
@@ -44,6 +48,7 @@ async def is_register_admin(chat, user):
             (types.ChatParticipantAdmin, types.ChatParticipantCreator),
         )
     return None
+
 
 @register(pattern="^/google (.*)")
 async def _(event):
@@ -77,6 +82,7 @@ async def _(event):
                       link_preview=False,
                       parse_mode="Markdown")
 
+
 @register(pattern="^/img (.*)")
 async def img_sampler(event):
     if event.fwd_from:
@@ -108,14 +114,11 @@ async def img_sampler(event):
     for files in types:
         files_grabbed.extend(glob.glob(files))
     await tbot.send_file(event.chat_id,
-                                 files_grabbed,
-                                 reply_to=event.id)
+                         files_grabbed,
+                         reply_to=event.id)
     os.chdir("/app/MissJuliaRobot/MissJuliaRobot")
     os.system("rm -rf store")
-import urllib
-from bs4 import BeautifulSoup
 
-from julia import CMD_HELP
 
 opener = urllib.request.build_opener()
 useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.157 Mobile Safari/537.36"
@@ -158,8 +161,17 @@ async def okgoogle(img):
         image.close()
         # https://stackoverflow.com/questions/23270175/google-reverse-image-search-using-post-request#28792943
         searchUrl = "https://www.google.com/searchbyimage/upload"
-        multipart = {"encoded_image": (name, open(name, "rb")), "image_content": ""}
-        response = requests.post(searchUrl, files=multipart, allow_redirects=False)
+        multipart = {
+            "encoded_image": (
+                name,
+                open(
+                    name,
+                    "rb")),
+            "image_content": ""}
+        response = requests.post(
+            searchUrl,
+            files=multipart,
+            allow_redirects=False)
         fetchUrl = response.headers["Location"]
 
         if response != 400:
@@ -214,9 +226,8 @@ async def ParseSauce(googleurl):
 
     try:
         for similar_image in soup.findAll("input", {"class": "gLFyf"}):
-            url = "https://www.google.com/search?tbm=isch&q=" + urllib.parse.quote_plus(
-                similar_image.get("value")
-            )
+            url = "https://www.google.com/search?tbm=isch&q=" + \
+                urllib.parse.quote_plus(similar_image.get("value"))
             results["similar_images"] = url
     except BaseException:
         pass
@@ -302,7 +313,7 @@ global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /google <text>: Perform a google search

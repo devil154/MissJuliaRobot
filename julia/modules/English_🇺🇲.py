@@ -1,4 +1,7 @@
-from translate import Translator 
+from pathlib import Path
+import logging
+import inspect
+from translate import Translator
 from julia import tbot
 import json
 import requests
@@ -30,11 +33,11 @@ from telethon.tl.types import *
 from tswift import Song
 
 
-
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
+
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -73,10 +76,10 @@ async def _(event):
     lang = event.pattern_match.group(1)
     thetext = await event.get_reply_message()
     translate_text = thetext.text
-    translator= Translator(to_lang=lang)
+    translator = Translator(to_lang=lang)
     translation = translator.translate(translate_text)
     await event.reply(translation)
-    
+
 
 API_KEY = "6ae0c3a0-afdc-4532-a810-82ded0054236"
 URL = "http://services.gingersoftware.com/Ginger/correct/json/GingerTheText"
@@ -106,13 +109,13 @@ async def _(event):
     prev_end = 0
 
     for change in changes:
-            start = change.get("From")
-            end = change.get("To") + 1
-            suggestions = change.get("Suggestions")
-            if suggestions:
-                sugg_str = suggestions[0].get("Text")
-                curr_string += msg[prev_end:start] + sugg_str
-                prev_end = end
+        start = change.get("From")
+        end = change.get("To") + 1
+        suggestions = change.get("Suggestions")
+        if suggestions:
+            sugg_str = suggestions[0].get("Text")
+            curr_string += msg[prev_end:start] + sugg_str
+            prev_end = end
 
     curr_string += msg[prev_end:]
     await event.reply(curr_string)
@@ -133,7 +136,7 @@ async def _(event):
         elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
-            return  
+            return
     text = event.text[len("/define "):]
     word = f"{text}"
     let = dictionary.meaning(word)
@@ -156,7 +159,7 @@ async def _(event):
         elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
-            return   
+            return
     text = event.text[len("/synonyms "):]
     word = f"{text}"
     let = dictionary.synonym(word)
@@ -179,7 +182,7 @@ async def _(event):
         elif event.chat_id == iid and event.sender_id == userss:
             pass
         else:
-            return    
+            return
     text = message.text[len("/antonyms "):]
     word = f"{text}"
     let = dictionary.antonym(word)
@@ -188,6 +191,7 @@ async def _(event):
     net = jet.replace("}", "")
     got = net.replace("'", "")
     await event.reply(got)
+
 
 @register(pattern="^/emotion$")
 async def _(event):
@@ -217,14 +221,11 @@ async def _(event):
     await event.reply(t)
 
 
-import inspect
-import logging
-from pathlib import Path
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 
 __help__ = """
@@ -232,9 +233,9 @@ __help__ = """
  - /forbesify: Correct your punctuations better use the advanged spell module
  - /tr <language code>: Type in reply to a message to get it's translation in the destination language
  - /define <text>: Type the word or expression you want to search\nFor example /define Gay
- - /emotion: Type in reply to a message to check emotions 
- - /synonyms <word>: Find the synonyms of a word 
- - /antonyms <word>: Find the antonyms of a word 
+ - /emotion: Type in reply to a message to check emotions
+ - /synonyms <word>: Find the synonyms of a word
+ - /antonyms <word>: Find the antonyms of a word
 """
 
 CMD_HELP.update({

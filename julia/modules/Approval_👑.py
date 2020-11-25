@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 from pymongo import MongoClient
 from julia import MONGO_DB_URI
@@ -19,9 +21,8 @@ async def can_approve_users(message):
         )
     )
     p = result.participant
-    return isinstance(p, types.ChannelParticipantCreator) or (
-        isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.add_admins
-    )
+    return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
+        p, types.ChannelParticipantAdmin) and p.admin_rights.add_admins)
 
 
 async def is_register_admin(chat, user):
@@ -231,10 +232,10 @@ async def checkst(event):
 async def apprlst(event):
     print("😁")
     if event.fwd_from:
-        
+
         return
     if MONGO_DB_URI is None:
-        
+
         return
     chat_id = event.chat.id
     sender = event.sender_id
@@ -265,12 +266,13 @@ async def apprlst(event):
     except Exception:
         await event.reply("No one is approved in this chat.")
 
+
 @register(pattern="^/disapproveall$")
 async def disapprlst(event):
     # print("😁")
     if event.fwd_from:
         return
-    if MONGO_DB_URI is None:        
+    if MONGO_DB_URI is None:
         return
     chat_id = event.chat.id
     sender = event.sender_id
@@ -284,19 +286,17 @@ async def disapprlst(event):
     autos = approved_users.find({})
     for i in autos:
         if event.chat_id == i["id"]:
-           approved_users.delete_one({"id": event.chat_id})
-           await event.reply("Successfully disapproved everyone in the chat.")
-           return
+            approved_users.delete_one({"id": event.chat_id})
+            await event.reply("Successfully disapproved everyone in the chat.")
+            return
     await event.reply("No one is approved in this chat.")
 
 
-import os
-from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /approve: Approves a user so that they can use all non-admin commands in group

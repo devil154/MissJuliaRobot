@@ -32,30 +32,36 @@ leechers = dbb.leecher
 def register(**args):
     pattern = args.get('pattern')
     r_pattern = r'^[/]'
-    
+
     if pattern is not None and not pattern.startswith('(?i)'):
         args['pattern'] = '(?i)' + pattern
-  
+
     args['pattern'] = pattern.replace('^/', r_pattern, 1)
     stack = inspect.stack()
     previous_stack_frame = stack[1]
     file_test = Path(previous_stack_frame.filename)
-    file_test = file_test.stem.replace(".py", "")   
+    file_test = file_test.stem.replace(".py", "")
     reg = re.compile("(.*)")
 
-    if not pattern == None:
+    if pattern is not None:
         try:
             cmd = re.search(reg, pattern)
             try:
-                cmd = cmd.group(1).replace("$", "").replace("\\", "").replace("^", "")
-            except:
+                cmd = cmd.group(1).replace(
+                    "$",
+                    "").replace(
+                    "\\",
+                    "").replace(
+                    "^",
+                    "")
+            except BaseException:
                 pass
 
             try:
                 CMD_LIST[file_test].append(cmd)
-            except:
+            except BaseException:
                 CMD_LIST.update({file_test: [cmd]})
-        except:
+        except BaseException:
             pass
 
     def decorator(func):
@@ -64,37 +70,38 @@ def register(**args):
                 return
 
             if check.is_group or check.is_private:
-               pass
+                pass
             else:
-               print("i don't work in channels")
-               return
-    
+                print("i don't work in channels")
+                return
+
             spammers = leechers.find({})
             for c in spammers:
-              if check.sender_id == c['id']:
-                 painkiller = c['time']
-                 spamtimecheck = time.time() - painkiller
-                 if (time.strftime("%H", time.gmtime(spamtimecheck))) >= "10":
-                    leechers.delete_one({"id": check.sender_id})     
-                    pass
-                 else:
-                    return
-                     
+                if check.sender_id == c['id']:
+                    painkiller = c['time']
+                    spamtimecheck = time.time() - painkiller
+                    if (time.strftime("%H", time.gmtime(spamtimecheck))) >= "10":
+                        leechers.delete_one({"id": check.sender_id})
+                        pass
+                    else:
+                        return
+
             try:
                 await func(check)
                 try:
-                  LOAD_PLUG[file_test].append(func)
+                    LOAD_PLUG[file_test].append(func)
                 except Exception:
-                  LOAD_PLUG.update({file_test: [func]})
-            except:
+                    LOAD_PLUG.update({file_test: [func]})
+            except BaseException:
                 return
             else:
                 pass
 
         tbot.add_event_handler(wrapper, events.NewMessage(**args))
         return wrapper
-  
+
     return decorator
+
 
 def juliabot(**args):
     pattern = args.get('pattern', None)
@@ -159,7 +166,7 @@ def juliabot(**args):
 def load_module(shortname):
     if shortname.startswith("__"):
         pass
-    elif shortname.endswith("_"):        
+    elif shortname.endswith("_"):
         import importlib
         import julia.events
         path = Path(f"julia/modules/{shortname}.py")
@@ -183,10 +190,11 @@ def load_module(shortname):
         sys.modules["julia.modules." + shortname] = mod
         print("Successfully imported " + shortname)
 
+
 path = "julia/modules/*.py"
 files = glob.glob(path)
 for name in files:
-  with open(name) as f:
+    with open(name) as f:
         path1 = Path(f.name)
         shortname = path1.stem
         load_module(shortname.replace(".py", ""))

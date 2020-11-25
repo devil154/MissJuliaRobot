@@ -1,3 +1,7 @@
+from julia import tbot, CMD_HELP
+from pathlib import Path
+import logging
+import inspect
 import asyncio
 import glob
 import html
@@ -84,24 +88,25 @@ client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
 
+
 async def is_register_admin(chat, user):
-        if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-            return isinstance(
-                (
-                    await tbot(functions.channels.GetParticipantRequest(chat, user))
-                ).participant,
-                (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
-            )
-        if isinstance(chat, types.InputPeerChat):
-            ui = await tbot.get_peer_id(user)
-            ps = (
-                await tbot(functions.messages.GetFullChatRequest(chat.chat_id))
-            ).full_chat.participants.participants
-            return isinstance(
-                next((p for p in ps if p.user_id == ui), None),
-                (types.ChatParticipantAdmin, types.ChatParticipantCreator),
-            )
-        return False
+    if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
+        return isinstance(
+            (
+                await tbot(functions.channels.GetParticipantRequest(chat, user))
+            ).participant,
+            (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
+        )
+    if isinstance(chat, types.InputPeerChat):
+        ui = await tbot.get_peer_id(user)
+        ps = (
+            await tbot(functions.messages.GetFullChatRequest(chat.chat_id))
+        ).full_chat.participants.participants
+        return isinstance(
+            next((p for p in ps if p.user_id == ui), None),
+            (types.ChatParticipantAdmin, types.ChatParticipantCreator),
+        )
+    return False
 
 
 telegraph = Telegraph()
@@ -136,20 +141,15 @@ async def tor_search(event):
         "Magnet Links for {}:\n\nhttps://telegra.ph/{}".format(str, response["path"]),
         link_preview=False,
     )
-   
-   
-import inspect
-import logging
-import re, os
-from pathlib import Path
-from julia import tbot, CMD_HELP
+
+
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
-__help__ = """ 
+__help__ = """
  - /torrent <text>: Search for torrent links
 If you are still messed up send `/helptorrent` in pm for the tutorial !
 """
@@ -159,4 +159,3 @@ CMD_HELP.update({
         __help__
     ]
 })
-

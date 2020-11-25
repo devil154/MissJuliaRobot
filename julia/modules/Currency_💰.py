@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 import requests
 
@@ -99,12 +101,10 @@ async def _(event):
             f"**Invalid Args!!:** Required 3 But Passed {len(args) -1}",
         )
 
-import os
-from julia import CMD_HELP
 global __help__
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /cash : currency converter

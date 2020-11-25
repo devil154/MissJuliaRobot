@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 from geopy.geocoders import Nominatim
 from julia.events import register
@@ -10,6 +12,7 @@ client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
+
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -33,6 +36,7 @@ async def is_register_admin(chat, user):
 
 GMAPS_LOC = "https://maps.googleapis.com/maps/api/geocode/json"
 
+
 @register(pattern="^/gps (.*)")
 async def _(event):
     approved_userss = approved_users.find({})
@@ -47,28 +51,27 @@ async def _(event):
         else:
             return
     args = event.pattern_match.group(1)
- 
+
     try:
         geolocator = Nominatim(user_agent="SkittBot")
         location = args
         geoloc = geolocator.geocode(location)
         longitude = geoloc.longitude
         latitude = geoloc.latitude
-        gm = "https://www.google.com/maps/search/{},{}".format(latitude, longitude)
+        gm = "https://www.google.com/maps/search/{},{}".format(
+            latitude, longitude)
         await tbot.send_file(event.chat_id, file=types.InputMediaGeoPoint(types.InputGeoPoint(float(latitude), float(longitude))))
         await event.reply(
             "Open with: [Google Maps]({})".format(gm),
             link_preview=False,
         )
-    except Exception as e:     
-        print (e)
+    except Exception as e:
+        print(e)
         await event.reply("I can't find that")
 
-import os
-from julia import CMD_HELP
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /gps: <location> Get gps location.

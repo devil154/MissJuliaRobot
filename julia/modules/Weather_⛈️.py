@@ -1,3 +1,4 @@
+from julia import CMD_HELP
 from julia import tbot
 import io
 import os
@@ -18,6 +19,7 @@ client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
+
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -94,6 +96,7 @@ async def _(event):
     else:
         await event.reply(response_api["message"])
 
+
 @register(pattern="^/wttr (.*)")
 async def _(event):
     if event.fwd_from:
@@ -118,10 +121,9 @@ async def _(event):
         response_api = await response_api_zero.read()
         with io.BytesIO(response_api) as out_file:
             await event.reply(file=out_file)
-from julia import CMD_HELP
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /weather <city>: Get weather info in a particular place

@@ -41,12 +41,16 @@ if ENV:
         raise Exception(
             "Your sudo users list does not contain valid integers.")
     try:
-        SUPPORT_USERS = {int(x) for x in os.environ.get("SUPPORT_USERS", "").split()}
+        SUPPORT_USERS = {
+            int(x) for x in os.environ.get(
+                "SUPPORT_USERS", "").split()}
     except ValueError:
         raise Exception(
             "Your support users list does not contain valid integers.")
     try:
-        WHITELIST_USERS = {int(x) for x in os.environ.get("WHITELIST_USERS", "").split()}
+        WHITELIST_USERS = {
+            int(x) for x in os.environ.get(
+                "WHITELIST_USERS", "").split()}
     except ValueError:
         raise Exception(
             "Your whitelisted users list does not contain valid integers.")
@@ -77,7 +81,7 @@ if ENV:
     GBAN_LOGS = os.environ.get("MESSAGE_DUMP")
     LYDIA_API_KEY = os.environ.get("LYDIA_API_KEY", None)
     tbot = TelegramClient("alexa", API_KEY, API_HASH)
-   
+
     SUDO_USERS = list(SUDO_USERS)
     REM_BG_API_KEY = os.environ.get("REM_BG_API_KEY", None)
     WHITELIST_USERS = list(WHITELIST_USERS)
@@ -92,7 +96,9 @@ if ENV:
 
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
     MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
-    UPSTREAM_REPO_URL = os.environ.get("UPSTREAM_REPO_URL", "https://github.com/MainTeraHer0/MissLillyRobot.git")
+    UPSTREAM_REPO_URL = os.environ.get(
+        "UPSTREAM_REPO_URL",
+        "https://github.com/MainTeraHer0/MissLillyRobot.git")
     TEMPORARY_DATA = os.environ.get("TEMPORARY_DATA", None)
 
     CONSOLE_LOGGER_VERBOSE = os.environ.get("CONSOLE_LOGGER_VERBOSE", "False")
@@ -131,10 +137,10 @@ if ENV:
             LOGS.error("BOTLOG_CHATID environment variable isn't a "
                        "valid entity. Halting!")
             sys.exit(1)
-    
+
     try:
         ubot.start()
-    except:
+    except BaseException:
         print("Network Error !")
         sys.exit(1)
 

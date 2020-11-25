@@ -1,3 +1,4 @@
+from julia import CMD_HELP
 from julia import tbot
 import json
 import os
@@ -16,6 +17,7 @@ client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
+
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -36,6 +38,7 @@ async def is_register_admin(chat, user):
             (types.ChatParticipantAdmin, types.ChatParticipantCreator),
         )
     return None
+
 
 @register(pattern="^/img2textlang")
 async def get_ocr_languages(event):
@@ -119,10 +122,9 @@ async def parse_ocr_space_api(event):
         await event.reply("Read Document in {} seconds. \n{}".format(
             ProcessingTimeInMilliseconds, ParsedText))
     os.remove(downloaded_file_name)
-from julia import CMD_HELP
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /img2text <lang>: Type in reply to a image to extract the text from it

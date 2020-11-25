@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 from random import randint
 
@@ -16,6 +18,7 @@ client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
+
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -69,7 +72,7 @@ async def wallpaper(event):
         if not wallpapers:
             await event.reply("No results found! Refine your search.")
             return
-        index = randint(0, len(wallpapers) - 1)  
+        index = randint(0, len(wallpapers) - 1)
         wallpaper = wallpapers[index]
         wallpaper = wallpaper.get("url_image")
         wallpaper = wallpaper.replace("\\", "")
@@ -80,11 +83,9 @@ async def wallpaper(event):
             reply_to=event.id,
         )
 
-import os
-from julia import CMD_HELP
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /wall <topic>: Searches best wallpaper on the given topic and returns them

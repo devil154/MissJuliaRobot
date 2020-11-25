@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 from telethon import utils
 from telethon.tl import types
@@ -23,9 +25,8 @@ async def can_change_info(message):
         )
     )
     p = result.participant
-    return isinstance(p, types.ChannelParticipantCreator) or (
-        isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.change_info
-    )
+    return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
+        p, types.ChannelParticipantAdmin) and p.admin_rights.change_info)
 
 
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
@@ -34,9 +35,9 @@ async def on_note(event):
     note = get_notes(event.chat_id, name)
     message_id = event.sender_id
     if event.reply_to_msg_id:
-       message_id = event.reply_to_msg_id
+        message_id = event.reply_to_msg_id
     if note is None:
-       return
+        return
     await event.reply(note.reply, reply_to=message_id)
 
 
@@ -52,8 +53,8 @@ async def _(event):
     if msg:
         note = msg.text
         add_note(
-            event.chat_id,  
-            name, 
+            event.chat_id,
+            name,
             note,
         )
         await event.reply(
@@ -99,13 +100,11 @@ async def on_note_delete(event):
     await event.reply("Note **{}** deleted successfully".format(name))
 
 
-import os
-from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
 **Admin Only**

@@ -1,3 +1,7 @@
+from julia import CMD_HELP
+import os
+from julia.events import register
+from telethon.tl import functions
 from julia import tbot
 import asyncio
 import re
@@ -20,8 +24,7 @@ TYPE_PHOTO = 1
 TYPE_DOCUMENT = 2
 
 last_triggered_filters = {}  # pylint:disable=E0602
-from telethon.tl import functions
-from julia.events import register
+
 
 async def can_change_info(message):
     result = await tbot(
@@ -31,9 +34,9 @@ async def can_change_info(message):
         )
     )
     p = result.participant
-    return isinstance(p, types.ChannelParticipantCreator) or (
-        isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.change_info
-    )
+    return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
+        p, types.ChannelParticipantAdmin) and p.admin_rights.change_info)
+
 
 @tbot.on(events.NewMessage(pattern=None))
 async def on_snip(event):
@@ -86,21 +89,21 @@ async def on_snip(event):
 
                 filter = ""
                 options = ""
-                butto=None
+                butto = None
 
                 if "|" in snip.reply:
-                    filter, options= snip.reply.split("|")
+                    filter, options = snip.reply.split("|")
                 else:
                     filter = str(snip.reply)
-                try:             
-                    filter = filter.strip()     
+                try:
+                    filter = filter.strip()
                     button = options.strip()
-                    params = re.findall(r'\'(.*?)\'',button)                
+                    params = re.findall(r'\'(.*?)\'', button)
                     butto = [Button.url(*params)]
-                except:
+                except BaseException:
                     filter = filter.strip()
                     button = None
-                
+
                 await event.reply(filter, buttons=butto, file=media)
 
                 if event.chat_id not in last_triggered_filters:
@@ -223,14 +226,12 @@ async def on_snip_delete(event):
 
     await event.reply(f"Filter **{name}** deleted successfully")
 
- 
-import os
-from julia import CMD_HELP
+
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
 **Admin Only**

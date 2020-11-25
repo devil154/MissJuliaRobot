@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 from julia import MONGO_DB_URI
 from pymongo import MongoClient
@@ -135,12 +137,10 @@ async def imdb(e):
     except IndexError:
         await e.reply("Please enter a valid movie name !")
 
-import os
-from julia import CMD_HELP
 global __help__
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /imdb - Get full info about a movie with imdb.com

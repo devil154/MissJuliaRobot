@@ -1,3 +1,4 @@
+from julia import CMD_HELP
 from julia import tbot
 import os
 from asyncio import sleep
@@ -147,11 +148,10 @@ size=200x200&charset-source=UTF-8&charset-target=UTF-8\
     duration = (datetime.now() - start).seconds
     await qrcode.reply("Created QRCode in {} seconds".format(duration))
     await sleep(5)
-from julia import CMD_HELP
 global __help__
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /getqr: get the qr code content from the replied qr code

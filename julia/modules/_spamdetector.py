@@ -41,9 +41,9 @@ async def leechers(event):
         and event.sender_id == USERSPAM[0]
         and (time.strftime("%S", time.gmtime(spamtimecheck))) <= "03"
     ):
-        
+
         spamcounter = 0
-        if senderr.username == None:
+        if senderr.username is None:
             st = senderr.first_name
             hh = senderr.id
             final = f"[{st}](tg://user?id={hh}) you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"
@@ -51,8 +51,8 @@ async def leechers(event):
             st = senderr.username
             final = f"@{st} you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"
             pass
-    else: 
-        spamcounter = 0       
+    else:
+        spamcounter = 0
         return
 
     dev = await event.respond(final)
@@ -64,14 +64,14 @@ async def leechers(event):
     users = leechers.find({})
     for c in users:
         if USERSPAM[0] == c["id"]:
-            print ("spammers never die")
+            print("spammers never die")
             return
     timerr = time.time()
     leechers.insert_one({"id": USERSPAM[0], "time": timerr})
     try:
-            MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
-            await tbot(EditBannedRequest(event.chat_id, event.sender_id, MUTE_RIGHTS))
-            await dev.edit(final + "\nYou are now muted !")
+        MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
+        await tbot(EditBannedRequest(event.chat_id, event.sender_id, MUTE_RIGHTS))
+        await dev.edit(final + "\nYou are now muted !")
     except Exception:
-            pass
+        pass
     spamcounter = 0

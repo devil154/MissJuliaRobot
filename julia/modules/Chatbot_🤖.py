@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 from time import time
 
@@ -14,6 +16,7 @@ from telethon import events
 CoffeeHouseAPI = API(LYDIA_API_KEY)
 api_client = LydiaAI(CoffeeHouseAPI)
 
+
 async def can_change_info(message):
     try:
         result = await tbot(
@@ -23,9 +26,8 @@ async def can_change_info(message):
             )
         )
         p = result.participant
-        return isinstance(p, types.ChannelParticipantCreator) or (
-            isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.change_info
-        )
+        return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
+            p, types.ChannelParticipantAdmin) and p.admin_rights.change_info)
     except Exception:
         return False
 
@@ -49,7 +51,7 @@ async def _(event):
         expires = str(ses.expires)
         sql.set_ses(chat.id, ses_id, expires)
         await event.reply("AI successfully enabled for this chat!")
-       
+
     await event.reply("AI is already enabled for this chat!")
     return ""
 
@@ -70,17 +72,16 @@ async def _(event):
         return ""
     sql.rem_chat(chat.id)
     await event.reply("AI disabled successfully!")
-    
 
 
 @tbot.on(events.NewMessage(pattern=None))
 async def check_message(event):
     if event.is_group:
-            pass
+        pass
     else:
         return
     message = str(event.text)
-    reply_msg = await event.get_reply_message()   
+    reply_msg = await event.get_reply_message()
     if message.lower() == "julia":
         return True
     if reply_msg:
@@ -93,7 +94,7 @@ async def check_message(event):
 @tbot.on(events.NewMessage(pattern=None))
 async def _(event):
     if event.is_group:
-            pass
+        pass
     else:
         return
     global api_client
@@ -117,18 +118,16 @@ async def _(event):
         except ValueError:
             pass
         try:
-            async with tbot.action(event.chat, 'typing'):      
-               rep = api_client.think_thought(sesh, query)                    
-               await event.reply(rep)
+            async with tbot.action(event.chat, 'typing'):
+                rep = api_client.think_thought(sesh, query)
+                await event.reply(rep)
         except CFError as e:
             await tbot.send_message(OWNER_ID, f"Chatbot error: {e} occurred in {chat.id}!")
 
-import os
-from julia import CMD_HELP
 global __help__
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /addchat: Activates AI mode in the chat the bot will give auto replies to anyone who tags the bot

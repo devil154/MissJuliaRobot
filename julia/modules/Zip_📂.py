@@ -1,3 +1,8 @@
+from datetime import datetime
+from julia import CMD_HELP
+from telethon.tl.types import DocumentAttributeVideo
+from hachoir.parser import createParser
+from hachoir.metadata import extractMetadata
 from julia import tbot
 import os
 import time
@@ -53,7 +58,7 @@ async def _(event):
             pass
         else:
             return
-  
+
     if not event.is_reply:
         await event.reply("Reply to a file to compress it.")
         return
@@ -69,7 +74,7 @@ async def _(event):
                 reply_message, TEMP_DOWNLOAD_DIRECTORY
             )
             directory_name = downloaded_file_name
-        except Exception as e:  
+        except Exception as e:
             await mone.reply(str(e))
     zipfile.ZipFile(directory_name + ".zip", "w", zipfile.ZIP_DEFLATED).write(
         directory_name
@@ -88,11 +93,7 @@ def zipdir(path, ziph):
         for file in files:
             ziph.write(os.path.join(root, file))
             os.remove(os.path.join(root, file))
-from datetime import datetime
 
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
-from telethon.tl.types import DocumentAttributeVideo
 
 extracted = TEMP_DOWNLOAD_DIRECTORY + "extracted/"
 thumb_image_path = TEMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
@@ -116,7 +117,7 @@ async def _(event):
             pass
         else:
             return
-   
+
     mone = await event.reply("Processing ...")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
@@ -128,7 +129,7 @@ async def _(event):
             downloaded_file_name = await tbot.download_media(
                 reply_message, TEMP_DOWNLOAD_DIRECTORY
             )
-        except Exception as e:  
+        except Exception as e:
             await mone.reply(str(e))
         else:
             end = datetime.now()
@@ -152,7 +153,8 @@ async def _(event):
                     if metadata.has("duration"):
                         duration = metadata.get("duration").seconds
                     if os.path.exists(thumb_image_path):
-                        metadata = extractMetadata(createParser(thumb_image_path))
+                        metadata = extractMetadata(
+                            createParser(thumb_image_path))
                         if metadata.has("width"):
                             width = metadata.get("width")
                         if metadata.has("height"):
@@ -197,12 +199,10 @@ def get_lst_of_files(input_directory, output_lst):
     return output_lst
 
 
-
-from julia import CMD_HELP
 global __help__
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /zip: reply to a telegram file to compress it in .zip format

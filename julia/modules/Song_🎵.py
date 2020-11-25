@@ -1,5 +1,16 @@
+from julia import CMD_HELP
 from pathlib import Path
-import asyncio, time, io, math, os, logging, asyncio, shutil, re, subprocess, json
+import asyncio
+import time
+import io
+import math
+import os
+import logging
+import asyncio
+import shutil
+import re
+import subprocess
+import json
 from re import findall
 from asyncio import sleep
 from telethon.events import NewMessage
@@ -35,7 +46,7 @@ from telethon import types
 from telethon.tl import functions
 from julia import tbot
 from julia.events import register
-from youtubesearchpython import SearchVideos 
+from youtubesearchpython import SearchVideos
 from tswift import Song
 from pymongo import MongoClient
 from julia import MONGO_DB_URI
@@ -84,15 +95,15 @@ async def download_song(v_url):
     url = v_url.pattern_match.group(1)
     rkp = await v_url.reply("`Processing ...`")
     if not url:
-       await rkp.edit("`Error \nusage song <song name>`")
-    search = SearchVideos(url, offset = 1, mode = "json", max_results = 1)
+        await rkp.edit("`Error \nusage song <song name>`")
+    search = SearchVideos(url, offset=1, mode="json", max_results=1)
     test = search.result()
     p = json.loads(test)
     q = p.get('search_result')
     try:
-       url = q[0]['link']
-    except:
-    	return await rkp.edit("`Failed to find that song`")
+        url = q[0]['link']
+    except BaseException:
+        return await rkp.edit("`Failed to find that song`")
     type = "audio"
     await rkp.edit("`Preparing to download ...`")
     if type == "audio":
@@ -124,7 +135,7 @@ async def download_song(v_url):
             False
         }
         video = False
-        song = True    
+        song = True
     try:
         await rkp.edit("`Fetching data, please wait ...`")
         with YoutubeDL(opts) as rip:
@@ -171,11 +182,11 @@ async def download_song(v_url):
             attributes=[
                 DocumentAttributeAudio(duration=int(rip_data['duration']),
                                        title=str(rip_data['title']),
-                                       performer=str(rip_data['uploader'])                                      )
-            ])           
+                                       performer=str(rip_data['uploader']))
+            ])
         os.system("rm -rf *.mp3")
         os.system("rm -rf *.webp")
-    
+
 
 @register(pattern="^/video (.*)")
 async def download_video(v_url):
@@ -193,15 +204,15 @@ async def download_video(v_url):
     url = v_url.pattern_match.group(1)
     rkp = await v_url.reply("`Processing ...`")
     if not url:
-       await rkp.edit("`Error \nusage video <song name>`")
-    search = SearchVideos(url, offset = 1, mode = "json", max_results = 1)
+        await rkp.edit("`Error \nusage video <song name>`")
+    search = SearchVideos(url, offset=1, mode="json", max_results=1)
     test = search.result()
     p = json.loads(test)
     q = p.get('search_result')
     try:
-       url = q[0]['link']
-    except:
-    	return await rkp.edit("`Failed to find that video song`")
+        url = q[0]['link']
+    except BaseException:
+        return await rkp.edit("`Failed to find that video song`")
     type = "video"
     await rkp.edit("`Preparing to download ...`")
     if type == "video":
@@ -314,12 +325,11 @@ async def download_lyrics(v_url):
         else:
             await v_url.reply(reply)
 
-from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /song <songname artist(optional)>: uploads the song in it's best quality available

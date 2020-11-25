@@ -1,3 +1,9 @@
+import os
+import re
+from julia import tbot, CMD_HELP
+from pathlib import Path
+import logging
+import inspect
 from julia.modules.sql import afk_sql as sql
 
 from telegram.error import BadRequest
@@ -16,6 +22,7 @@ client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
+
 
 async def is_register_admin(chat, user):
     try:
@@ -58,7 +65,7 @@ async def _(event):
         else:
             return
     else:
-      return
+        return
 
     cmd = event.pattern_match.group(1)
 
@@ -66,7 +73,7 @@ async def _(event):
         reason = cmd
     else:
         reason = ""
- 
+
     fname = sender.first_name
 
     notice = ""
@@ -75,7 +82,7 @@ async def _(event):
         notice = "{fname} your afk reason was shortened to 100 characters."
     else:
         reason = cmd
-    
+
     print(reason)
     start_time = time.time()
     sql.set_afk(sender.id, reason, start_time)
@@ -98,7 +105,7 @@ async def _(event):
     for ch in approved_userss:
         iid = ch['id']
         userss = ch['user']
-        
+
     if event.is_group:
         if (await is_register_admin(event.input_chat, event.message.sender_id)):
             pass
@@ -107,7 +114,7 @@ async def _(event):
         else:
             return
     else:
-      return
+        return
 
     res = sql.rm_afk(sender.id)
     if res:
@@ -119,41 +126,42 @@ async def _(event):
         except BaseException:
             return
 
+
 @tbot.on(events.NewMessage(pattern=None))
 async def _(event):
     send = await event.get_sender()
     sender = event.sender_id
     msg = str(event.text)
     global let
-    global userid 
-    userid=None
-    let=None
+    global userid
+    userid = None
+    let = None
     if event.reply_to_msg_id:
-       reply = await event.get_reply_message()
-       userid = reply.sender_id 
+        reply = await event.get_reply_message()
+        userid = reply.sender_id
     else:
-     try:
-      for (ent, txt) in event.get_entities_text():
-        if ent.offset != 0:
-            break
-        if isinstance(ent, types.MessageEntityMention):                       
-          c = txt
-          a = c.split()[0]
-        
-        let = await tbot.get_entity(a)
-        userid = let.id       
-     except Exception:
-       return
+        try:
+            for (ent, txt) in event.get_entities_text():
+                if ent.offset != 0:
+                    break
+                if isinstance(ent, types.MessageEntityMention):
+                    c = txt
+                    a = c.split()[0]
+
+                let = await tbot.get_entity(a)
+                userid = let.id
+        except Exception:
+            return
 
     if not userid:
-       return
+        return
     if sender == userid:
-       return
+        return
 
     if event.is_group:
-       pass
+        pass
     else:
-       return  
+        return
 
     if sql.is_afk(userid):
         user = sql.check_afk_status(userid)
@@ -162,37 +170,32 @@ async def _(event):
             elapsed_time = time.time() - float(etime)
             final = time.strftime("%Hh: %Mm: %Ss", time.gmtime(elapsed_time))
             try:
-              fst_name = let.first_name
-            except:
-              fst_name = "This user"
-            res = "**{} is AFK !**\n\n**Last seen**: {}".format(fst_name, final)
-     
+                fst_name = let.first_name
+            except BaseException:
+                fst_name = "This user"
+            res = "**{} is AFK !**\n\n**Last seen**: {}".format(
+                fst_name, final)
+
             await event.reply(res, parse_mode="markdown")
         else:
             etime = user.start_time
             elapsed_time = time.time() - float(etime)
             final = time.strftime("%Hh: %Mm: %Ss", time.gmtime(elapsed_time))
             try:
-              fst_name = let.first_name
-            except:
-              fst_name = "This user"
+                fst_name = let.first_name
+            except BaseException:
+                fst_name = "This user"
             res = "**{} is AFK !**\n\n**Reason**: {}\n\n**Last seen**: {}".format(
-                fst_name, user.reason, final
-            )
+                fst_name, user.reason, final)
             await event.reply(res, parse_mode="markdown")
-    userid = "" # after execution
-    let = "" # after execution
+    userid = ""  # after execution
+    let = ""  # after execution
 
-import inspect
-import logging
-import re, os
-from pathlib import Path
-from julia import tbot, CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /afk <reason>: mark yourself as AFK(Away From Keyboard)

@@ -1,3 +1,14 @@
+from julia import CMD_HELP
+from random import randint
+from telethon.tl.types import DocumentAttributeFilename
+from PIL import ImageEnhance, ImageOps
+from random import randint, uniform
+from julia import GOOGLE_CHROME_BIN
+from julia import CHROME_DRIVER
+from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
+from julia import MONGO_DB_URI
+from telethon import types, events
 from julia import tbot
 import asyncio
 import io
@@ -6,7 +17,7 @@ import random
 import re
 import string
 
-import nltk  
+import nltk
 from PIL import Image
 from zalgo_text import zalgo
 from julia.events import register
@@ -97,11 +108,6 @@ nltk.download("averaged_perceptron_tagger")
 WIDE_MAP = {i: i + 0xFEE0 for i in range(0x21, 0x7F)}
 WIDE_MAP[0x20] = 0x3000
 
-from telethon import types, events
-from telethon.tl import functions
-
-from pymongo import MongoClient
-from julia import MONGO_DB_URI
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
@@ -275,7 +281,6 @@ async def msg(event):
         await event.reply(reply_text)
 
 
-
 @register(pattern="^/clapmoji$")
 async def msg(event):
     approved_userss = approved_users.find({})
@@ -299,7 +304,6 @@ async def msg(event):
         reply_text += rtext.replace(" ", " 👏 ")
         reply_text += " 👏"
         await event.reply(reply_text)
-
 
 
 @register(pattern="^/stretch$")
@@ -328,7 +332,6 @@ async def msg(event):
         await event.reply(reply_text)
 
 
-
 @register(pattern="^/vapor(?: |$)(.*)")
 async def msg(event):
     approved_userss = approved_users.find({})
@@ -342,8 +345,7 @@ async def msg(event):
             pass
         else:
             return
-   
-    
+
     rtex = await event.get_reply_message()
     rtext = rtex.text
     if rtext:
@@ -376,9 +378,9 @@ async def msg(event):
     if rtext is None:
         await event.reply("Reply to a message to make meme.")
         return
-    else:   
-      reply_text = zalgo.zalgo().zalgofy(rtext)
-      await event.reply(reply_text)
+    else:
+        reply_text = zalgo.zalgo().zalgofy(rtext)
+        await event.reply(reply_text)
 
 
 @register(pattern="^/forbesify$")
@@ -434,9 +436,9 @@ async def msg(event):
             return
 
     rtext = event.pattern_match.group(1)
-    
+
     args = rtext
-    
+
     if len(args) == 0:
         await event.reply("Where is text?")
         return
@@ -509,13 +511,9 @@ async def msg(event):
     reply_text += " 😭"
     await event.reply(reply_text)
 
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-
-from julia import CHROME_DRIVER
-from julia import GOOGLE_CHROME_BIN
 
 CARBONLANG = "en"
+
 
 @register(pattern="^/carbon (.*)")
 async def carbon_api(e):
@@ -551,7 +549,9 @@ async def carbon_api(e):
     chrome_options.add_argument("--disable-gpu")
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
-    driver = webdriver.Chrome(executable_path=CHROME_DRIVER, options=chrome_options)
+    driver = webdriver.Chrome(
+        executable_path=CHROME_DRIVER,
+        options=chrome_options)
     driver.get(url)
     await gg.edit("`Processing..\n50%`")
     download_path = "./"
@@ -581,10 +581,6 @@ async def carbon_api(e):
     os.remove("./carbon.png")
     driver.quit()
 
-from random import randint, uniform
-
-from PIL import ImageEnhance, ImageOps
-from telethon.tl.types import DocumentAttributeFilename
 
 @register(pattern="^/deepfry(?: |$)(.*)")
 async def deepfryer(event):
@@ -614,11 +610,11 @@ async def deepfryer(event):
     else:
         await event.reply("`Reply to an image or sticker to deep fry it!`")
         return
-    
+
     image = io.BytesIO()
     await tbot.download_media(data, image)
     image = Image.open(image)
-    
+
     for _ in range(frycount):
         image = await deepfry(image)
     fried_io = io.BytesIO()
@@ -686,6 +682,7 @@ async def check_media(reply_message):
     else:
         return data
 
+
 @register(pattern="^/type (.*)")
 async def typewriter(typew):
     approved_userss = approved_users.find({})
@@ -717,6 +714,7 @@ async def typewriter(typew):
         await asyncio.sleep(2)
         await now.edit(old_text)
         await asyncio.sleep(2)
+
 
 @register(pattern="^/sticklet (.*)")
 async def sticklet(event):
@@ -798,6 +796,7 @@ async def get_font_file(client, channel_id):
     # download and return the file path
     return await client.download_media(font_file_message)
 
+
 @register(pattern=r"^/(\w+)say (.*)")
 async def univsaye(cowmsg):
     approved_userss = approved_users.find({})
@@ -825,6 +824,7 @@ async def univsaye(cowmsg):
         cheese = cheese()
 
         await cowmsg.reply(f"`{cheese.milk(text).replace('`', '´')}`")
+
 
 @register(pattern="^/basketball$")
 async def _(event):
@@ -1378,6 +1378,7 @@ def deEmojify(inputString: str) -> str:
 
 # Made By @MissJulia_Robot
 
+
 @juliabot(pattern="/animated")
 async def waifu(animu):
     animus = [20, 32, 33, 40, 41, 42, 58]
@@ -1414,6 +1415,7 @@ async def stickerizer(event):
     os.remove(bara)
     await randika.delete()
 
+
 @register(pattern="^/dice$")
 async def _(event):
     if event.fwd_from:
@@ -1440,6 +1442,7 @@ async def _(event):
         except BaseException:
             pass
 
+
 @register(pattern="^/fortune$")
 async def fortunate(event):
     if event.fwd_from:
@@ -1459,10 +1462,6 @@ async def fortunate(event):
     pit = jit.decode()
     await event.reply(pit)
 
-import random
-from random import randint
-from telegram.ext import CommandHandler
-from telegram.ext import run_async
 
 ABUSE_STRINGS = (
     "Fuck off",
@@ -1707,7 +1706,7 @@ async def msg(event):
         else:
             return
     if event.reply_to_msg_id:
-        reply= await event.get_reply_message()
+        reply = await event.get_reply_message()
         replyto = reply.sender_id
     else:
         replyto = event.sender_id
@@ -1728,7 +1727,7 @@ async def msg(event):
         else:
             return
     if event.reply_to_msg_id:
-        reply= await event.get_reply_message()
+        reply = await event.get_reply_message()
         replyto = reply.sender_id
     else:
         replyto = event.sender_id
@@ -1799,9 +1798,6 @@ async def _(event):
         await event.reply(
             "Go do some work instead of flipping tables ma boy.")
 
-import random
-from telegram.ext import CommandHandler
-from telegram.ext import run_async
 
 SFW_STRINGS = (
     "Owww ... Such a stupid idiot.",
@@ -1888,17 +1884,12 @@ async def _(event):
         else:
             return
     if event.reply_to_msg_id:
-        reply= await event.get_reply_message()
+        reply = await event.get_reply_message()
         replyto = reply.sender_id
     else:
         replyto = event.sender_id
     await tbot.send_message(event.chat_id, random.choice(SFW_STRINGS), reply_to=replyto)
 
-import random
-from telegram import Update
-from telegram.ext import CallbackContext
-from telegram.ext import CommandHandler
-from telegram.ext import run_async
 
 reactionhappy = [
     "''̵͇З= ( ▀ ͜͞ʖ▀) =Ε/̵͇/’’",
@@ -2184,13 +2175,12 @@ async def _(event):
         else:
             return
     if event.reply_to_msg_id:
-        reply= await event.get_reply_message()
+        reply = await event.get_reply_message()
         replyto = reply.sender_id
     else:
         replyto = event.sender_id
     react = random.choice(reactions)
     await event.reply(react, reply_to=replyto)
-
 
 
 @register(pattern="^/rhappy$")
@@ -2207,7 +2197,7 @@ async def _(event):
         else:
             return
     if event.reply_to_msg_id:
-        reply= await event.get_reply_message()
+        reply = await event.get_reply_message()
         replyto = reply.sender_id
     else:
         replyto = event.sender_id
@@ -2229,7 +2219,7 @@ async def _(event):
         else:
             return
     if event.reply_to_msg_id:
-        reply= await event.get_reply_message()
+        reply = await event.get_reply_message()
         replyto = reply.sender_id
     else:
         replyto = event.sender_id
@@ -2237,12 +2227,11 @@ async def _(event):
     await event.reply(rangry, reply_to=replyto)
 
 
-from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
 **Some memes command, find it all out yourself !**

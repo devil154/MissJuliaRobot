@@ -12,6 +12,7 @@ client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
 
+
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
 
@@ -31,6 +32,7 @@ async def is_register_admin(chat, user):
             (types.ChatParticipantAdmin, types.ChatParticipantCreator),
         )
     return None
+
 
 @register(pattern="^/camscanner$")
 async def asciiart(event):
@@ -77,7 +79,7 @@ global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /camscanner: Reply to a image to scan and improve it's clarity.
@@ -99,4 +101,3 @@ CMD_HELP.update({
         __help__
     ]
 })
-

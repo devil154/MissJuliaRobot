@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 from telethon import *
 from telethon import events
@@ -16,6 +18,7 @@ client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
+
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -64,7 +67,7 @@ async def ramdomgames(event):
     if event.fwd_from:
         return
     await (await inline_query(ubot, "@gamee", "1+2=3"))[0].click("MissJuliaRobot",
-                                                              hide_via=True)
+                                                                 hide_via=True)
 
 
 @register(pattern="^/mathbattle$")
@@ -138,7 +141,8 @@ async def ramdomgamesk(event):
         return
     await (await inline_query(ubot, "@gamee",
                               "Penalty Shooter"))[0].click("MissJuliaRobot",
-                                                   hide_via=True)
+                                                           hide_via=True)
+
 
 @register(pattern="^/penaltyshooter$")
 async def ramdomgamess(event):
@@ -284,7 +288,7 @@ async def ramdomgamesk(event):
         return
     await (await inline_query(ubot, "@gamee",
                               "Neon Blaster"))[0].click("MissJuliaRobot",
-                                                hide_via=True)
+                                                        hide_via=True)
 
 
 @register(pattern="^/neonblaster$")
@@ -389,13 +393,10 @@ async def ramdomgamess(event):
             pass
 
 
-
-import os
-from julia import CMD_HELP
 global __help__
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
 **Here are some cool games for you enjoy them, more coming in the future !**

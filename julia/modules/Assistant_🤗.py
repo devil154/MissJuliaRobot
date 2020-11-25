@@ -1,3 +1,4 @@
+from julia import CMD_HELP
 from julia import tbot
 import os
 import subprocess
@@ -21,6 +22,7 @@ client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
 
+
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
 
@@ -40,6 +42,7 @@ async def is_register_admin(chat, user):
             (types.ChatParticipantAdmin, types.ChatParticipantCreator),
         )
     return None
+
 
 @register(pattern=r"^/julia(?: |$)([\s\S]*)")
 async def _(event):
@@ -142,6 +145,7 @@ async def _(event):
                 await event.reply("API Failure !")
                 os.remove(required_file_name)
 
+
 @register(pattern="^/howdoi (.*)")
 async def howdoi(event):
     if event.fwd_from:
@@ -162,10 +166,9 @@ async def howdoi(event):
     jit = subprocess.check_output(["howdoi", f"{str}"])
     pit = jit.decode()
     await event.reply(pit)
-from julia import CMD_HELP
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
 **For text assistant**

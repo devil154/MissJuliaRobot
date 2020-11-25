@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 import re
 from telethon import events
@@ -15,9 +17,9 @@ async def can_change_info(message):
         )
     )
     p = result.participant
-    return isinstance(p, types.ChannelParticipantCreator) or (
-        isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.change_info
-    )
+    return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
+        p, types.ChannelParticipantAdmin) and p.admin_rights.change_info)
+
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -52,7 +54,7 @@ async def on_new_message(event):
     for snip in snips:
         pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
         print(re.search(pattern, name, flags=re.IGNORECASE))
-        if re.search(pattern, name, flags=re.IGNORECASE):    
+        if re.search(pattern, name, flags=re.IGNORECASE):
             try:
                 await event.delete()
             except Exception as e:
@@ -120,15 +122,13 @@ async def on_delete_blacklist(event):
         if sql.rm_from_blacklist(event.chat_id, trigger.lower()):
             successful += 1
     await event.reply(f"Removed {successful} / {len(to_unblacklist)} from the blacklist")
-    
-   
-import os
-from julia import CMD_HELP
+
+
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
 **Admin Only**

@@ -1,3 +1,4 @@
+from julia import CMD_HELP
 from julia import tbot
 import os
 
@@ -18,6 +19,7 @@ client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
 
+
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
 
@@ -37,6 +39,7 @@ async def is_register_admin(chat, user):
             (types.ChatParticipantAdmin, types.ChatParticipantCreator),
         )
     return None
+
 
 @register(pattern="^/tts (.*)")
 async def _(event):
@@ -87,14 +90,13 @@ async def _(event):
         return
     with open("k.mp3", "r"):
         await tbot.send_file(event.chat_id,
-                                     "k.mp3",
-                                     voice_note=True,
-                                     reply_to=reply_to_id)
+                             "k.mp3",
+                             voice_note=True,
+                             reply_to=reply_to_id)
         os.remove("k.mp3")
-from julia import CMD_HELP
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /tts <lang | text>: Returns a speech note of the text provided

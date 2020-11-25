@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 import json
 import re
@@ -77,8 +79,7 @@ async def magisk(event):
 
         releases += (
             f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | '
-            f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
-        )
+            f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | ')
 
         if cc == 1:
             releases += (
@@ -167,7 +168,7 @@ async def codename_info(request):
             "certified-android-devices/master/by_brand.json"
         ).text
     )
-    devices_lower = {k.lower(): v for k, v in data.items()}  
+    devices_lower = {k.lower(): v for k, v in data.items()}
     devices = devices_lower.get(brand)
     results = [
         i
@@ -216,11 +217,11 @@ async def devices_specifications(request):
         return
     all_brands = (
         BeautifulSoup(
-            get("https://www.devicespecifications.com/en/brand-more").content, "lxml"
-        )
-        .find("div", {"class": "brand-listing-container-news"})
-        .findAll("a")
-    )
+            get("https://www.devicespecifications.com/en/brand-more").content,
+            "lxml") .find(
+            "div",
+            {
+                "class": "brand-listing-container-news"}) .findAll("a"))
     brand_page_url = None
     try:
         brand_page_url = [
@@ -301,12 +302,10 @@ async def twrp(request):
         f"**Updated:** __{date}__\n"
     )
     await request.reply(reply)
-import os
-from julia import CMD_HELP
 global __help__
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /magisk: Get the latest Magisk releases

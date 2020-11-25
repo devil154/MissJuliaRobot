@@ -1,3 +1,7 @@
+from julia import tbot, CMD_HELP
+from pathlib import Path
+import logging
+import inspect
 import asyncio
 import glob
 import html
@@ -84,24 +88,26 @@ client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
 
+
 async def is_register_admin(chat, user):
-        if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-            return isinstance(
-                (
-                    await tbot(functions.channels.GetParticipantRequest(chat, user))
-                ).participant,
-                (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
-            )
-        if isinstance(chat, types.InputPeerChat):
-            ui = await tbot.get_peer_id(user)
-            ps = (
-                await tbot(functions.messages.GetFullChatRequest(chat.chat_id))
-            ).full_chat.participants.participants
-            return isinstance(
-                next((p for p in ps if p.user_id == ui), None),
-                (types.ChatParticipantAdmin, types.ChatParticipantCreator),
-            )
-        return False
+    if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
+        return isinstance(
+            (
+                await tbot(functions.channels.GetParticipantRequest(chat, user))
+            ).participant,
+            (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
+        )
+    if isinstance(chat, types.InputPeerChat):
+        ui = await tbot.get_peer_id(user)
+        ps = (
+            await tbot(functions.messages.GetFullChatRequest(chat.chat_id))
+        ).full_chat.participants.participants
+        return isinstance(
+            next((p for p in ps if p.user_id == ui), None),
+            (types.ChatParticipantAdmin, types.ChatParticipantCreator),
+        )
+    return False
+
 
 @register(pattern="^/barcode ?(.*)")
 async def _(event):
@@ -145,7 +151,8 @@ async def _(event):
         message = "SYNTAX: `.barcode <long text to include>`"
     bar_code_type = "code128"
     try:
-        bar_code_mode_f = barcode.get(bar_code_type, message, writer=ImageWriter())
+        bar_code_mode_f = barcode.get(
+            bar_code_type, message, writer=ImageWriter())
         filename = bar_code_mode_f.save(bar_code_type)
         await event.client.send_file(
             event.chat_id,
@@ -162,17 +169,11 @@ async def _(event):
     await event.reply("Created BarCode in {} seconds".format(ms))
 
 
-
-import inspect
-import logging
-import re, os
-from pathlib import Path
-from julia import tbot, CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /barcode <text>: makes a barcode out of the text, crop the barcode if you don't want to reveal the text

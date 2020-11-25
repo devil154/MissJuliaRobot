@@ -106,17 +106,17 @@ async def is_register_admin(chat, user):
 
 
 async def can_promote_users(message):
-        result = await tbot(
-            functions.channels.GetParticipantRequest(
-                channel=message.chat_id,
-                user_id=message.sender_id,
-            )
+    result = await tbot(
+        functions.channels.GetParticipantRequest(
+            channel=message.chat_id,
+            user_id=message.sender_id,
         )
-        p = result.participant
-        return isinstance(p, types.ChannelParticipantCreator) or (
-            isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.ban_users
-        )
-    
+    )
+    p = result.participant
+    return isinstance(p, types.ChannelParticipantCreator) or (
+        isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.ban_users
+    )
+
 
 async def can_ban_users(message):
     result = await tbot(
@@ -128,18 +128,18 @@ async def can_ban_users(message):
     return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
         p, types.ChannelParticipantAdmin) and p.admin_rights.ban_users)
 
+
 async def can_change_info(message):
-        result = await tbot(
-            functions.channels.GetParticipantRequest(
-                channel=message.chat_id,
-                user_id=message.sender_id,
-            )
+    result = await tbot(
+        functions.channels.GetParticipantRequest(
+            channel=message.chat_id,
+            user_id=message.sender_id,
         )
-        p = result.participant
-        return isinstance(p, types.ChannelParticipantCreator) or (
-            isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.change_info
-        )
-    
+    )
+    p = result.participant
+    return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
+        p, types.ChannelParticipantAdmin) and p.admin_rights.change_info)
+
 
 async def can_del(message):
     result = await tbot(
@@ -149,9 +149,9 @@ async def can_del(message):
         )
     )
     p = result.participant
-    return isinstance(p, types.ChannelParticipantCreator) or (
-        isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.delete_messages
-    )
+    return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
+        p, types.ChannelParticipantAdmin) and p.admin_rights.delete_messages)
+
 
 async def can_pin_msg(message):
     result = await tbot(
@@ -161,9 +161,9 @@ async def can_pin_msg(message):
         )
     )
     p = result.participant
-    return isinstance(p, types.ChannelParticipantCreator) or (
-        isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.pin_messages
-    )
+    return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
+        p, types.ChannelParticipantAdmin) and p.admin_rights.pin_messages)
+
 
 async def get_user_sender_id(user, event):
     if isinstance(user, str):
@@ -209,11 +209,13 @@ async def get_user_from_event(event):
 
     return user_obj
 
+
 def find_instance(items, class_or_tuple):
     for item in items:
         if isinstance(item, class_or_tuple):
             return item
     return None
+
 
 @register(pattern="^/promote(?: |$)(.*)")
 async def promote(promt):
@@ -228,8 +230,8 @@ async def promote(promt):
             return
     else:
         return
-        
-    user = await get_user_from_event(promt)        
+
+    user = await get_user_from_event(promt)
     if promt.is_group:
         if await is_register_admin(promt.input_chat, user.id):
             await promt.reply("Why will i promote an admin ?")
@@ -237,8 +239,7 @@ async def promote(promt):
         else:
             pass
     else:
-      return
-     
+        return
 
     new_rights = ChatAdminRights(add_admins=True,
                                  invite_users=True,
@@ -264,6 +265,7 @@ async def promote(promt):
         await event.reply("Failed to promote that user !")
         return
 
+
 @register(pattern="^/demote(?: |$)(.*)")
 async def demote(dmod):
     # Admin right check
@@ -276,8 +278,8 @@ async def demote(dmod):
             return
     else:
         return
-        
-    user = await get_user_from_event(dmod)        
+
+    user = await get_user_from_event(dmod)
     if dmod.is_group:
         if not await is_register_admin(dmod.input_chat, user.id):
             await dmod.reply("How can i demote a non-admin ?")
@@ -285,8 +287,7 @@ async def demote(dmod):
         else:
             pass
     else:
-      return
-
+        return
 
     # If passing, declare that we're going to demote
 
@@ -314,7 +315,7 @@ async def demote(dmod):
         await dmod.reply("Can't demote, maybe you tried to demote an admin whom I haven't promoted !")
         return
     await dmod.reply("Demoted Successfully!")
-    
+
 
 @register(pattern="^/pin(?: |$)(.*)")
 async def pin(msg):
@@ -375,7 +376,6 @@ async def get_admin(show):
     await show.reply(mentions, parse_mode="html")
 
 
-
 @register(pattern="^/setgrouppic$")
 async def set_group_photo(gpic):
     replymsg = await gpic.get_reply_message()
@@ -387,7 +387,6 @@ async def set_group_photo(gpic):
             return
     else:
         return
-        
 
     if replymsg and replymsg.media:
         if isinstance(replymsg.media, MessageMediaPhoto):
@@ -407,31 +406,32 @@ async def set_group_photo(gpic):
         except ImageProcessFailedError:
             await gpic.reply(PP_ERROR)
 
+
 @register(pattern="^/settitle ?(.*)")
 async def settitle(promt):
     textt = promt.pattern_match.group(1)
     thatuser = textt.split(" ")[0]
     title_admin = textt.split(" ")[1]
-    #print(thatuser)
-    #print(title_admin)
+    # print(thatuser)
+    # print(title_admin)
     if thatuser:
-      user = await tbot.get_entity(thatuser)
+        user = await tbot.get_entity(thatuser)
     else:
-      await promt.reply("Pass the user's username or id or followed by title !")
-      return
-  
+        await promt.reply("Pass the user's username or id or followed by title !")
+        return
+
     if promt.is_group:
         if not await can_promote_users(message=promt):
             return
     else:
         return
-       
+
     if promt.is_group:
         if not await is_register_admin(promt.input_chat, user.id):
             await promt.reply("How can i set title of a non-admin ?")
             return
         else:
-            pass    
+            pass
 
     try:
         result = await tbot(functions.channels.GetParticipantRequest(
@@ -442,18 +442,19 @@ async def settitle(promt):
 
         await tbot(
             EditAdminRequest(promt.chat_id, user_id=user.id, admin_rights=p.admin_rights, rank=title_admin))
-   
+
         await promt.reply("Title set successfully !")
 
     except Exception:
         await promt.reply("Failed to set title for that user !")
         return
 
+
 @register(pattern="^/users$")
 async def get_users(show):
-    if not show.is_group:   
+    if not show.is_group:
         return
-  
+
     if show.is_group:
         if await is_register_admin(show.input_chat, show.message.sender_id):
             pass
@@ -480,6 +481,7 @@ async def get_users(show):
     )
     os.remove("userslist.txt")
 
+
 @register(pattern="^/zombies(?: |$)(.*)")
 async def rm_deletedacc(show):
     """ For .delusers command, list all the ghost/deleted accounts in a chat. """
@@ -487,12 +489,12 @@ async def rm_deletedacc(show):
     del_u = 0
     del_status = "`No deleted accounts found, Group is cleaned as Hell`"
 
-    if not show.is_group:  
+    if not show.is_group:
         return
 
     if show.is_group:
-          if not await can_ban_users(message=show):
-               return
+        if not await can_ban_users(message=show):
+            return
 
     if con != "clean":
         await show.reply("`Searching for zombie accounts...`")
@@ -535,16 +537,17 @@ async def rm_deletedacc(show):
 
     await show.reply(del_status)
 
+
 @register(pattern="^/kickthefools$")
 async def _(event):
     if event.fwd_from:
         return
-    
-    if event.is_group:  
-      if not await can_ban_users(message=event):
-         return
+
+    if event.is_group:
+        if not await can_ban_users(message=event):
+            return
     else:
-      return
+        return
 
     c = 0
     KICK_RIGHTS = ChatBannedRights(until_date=None, view_messages=True)
@@ -574,13 +577,14 @@ async def _(event):
     required_string = "Successfully Kicked **{}** users"
     await event.reply(required_string.format(c))
 
+
 @register(pattern="^/unbanall$")
 async def _(event):
-    if not event.is_group:  
+    if not event.is_group:
         return
     if event.is_group:
-            if not await can_ban_users(message=event):
-                return
+        if not await can_ban_users(message=event):
+            return
 
     done = await event.reply("Searching Participant Lists.")
     p = 0
@@ -607,11 +611,11 @@ async def _(event):
 
 @register(pattern="^/unmuteall$")
 async def _(event):
-    if not event.is_group:  
+    if not event.is_group:
         return
     if event.is_group:
-            if not await can_ban_users(message=event):
-                return
+        if not await can_ban_users(message=event):
+            return
 
     done = await event.reply("Working ...")
     p = 0
@@ -638,18 +642,19 @@ async def _(event):
     required_string = "Successfully unmuted **{}** users"
     await event.reply(required_string.format(p))
 
+
 @register(pattern="^/ban(?: |$)(.*)")
 async def ban(bon):
     """ For /ban command, do a ban at targeted person """
     # Here laying the sanity check
-     
-    if not bon.is_group:  
-        print ("1")
+
+    if not bon.is_group:
+        print("1")
         return
     if bon.is_group:
-            if not await can_ban_users(message=bon):
-                print ("2")
-                return
+        if not await can_ban_users(message=bon):
+            print("2")
+            return
 
     chat = await bon.get_chat()
     admin = chat.admin_rights
@@ -669,28 +674,29 @@ async def ban(bon):
         else:
             pass
     else:
-      print("i don't work in channels")
-      return
+        print("i don't work in channels")
+        return
 
     try:
         await tbot(EditBannedRequest(bon.chat_id, user.id,
-                                           BANNED_RIGHTS))
+                                     BANNED_RIGHTS))
         await bon.reply("Banned Successfully")
 
     except Exception as e:
         print(e)
         return
-    
+
+
 @register(pattern="^/kick(?: |$)(.*)")
 async def kick(bon):
     """ For /ban command, do a ban at targeted person """
     # Here laying the sanity check
-     
-    if not bon.is_group:  
+
+    if not bon.is_group:
         return
     if bon.is_group:
-            if not await can_ban_users(message=bon):
-                return
+        if not await can_ban_users(message=bon):
+            return
 
     chat = await bon.get_chat()
     admin = chat.admin_rights
@@ -709,15 +715,14 @@ async def kick(bon):
         else:
             pass
     else:
-      return
+        return
 
     try:
         await tbot.kick_participant(bon.chat_id, user.id)
         await bon.reply("Kicked Successfully")
 
-    except:
+    except BaseException:
         return
-    
 
 
 @register(pattern="^/unban(?: |$)(.*)")
@@ -728,11 +733,11 @@ async def unban(bon):
     admin = chat.admin_rights
     creator = chat.creator
 
-    if not bon.is_group:  
+    if not bon.is_group:
         return
     if bon.is_group:
-            if not await can_ban_users(message=bon):
-                return
+        if not await can_ban_users(message=bon):
+            return
 
     user = await get_user_from_event(bon)
     if user:
@@ -747,15 +752,16 @@ async def unban(bon):
         else:
             pass
     else:
-      return
+        return
 
     try:
         await tbot(EditBannedRequest(bon.chat_id, user.id,
-                                           UNBAN_RIGHTS))
+                                     UNBAN_RIGHTS))
         await bon.reply("Unbanned Successfully")
 
-    except:
+    except BaseException:
         return
+
 
 @register(pattern="^/banme$")
 async def banme(bon):
@@ -765,17 +771,18 @@ async def banme(bon):
     creator = chat.creator
     sender = bon.sender_id
 
-    if not bon.is_group:  
+    if not bon.is_group:
         return
 
     try:
         await tbot(EditBannedRequest(bon.chat_id, sender,
-                                           BANNED_RIGHTS))
+                                     BANNED_RIGHTS))
         await bon.reply("Ok Banned !")
 
     except Exception as e:
         print(e)
         return
+
 
 @register(pattern="^/kickme$")
 async def kickme(bon):
@@ -785,7 +792,7 @@ async def kickme(bon):
     creator = chat.creator
     sender = event.sender_id
 
-    if not bon.is_group:  
+    if not bon.is_group:
         return
 
     try:
@@ -795,7 +802,6 @@ async def kickme(bon):
     except Exception as e:
         print(e)
         return
-
 
 
 @register(pattern="^/mute(?: |$)(.*)")
@@ -809,11 +815,11 @@ async def spider(spdr):
     admin = chat.admin_rights
     creator = chat.creator
 
-    if not spdr.is_group:  
+    if not spdr.is_group:
         return
     if spdr.is_group:
-            if not await can_ban_users(message=spdr):
-                return
+        if not await can_ban_users(message=spdr):
+            return
 
     user = await get_user_from_event(spdr)
     if user:
@@ -828,15 +834,15 @@ async def spider(spdr):
         else:
             pass
     else:
-      return
+        return
 
     try:
         await tbot(EditBannedRequest(spdr.chat_id, user.id,
-                                            MUTE_RIGHTS))
+                                     MUTE_RIGHTS))
 
         await spdr.reply("Muted Successfully !")
 
-    except:
+    except BaseException:
         return await spdr.reply("Couldn't fetch that user !")
 
 
@@ -851,11 +857,11 @@ async def spiderr(spdr):
     admin = chat.admin_rights
     creator = chat.creator
 
-    if not spdr.is_group:  
+    if not spdr.is_group:
         return
     if spdr.is_group:
-            if not await can_ban_users(message=spdr):
-                return
+        if not await can_ban_users(message=spdr):
+            return
 
     user = await get_user_from_event(spdr)
     if user:
@@ -870,16 +876,17 @@ async def spiderr(spdr):
         else:
             pass
     else:
-      return
+        return
 
     try:
         await tbot(EditBannedRequest(spdr.chat_id, user.id,
-                                            UNMUTE_RIGHTS))
+                                     UNMUTE_RIGHTS))
 
         await spdr.reply("Unmuted Successfully !")
 
-    except:
+    except BaseException:
         return await spdr.reply("Couldn't fetch that user !")
+
 
 @register(pattern="^/lock ?(.*)")
 async def locks(event):
@@ -980,14 +987,14 @@ async def locks(event):
 
 @register(pattern="^/unlock ?(.*)")
 async def rem_locks(event):
-    if not event.is_group:  
+    if not event.is_group:
         return
     if event.is_group:
-            if not await can_change_info(message=event):
-                print ("not enough perms")
-                return
+        if not await can_change_info(message=event):
+            print("not enough perms")
+            return
     input_str = event.pattern_match.group(1).lower()
-    #print(input_str)
+    # print(input_str)
     peer_id = event.chat_id
     msg = None
     media = None
@@ -1080,25 +1087,26 @@ async def rem_locks(event):
 
 @register(pattern="^/chatlocktypes$")
 async def ltypes(event):
-    if not event.is_group:  
+    if not event.is_group:
         return
     if event.is_group:
-            if not await can_ban_users(message=event):
-                return
+        if not await can_ban_users(message=event):
+            return
     await event.reply("**These are the valid lock types:**\n\nmsg\nmedia\nurl\nsticker\ngif\ngame\ninline\npoll\ninvite\npin\ninfo\nall")
+
 
 @register(pattern="^/chatlocks$")
 async def clocks(event):
-    if not event.is_group:  
+    if not event.is_group:
         return
     if event.is_group:
-            if not await can_ban_users(message=event):
-                return
+        if not await can_ban_users(message=event):
+            return
     try:
-     c = event.chat.default_banned_rights
-     await event.reply(str(c))
-    except:
-     return
+        c = event.chat.default_banned_rights
+        await event.reply(str(c))
+    except BaseException:
+        return
 
 
 @register(pattern="^/purge$")
@@ -1132,7 +1140,7 @@ async def purge_messages(event):
     except MessageDeleteForbiddenError:
         await event.reply("I can't delete messages that are too old")
         return
-    
+
     text = f"Purged Successfully !"
     await event.respond(text, parse_mode="markdown")
 
@@ -1167,22 +1175,23 @@ async def set_group_title(gpic):
             return
     else:
         return
-       
+
     try:
         await tbot(functions.messages.EditChatTitleRequest(
-        chat_id=gpic.chat_id,
-        title=input_str))
-    except:
+            chat_id=gpic.chat_id,
+            title=input_str))
+    except BaseException:
         await tbot(functions.channels.EditTitleRequest(
-        channel=gpic.chat_id,
-        title=input_str))
+            channel=gpic.chat_id,
+            title=input_str))
 
     if gpic.chat.title == input_str:
         await gpic.reply("Successfully set new group title.")
     else:
         await gpic.reply("Failed to set group title.")
-       
-@register(pattern="^/setdescription ([\s\S]*)")
+
+
+@register(pattern=r"^/setdescription ([\s\S]*)")
 async def set_group_des(gpic):
     input_str = gpic.pattern_match.group(1)
     # print(input_str)
@@ -1191,15 +1200,14 @@ async def set_group_des(gpic):
             return
     else:
         return
-       
+
     try:
         await tbot(functions.messages.EditChatAboutRequest(
-        peer=gpic.chat_id,
-        about=input_str))
+            peer=gpic.chat_id,
+            about=input_str))
         await gpic.reply("Successfully set new group description.")
-    except:
+    except BaseException:
         await gpic.reply("Failed to set group description.")
-       
 
 
 @register(pattern="^/setsticker$")
@@ -1209,31 +1217,32 @@ async def set_group_sticker(gpic):
             return
     else:
         return
-       
+
     rep_msg = await gpic.get_reply_message()
     if not rep_msg.document:
         await gpic.reply("Reply to any sticker plox.")
         return
     stickerset_attr_s = rep_msg.document.attributes
-    stickerset_attr = find_instance(stickerset_attr_s, DocumentAttributeSticker)
+    stickerset_attr = find_instance(
+        stickerset_attr_s, DocumentAttributeSticker)
     if not stickerset_attr.stickerset:
         await gpic.reply("Sticker does not belong to a pack.")
         return
     try:
-     id=stickerset_attr.stickerset.id
-     access_hash=stickerset_attr.stickerset.access_hash
-     print(id)
-     print (access_hash)
-     await tbot(functions.channels.SetStickersRequest(
-        channel=gpic.chat_id,
-        stickerset=types.InputStickerSetID(
-            id=id,
-            access_hash=access_hash)))
-     await gpic.reply("Group sticker pack successfully set !")
+        id = stickerset_attr.stickerset.id
+        access_hash = stickerset_attr.stickerset.access_hash
+        print(id)
+        print(access_hash)
+        await tbot(functions.channels.SetStickersRequest(
+            channel=gpic.chat_id,
+            stickerset=types.InputStickerSetID(
+                id=id,
+                access_hash=access_hash)))
+        await gpic.reply("Group sticker pack successfully set !")
     except Exception as e:
         print(e)
         await gpic.reply("Failed to set group sticker pack.")
-       
+
 
 global __help__
 
@@ -1269,7 +1278,7 @@ __help__ = """
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 CMD_HELP.update({
     file_helpo: [

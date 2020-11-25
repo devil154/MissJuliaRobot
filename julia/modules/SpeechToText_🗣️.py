@@ -1,3 +1,7 @@
+from julia import tbot, CMD_HELP
+from pathlib import Path
+import logging
+import inspect
 import asyncio
 import glob
 import html
@@ -85,24 +89,26 @@ db = client["missjuliarobot"]
 approved_users = db.approve
 
 # ------ THANKS TO LONAMI ------#
+
+
 async def is_register_admin(chat, user):
-        if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-            return isinstance(
-                (
-                    await tbot(functions.channels.GetParticipantRequest(chat, user))
-                ).participant,
-                (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
-            )
-        if isinstance(chat, types.InputPeerChat):
-            ui = await tbot.get_peer_id(user)
-            ps = (
-                await tbot(functions.messages.GetFullChatRequest(chat.chat_id))
-            ).full_chat.participants.participants
-            return isinstance(
-                next((p for p in ps if p.user_id == ui), None),
-                (types.ChatParticipantAdmin, types.ChatParticipantCreator),
-            )
-        return False
+    if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
+        return isinstance(
+            (
+                await tbot(functions.channels.GetParticipantRequest(chat, user))
+            ).participant,
+            (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
+        )
+    if isinstance(chat, types.InputPeerChat):
+        ui = await tbot.get_peer_id(user)
+        ps = (
+            await tbot(functions.messages.GetFullChatRequest(chat.chat_id))
+        ).full_chat.participants.participants
+        return isinstance(
+            next((p for p in ps if p.user_id == ui), None),
+            (types.ChatParticipantAdmin, types.ChatParticipantCreator),
+        )
+    return False
 
 
 @register(pattern="^/stt$")
@@ -123,7 +129,7 @@ async def _(event):
     start = datetime.now()
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-    
+
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         required_file_name = await event.client.download_media(
@@ -153,7 +159,8 @@ async def _(event):
                 transcript_confidence = ""
                 for alternative in results:
                     alternatives = alternative["alternatives"][0]
-                    transcript_response += " " + str(alternatives["transcript"])
+                    transcript_response += " " + \
+                        str(alternatives["transcript"])
                     transcript_confidence += (
                         " " + str(alternatives["confidence"]) + " + "
                     )
@@ -161,12 +168,10 @@ async def _(event):
                 ms = (end - start).seconds
                 if transcript_response != "":
                     string_to_show = "Language: `English`\nTRANSCRIPT: `{}`\nTime Taken: {} seconds\nConfidence: `{}`".format(
-                        transcript_response, ms, transcript_confidence
-                    )
+                        transcript_response, ms, transcript_confidence)
                 else:
                     string_to_show = "Language: `English`\nTime Taken: {} seconds\n**No Results Found**".format(
-                        ms
-                    )
+                        ms)
                 await event.reply(string_to_show)
             else:
                 await event.reply(r["error"])
@@ -175,16 +180,11 @@ async def _(event):
     else:
         await event.reply("Reply to a voice message, to get the text out of it.")
 
-import inspect
-import logging
-import re, os
-from pathlib import Path
-from julia import tbot, CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /stt: Type in reply to a voice message(english only) to extract text from it.

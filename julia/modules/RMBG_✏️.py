@@ -1,3 +1,4 @@
+from julia import CMD_HELP
 from julia import tbot
 from julia import MONGO_DB_URI
 from pymongo import MongoClient
@@ -117,11 +118,12 @@ def ReTrieveFile(input_file_name):
         stream=True,
     )
     return r
-from julia import CMD_HELP
+
+
 global __help__
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /rmbg: Type in reply to a media to remove it's background

@@ -48,7 +48,6 @@ async def terminal_runner(term):
         remove("output.txt")
         return
 
-
     if uid == 0:
         await term.reply("`" f"{curruser}:~# {command}" f"\n{result}" "`")
     else:

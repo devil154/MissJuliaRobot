@@ -1,6 +1,10 @@
+from julia.events import register
+from julia import CMD_HELP
 import io
 import sys
-import traceback, random, time
+import traceback
+import random
+import time
 from time import sleep
 import pyfiglet
 from pymongo import MongoClient
@@ -25,6 +29,7 @@ client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
 
+
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
 
@@ -46,11 +51,6 @@ async def is_register_admin(chat, user):
         )
     return None
 
-import os
-from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.types import MessageEntityMentionName
-from julia import CMD_HELP
-from julia.events import register
 
 TMP_DOWNLOAD_DIRECTORY = "./"
 
@@ -191,20 +191,21 @@ async def fetch_info(replied_user, event):
     caption += f"<a href=\"tg://user?id={user_id}\">{first_name}</a>"
 
     if user_id in SUDO_USERS:
-         caption += f"\n\n<b>This person is one of my SUDO USERS\nHe can Gban/Ungban anyome, so mind it !</b>"
-    
+        caption += f"\n\n<b>This person is one of my SUDO USERS\nHe can Gban/Ungban anyome, so mind it !</b>"
+
     if user_id == OWNER_ID:
-         caption += f"\n\n<b>This person is my owner.\nHe is the reason why I am alive.</b>"
+        caption += f"\n\n<b>This person is my owner.\nHe is the reason why I am alive.</b>"
 
     approved_userss = approved_users.find({})
     for ch in approved_userss:
         iid = ch["id"]
         userss = ch["user"]
-  
+
     if event.chat_id == iid and event.sender_id == userss:
-       caption += f"\n\n<b>This person is approved in this chat.</b>"
+        caption += f"\n\n<b>This person is approved in this chat.</b>"
 
     return photo, caption
+
 
 @register(pattern="^/userid$")
 async def useridgetter(target):
@@ -253,6 +254,7 @@ async def chatidgetter(chat):
             return
     await chat.reply("Chat ID: `" + str(chat.chat_id) + "`")
 
+
 @register(pattern="^/runs$")
 async def runs(event):
     RUNIT = [
@@ -277,7 +279,6 @@ async def runs(event):
         "As The Doctor would say... RUN!",
     ]
     await event.reply(random.choice(RUNIT))
-
 
 
 def get_readable_time(seconds: int) -> str:
@@ -317,7 +318,7 @@ async def ping(event):
     await message.edit("Pinging ...")
     end_time = datetime.datetime.now()
     pingtime = end_time - start_time
-    telegram_ping = str(round(pingtime.total_seconds(), 2)) +"s"    
+    telegram_ping = str(round(pingtime.total_seconds(), 2)) + "s"
     uptime = get_readable_time((time.time() - StartTime))
     await message.edit(
         "PONG !\n"
@@ -325,6 +326,7 @@ async def ping(event):
         "<b>Service uptime:</b> <code>{}</code>".format(telegram_ping, uptime),
         parse_mode="html",
     )
+
 
 @register(pattern="^/eval")
 async def _(event):
@@ -363,7 +365,8 @@ async def _(event):
     else:
         evaluation = "Success 😃"
 
-    final_output = "**EVAL**: `{}` \n\n **OUTPUT**: \n`{}` \n".format(cmd, evaluation)
+    final_output = "**EVAL**: `{}` \n\n **OUTPUT**: \n`{}` \n".format(
+        cmd, evaluation)
     MAX_MESSAGE_SIZE_LIMIT = 4095
     if len(final_output) > MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(final_output)) as out_file:
@@ -451,6 +454,7 @@ async def _(event):
     else:
         await event.reply(final_output)
 
+
 @juliabot(pattern="/saved")
 async def saat(event):
     chat = "@FileToLinkTGbot"
@@ -498,18 +502,17 @@ async def savel(event):
     await randika.delete()
     del holababy
     del reply_message
-    
 
-from julia import CMD_HELP
+
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /userid: If replied to user's message gets that user's id.
- - /chatid: Get the current chat id. 
+ - /chatid: Get the current chat id.
  - /runs: Reply a random string from an array of replies.
  - /info: Get information about a user.
  - /savefile: Gives you a permanent link of a file so that you can download it later anytime

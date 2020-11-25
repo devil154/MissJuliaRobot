@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 from telethon import *
 from telethon.tl import *
@@ -31,8 +33,6 @@ async def is_register_admin(chat, user):
             (types.ChatParticipantAdmin, types.ChatParticipantCreator),
         )
     return None
-
-
 
 
 @register(pattern="^/poll (.*)")
@@ -334,12 +334,10 @@ async def stop(event):
         await event.reply("Poll id should contain only numbers")
         return
 
-    
     if len(secret) != 5:
         await event.reply("Poll id should be an integer of 5 digits")
         return
 
-    
     msg = await event.get_reply_message()
 
     if str(msg.sender_id) != "1246850012":
@@ -349,26 +347,27 @@ async def stop(event):
         return
     print(secret)
     if msg.poll:
-            allpoll = poll_id.find({})
-            for c in allpoll:
-                if not event.sender_id == c["user"] and not secret == c["pollid"]:
-                   await event.reply("Oops, either you haven't created this poll or you have given wrong poll id")
-                   return
-            if msg.poll.poll.closed:
-               await event.reply("Oops, the poll is already closed.")
-               return
-            poll_id.delete_one({"user": event.sender_id})
-            pollid = msg.poll.poll.id
-            await msg.edit(
-                        file=types.InputMediaPoll(
-                            poll=types.Poll(
-                                id=pollid, question="", answers=[], closed=True
-                            )
-                        )
-                    )
-            await event.reply("Successfully stopped the poll")                  
+        allpoll = poll_id.find({})
+        for c in allpoll:
+            if not event.sender_id == c["user"] and not secret == c["pollid"]:
+                await event.reply("Oops, either you haven't created this poll or you have given wrong poll id")
+                return
+        if msg.poll.poll.closed:
+            await event.reply("Oops, the poll is already closed.")
+            return
+        poll_id.delete_one({"user": event.sender_id})
+        pollid = msg.poll.poll.id
+        await msg.edit(
+            file=types.InputMediaPoll(
+                poll=types.Poll(
+                    id=pollid, question="", answers=[], closed=True
+                )
+            )
+        )
+        await event.reply("Successfully stopped the poll")
     else:
         await event.reply("This isn't a poll")
+
 
 @register(pattern="^/forgotpollid$")
 async def stop(event):
@@ -385,21 +384,19 @@ async def stop(event):
             return
     allpoll = poll_id.find({})
     for c in allpoll:
-      if event.sender_id == c["user"]:
-        try:
-          poll_id.delete_one({"user": event.sender_id})
-          await event.reply("Done you can now create a new poll.")       
-        except Exception:
-          await event.reply("Seems like you haven't created any poll yet !")
+        if event.sender_id == c["user"]:
+            try:
+                poll_id.delete_one({"user": event.sender_id})
+                await event.reply("Done you can now create a new poll.")
+            except Exception:
+                await event.reply("Seems like you haven't created any poll yet !")
 
 
-import os
-from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 
 __help__ = """

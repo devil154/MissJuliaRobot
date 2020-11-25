@@ -1,3 +1,4 @@
+from julia import CMD_HELP
 from julia import tbot
 import os
 import time
@@ -173,12 +174,11 @@ async def download_video(v_url):
         os.system("rm -rf *.mp4")
         os.system("rm -rf *.webp")
 
-from julia import CMD_HELP
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /yt <text>: perform a youtube search

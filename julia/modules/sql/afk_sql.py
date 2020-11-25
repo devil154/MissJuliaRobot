@@ -35,6 +35,7 @@ def is_afk(user_id):
     return user_id in AFK_USERS
     return user_id in AFK_USERSS
 
+
 def check_afk_status(user_id):
     try:
         return SESSION.query(AFK).get(user_id)
@@ -50,7 +51,7 @@ def set_afk(user_id, reason, start_time=""):
         else:
             curr.is_afk = True
             curr.reason = reason
-            curr.start_time = time.time()          
+            curr.start_time = time.time()
         AFK_USERS[user_id] = reason
         AFK_USERSS[user_id] = start_time
         SESSION.add(curr)
@@ -77,8 +78,10 @@ def __load_afk_users():
     global AFK_USERSS
     try:
         all_afk = SESSION.query(AFK).all()
-        AFK_USERS = {user.user_id: user.reason for user in all_afk if user.is_afk}
-        AFK_USERSS = {user.user_id: user.start_time for user in all_afk if user.is_afk}
+        AFK_USERS = {
+            user.user_id: user.reason for user in all_afk if user.is_afk}
+        AFK_USERSS = {
+            user.user_id: user.start_time for user in all_afk if user.is_afk}
     finally:
         SESSION.close()
 

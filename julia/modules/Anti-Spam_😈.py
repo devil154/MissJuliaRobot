@@ -1,3 +1,6 @@
+from julia import CMD_HELP
+import nude
+from better_profanity import profanity
 import html
 import asyncio
 from julia.modules.sql import cleaner_sql as sql
@@ -15,17 +18,18 @@ db = client["missjuliarobot"]
 approved_users = db.approve
 CMD_STARTERS = '/'
 
+
 async def can_change_info(message):
-        result = await tbot(
-            functions.channels.GetParticipantRequest(
-                channel=message.chat_id,
-                user_id=message.sender_id,
-            )
+    result = await tbot(
+        functions.channels.GetParticipantRequest(
+            channel=message.chat_id,
+            user_id=message.sender_id,
         )
-        p = result.participant
-        return isinstance(p, types.ChannelParticipantCreator) or (
-            isinstance(p, types.ChannelParticipantAdmin) and p.admin_rights.change_info
-        )
+    )
+    p = result.participant
+    return isinstance(p, types.ChannelParticipantCreator) or (isinstance(
+        p, types.ChannelParticipantAdmin) and p.admin_rights.change_info)
+
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -52,10 +56,10 @@ async def is_register_admin(chat, user):
 @register(pattern="^/cleanbluetext ?(.*)")
 async def _(event):
     if event.is_group:
-            if not await can_change_info(message=event):
-                return
+        if not await can_change_info(message=event):
+            return
     else:
-       return
+        return
     args = event.pattern_match.group(1)
     if args:
         val = args
@@ -84,13 +88,14 @@ async def _(event):
         )
         await event.reply(reply, parse_mode="html")
 
+
 @register(pattern="^/ignorecleanbluetext ?(.*)")
 async def _(event):
     if event.is_group:
-            if not await can_change_info(message=event):
-                return
+        if not await can_change_info(message=event):
+            return
     else:
-       return
+        return
     args = event.pattern_match.group(1)
     chat = event.chat
 
@@ -108,13 +113,14 @@ async def _(event):
         reply = "No command supplied to be ignored."
         await event.reply(reply)
 
+
 @register(pattern="^/unignorecleanbluetext ?(.*)")
 async def _(event):
     if event.is_group:
-            if not await can_change_info(message=event):
-                return
+        if not await can_change_info(message=event):
+            return
     else:
-       return
+        return
     args = event.pattern_match.group(1)
     chat = event.chat
 
@@ -137,11 +143,11 @@ async def _(event):
 async def _(event):
 
     if event.is_group:
-            if not await can_change_info(message=event):
-                return
+        if not await can_change_info(message=event):
+            return
     else:
-       return
-       
+        return
+
     chat = event.chat
 
     global_ignored_list, local_ignore_list = sql.get_all_ignored(chat.id)
@@ -169,7 +175,7 @@ async def _(event):
 
 
 @tbot.on(events.NewMessage(pattern=None))
-async def _(event):    
+async def _(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
         iid = ch['id']
@@ -182,24 +188,23 @@ async def _(event):
         else:
             pass
     else:
-      return
+        return
     if str(event.sender_id) == "1246850012":
         return
     if event.sender_id == OWNER_ID:
         return
-  
+
     if sql.is_enabled(event.chat_id):
-       fst_word = event.text.strip().split(None, 1)[0]
-       command = fst_word[1:].split('@')
-       if len(fst_word) > 1 and any(fst_word.startswith(start)
-                                         for start in CMD_STARTERS):
+        fst_word = event.text.strip().split(None, 1)[0]
+        command = fst_word[1:].split('@')
+        if len(fst_word) > 1 and any(fst_word.startswith(start)
+                                     for start in CMD_STARTERS):
 
-          ignored = sql.is_command_ignored(event.chat_id, command[0])
-          if ignored:
-             return
-          await event.delete()
+            ignored = sql.is_command_ignored(event.chat_id, command[0])
+            if ignored:
+                return
+            await event.delete()
 
-from better_profanity import profanity
 profanity.load_censor_words_from_file('./profanity_wordlist.txt')
 
 client = MongoClient()
@@ -264,59 +269,57 @@ async def sticklet(event):
         await event.reply("I only understand by on or off")
         return
 
-import nude
 
-@tbot.on(events.NewMessage(pattern=None))      
+@tbot.on(events.NewMessage(pattern=None))
 async def spam_update(event):
-  if event.is_private:  	
-   return
-  if MONGO_DB_URI is None:
-   return
-  msg = str(event.text)
-  sender = await event.get_sender()
-  let = sender.username
-  if event.is_group:
-    if (await is_register_admin(event.input_chat, event.message.sender_id)):
-       return
-    else:
-       pass     
-  chats = spammers.find({})
-  for c in chats:
-   if event.text: 
-    if event.chat_id == c['id']:
-     if profanity.contains_profanity(msg) == True:
-        await event.delete()
-        if sender.username == None:
-           st = sender.first_name
-           hh = sender.id
-           final = f"[{st}](tg://user?id={hh}) **{msg}** is detected as a slang word and your message has been deleted"
+    if event.is_private:
+        return
+    if MONGO_DB_URI is None:
+        return
+    msg = str(event.text)
+    sender = await event.get_sender()
+    let = sender.username
+    if event.is_group:
+        if (await is_register_admin(event.input_chat, event.message.sender_id)):
+            return
         else:
-           final = f'@{let} **{msg}** is detected as a slang word and your message has been deleted'
-        dev = await event.respond(final)
-        await asyncio.sleep(10)
-        await dev.delete()
-   if event.photo:
-     if event.chat_id == c['id']:
-        await event.client.download_media(event.photo, "nudes.jpg")
-        if nude.is_nude('./nudes.jpg') == True:
-           await event.delete()
-           if sender.username == None:
-             st = sender.first_name
-             hh = sender.id
-             final = f"[{st}](tg://user?id={hh}) your message has been deleted due to pornographic content"
-           else:
-             final = f'@{let} your message has been deleted due to pornographic content'
-           dev = await event.respond(final)
-           await asyncio.sleep(10)
-           await dev.delete()
-           os.remove("nudes.jpg")
-    		
-from julia import CMD_HELP
+            pass
+    chats = spammers.find({})
+    for c in chats:
+        if event.text:
+            if event.chat_id == c['id']:
+                if profanity.contains_profanity(msg):
+                    await event.delete()
+                    if sender.username is None:
+                        st = sender.first_name
+                        hh = sender.id
+                        final = f"[{st}](tg://user?id={hh}) **{msg}** is detected as a slang word and your message has been deleted"
+                    else:
+                        final = f'@{let} **{msg}** is detected as a slang word and your message has been deleted'
+                    dev = await event.respond(final)
+                    await asyncio.sleep(10)
+                    await dev.delete()
+        if event.photo:
+            if event.chat_id == c['id']:
+                await event.client.download_media(event.photo, "nudes.jpg")
+                if nude.is_nude('./nudes.jpg'):
+                    await event.delete()
+                    if sender.username is None:
+                        st = sender.first_name
+                        hh = sender.id
+                        final = f"[{st}](tg://user?id={hh}) your message has been deleted due to pornographic content"
+                    else:
+                        final = f'@{let} your message has been deleted due to pornographic content'
+                    dev = await event.respond(final)
+                    await asyncio.sleep(10)
+                    await dev.delete()
+                    os.remove("nudes.jpg")
+
 global __help__
 global file_helpo
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /cleanbluetext <on/off/yes/no>: clean commands from non-admins after sending

@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 import math
 import requests
@@ -185,7 +187,6 @@ async def _(event):
     await event.reply(j)
 
 
-
 @register(pattern="^/cos (.*)")
 async def _(event):
     approved_userss = approved_users.find({})
@@ -199,9 +200,8 @@ async def _(event):
             pass
         else:
             return
-    args = int(event.pattern_match.group(1)) 
+    args = int(event.pattern_match.group(1))
     await event.reply(str(math.cos(int(args))))
-
 
 
 @register(pattern="^/sin (.*)")
@@ -217,10 +217,9 @@ async def _(event):
             pass
         else:
             return
-    args = int(event.pattern_match.group(1)) 
-    
-    await event.reply(str(math.sin(int(args))))
+    args = int(event.pattern_match.group(1))
 
+    await event.reply(str(math.sin(int(args))))
 
 
 @register(pattern="^/tan (.*)")
@@ -236,10 +235,9 @@ async def _(event):
             pass
         else:
             return
-    args = int(event.pattern_match.group(1)) 
-    
-    await event.reply(str(math.tan(int(args))))
+    args = int(event.pattern_match.group(1))
 
+    await event.reply(str(math.tan(int(args))))
 
 
 @register(pattern="^/arccos (.*)")
@@ -255,10 +253,9 @@ async def _(event):
             pass
         else:
             return
-    args = int(event.pattern_match.group(1)) 
-    
-    await event.reply(str(math.acos(int(args))))
+    args = int(event.pattern_match.group(1))
 
+    await event.reply(str(math.acos(int(args))))
 
 
 @register(pattern="^/arcsin (.*)")
@@ -274,10 +271,9 @@ async def _(event):
             pass
         else:
             return
-    args = int(event.pattern_match.group(1)) 
-    
-    await event.reply(str(math.asin(int(args))))
+    args = int(event.pattern_match.group(1))
 
+    await event.reply(str(math.asin(int(args))))
 
 
 @register(pattern="^/arctan (.*)")
@@ -293,10 +289,9 @@ async def _(event):
             pass
         else:
             return
-    args = int(event.pattern_match.group(1)) 
-    
-    await event.reply(str(math.atan(int(args))))
+    args = int(event.pattern_match.group(1))
 
+    await event.reply(str(math.atan(int(args))))
 
 
 @register(pattern="^/abs (.*)")
@@ -312,10 +307,9 @@ async def _(event):
             pass
         else:
             return
-    args = int(event.pattern_match.group(1)) 
-    
-    await event.reply(str(math.fabs(int(args))))
+    args = int(event.pattern_match.group(1))
 
+    await event.reply(str(math.fabs(int(args))))
 
 
 @register(pattern="^/log (.*)")
@@ -331,16 +325,14 @@ async def _(event):
             pass
         else:
             return
-    args = int(event.pattern_match.group(1)) 
-    
+    args = int(event.pattern_match.group(1))
+
     await event.reply(str(math.log(int(args))))
 
-import os
-from julia import CMD_HELP
 global __help__
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
 Solves complex math problems using https://newton.now.sh

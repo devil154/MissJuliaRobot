@@ -1,3 +1,5 @@
+from julia import CMD_HELP
+import os
 from julia import tbot
 import datetime
 from typing import List
@@ -13,6 +15,7 @@ client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["missjuliarobot"]
 approved_users = db.approve
+
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
@@ -33,6 +36,7 @@ async def is_register_admin(chat, user):
             (types.ChatParticipantAdmin, types.ChatParticipantCreator),
         )
     return None
+
 
 def generate_time(to_find: str, findtype: List[str]) -> str:
     data = requests.get(
@@ -123,11 +127,9 @@ async def _(event):
 
     await send_message.edit(result, parse_mode="html")
 
-import os
-from julia import CMD_HELP
 file_help = os.path.basename(__file__)
 file_help = file_help.replace(".py", "")
-file_helpo=  file_help.replace("_", " ")
+file_helpo = file_help.replace("_", " ")
 
 __help__ = """
  - /datetime <city>: Get the present date and time information
@@ -139,4 +141,3 @@ CMD_HELP.update({
         __help__
     ]
 })
-
