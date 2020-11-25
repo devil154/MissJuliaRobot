@@ -7,13 +7,12 @@ from julia import MONGO_DB_URI, OWNER_ID
 from telethon import events
 
 global spamcounter
-spamcounter = 0
+spamcounter = 0 
 
 @tbot.on(events.NewMessage(pattern=None))
 async def leechers(event):
     if str(event.sender_id) in str(OWNER_ID):
         return
-
     global spamcounter
     global starttimer
     starttimer = time.time()
@@ -23,17 +22,14 @@ async def leechers(event):
     check = sender
     USERSPAM = [1234]
     
-    if len(USERSPAM) >= 1:
-        if event.sender_id == USERSPAM[0]:
+    if event.sender_id == USERSPAM[0]:
             pass
-        else:
+    else:
             spamcounter = 0
             USERSPAM = []
             USERSPAM.append(check)
-    else:
-        spamcounter = 0
-        USERSPAM = []
-        USERSPAM.append(check)
+            return
+
     print (spamcounter)
     if spamcounter > 4:
         spamtimecheck = time.time() - starttimer
