@@ -1,5 +1,5 @@
 import asyncio
-from julia import tbot, CMD_HELP
+from julia import tbot, ubot, CMD_HELP
 from pathlib import Path
 import logging
 import inspect
