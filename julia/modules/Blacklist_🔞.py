@@ -127,7 +127,7 @@ async def on_delete_blacklist(event):
     await event.reply(f"Removed {successful} / {len(to_unblacklist)} from the blacklist")
 
 
-@tbot.on(events.NewMessage(pattern="^/addurl"))
+@register(pattern="^/addurl")
 async def _(event):
     if event.fwd_from:
         return
@@ -167,7 +167,7 @@ async def _(event):
 
 
 
-@tbot.on(events.NewMessage(pattern="^/delurl"))
+@register(pattern="^/delurl")
 async def _(event):
     if event.fwd_from:
         return
@@ -225,6 +225,27 @@ async def on_url_message(event):
                 await event.delete()
             except:
                 return
+
+@register(pattern="^/geturl$")
+async def _(event):
+    if event.fwd_from:
+        return
+    if event.is_private:
+        return
+    if event.is_group:
+        if await can_change_info(message=event):
+            pass
+        else:
+            return
+    chat = event.chat    
+    base_string = "Current <b>blacklisted</b> domains:\n"
+    blacklisted = sql.get_blacklisted_urls(chat.id)
+    if not blacklisted:
+        await event.reply("There are no blacklisted domains here!")
+        return
+    for domain in blacklisted:
+        base_string += "- <code>{}</code>\n".format(domain)
+    await event.reply(base_string, parse_mode="html")
 
 
 global __help__
