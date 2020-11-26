@@ -4,6 +4,7 @@ from julia import tbot
 import re
 from telethon import events
 import julia.modules.sql.blacklist_sql as sql
+import julia.modules.sql.urlblacklist_sql as urlsql
 from julia.events import register
 from telethon import types
 from telethon.tl import functions
