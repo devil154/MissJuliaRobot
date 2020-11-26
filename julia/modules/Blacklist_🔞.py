@@ -127,7 +127,7 @@ async def on_delete_blacklist(event):
     await event.reply(f"Removed {successful} / {len(to_unblacklist)} from the blacklist")
 
 
-@register(pattern="^/addurl")
+@tbot.on(events.NewMessage(pattern="^/addurl"))
 async def _(event):
     if event.fwd_from:
         return
@@ -167,7 +167,7 @@ async def _(event):
 
 
 
-@register(pattern="^/rmurl")
+@tbot.on(events.NewMessage(pattern="^/rmurl"))
 async def _(event):
     if event.fwd_from:
         return
