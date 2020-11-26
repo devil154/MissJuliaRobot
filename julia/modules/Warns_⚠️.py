@@ -75,9 +75,9 @@ async def _(event):
         if warn_reason:
             reply += "\nReason: {}".format(html.escape(warn_reason))
     
-    await event.reply(reply, buttons=[[Button.inline('Remove Warn ✖️', data="rm_warn")]], parse_mode="html")
+    await event.reply(reply, buttons=[[Button.inline('Remove Warn ✖️', data=f"rm_warn-{reply_message.sender_id}")]], parse_mode="html")
 
-@tbot.on(events.CallbackQuery(pattern=r'rm_warn'))
+@tbot.on(events.CallbackQuery(pattern=r'rm_warn-(\d+)')
 async def rm_warn(event):
    try:
     if event.is_group:
@@ -87,19 +87,18 @@ async def rm_warn(event):
             await event.answer("You need to be an admin to do this", alert=False)
         sender = await event.get_sender()
         sid= sender.id
-        reply_message = await event.get_reply_message()
-        warner = reply_message.sender_id
-        result = sql.get_warns(reply_message.sender_id, event.chat_id)
+        user_id = int(event.pattern_match.group(1))
+        result = sql.get_warns(user_id, event.chat_id)
         if not result and result[0] != 0:
             await event.answer("This user hasn't got any warnings!", alert=False)
             return
-        sql.remove_warn(reply_message.sender_id, event.chat_id)
+        sql.remove_warn(user_id, event.chat_id)
         await event.edit(f"Warn removed by <u><a href='tg://user?id={sid}'>user</a></u> ", parse_mode="html")
     else:
         return
    except:
       await event.answer("Sorry the button link has expired, pls use /removelastwarn to manually remove warns", alert=True)
-        
+       
 @register(pattern="^/getwarns$")
 async def _(event):
     if event.fwd_from:
