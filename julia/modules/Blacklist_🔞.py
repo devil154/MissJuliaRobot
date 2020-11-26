@@ -139,7 +139,7 @@ async def _(event):
         else:
             return
     chat = event.chat
-    urls = event.text.split(" ", maxsplit=1)[1]
+    urls = event.text.split(None, 1)
     if len(urls) > 1:
         urls = urls[1]
         to_blacklist = list(
@@ -167,7 +167,7 @@ async def _(event):
 
 
 
-@tbot.on(events.NewMessage(pattern="^/rmurl"))
+@tbot.on(events.NewMessage(pattern="^/delurl"))
 async def _(event):
     if event.fwd_from:
         return
@@ -179,7 +179,8 @@ async def _(event):
         else:
             return
     chat = event.chat
-    urls = event.text.split(" ", maxsplit=1)[1]
+    urls = event.text.split(None, 1)
+  
     if len(urls) > 1:
         urls = urls[1]
         to_unblacklist = list(
