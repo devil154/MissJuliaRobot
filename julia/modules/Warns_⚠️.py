@@ -77,7 +77,7 @@ async def _(event):
     
     await event.reply(reply, buttons=[[Button.inline('Remove Warn ✖️', data=f"rm_warn-{reply_message.sender_id}")]], parse_mode="html")
 
-@tbot.on(events.CallbackQuery(pattern=r'rm_warn-(\d+)')
+@tbot.on(events.CallbackQuery(pattern=r"rm_warn-(\d+)"))
 async def rm_warn(event):
    try:
     if event.is_group:
