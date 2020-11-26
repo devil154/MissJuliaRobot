@@ -92,9 +92,9 @@ async def _(event):
         num_warns, reasons = result
         limit, soft_warn = sql.get_warn_setting(event.chat_id)
         if reasons:
-            text = "This user has {}/{} warnings, for the following reasons:\n\n".format(
+            text = "This user has {}/{} warnings, for the following reasons:".format(
                 num_warns, limit)
-            # text += "\r\n"
+            text += "\r\n"
             text += reasons
             await event.reply(text)
         else:
