@@ -79,6 +79,7 @@ async def _(event):
 
 @tbot.on(events.CallbackQuery(pattern=r'rm_warn'))
 async def rm_warn(event):
+   try:
     if event.is_group:
         if await is_register_admin(event.input_chat, event.sender_id):
             pass
@@ -96,6 +97,8 @@ async def rm_warn(event):
         await event.edit(f"Warn removed by <u><a href='tg://user?id={sid}'>user</a></u> ", parse_mode="html")
     else:
         return
+   except:
+      await event.answer("Sorry the button link has expired, pls use /removelastwarn to manually remove warns", alert=True)
         
 @register(pattern="^/getwarns$")
 async def _(event):
