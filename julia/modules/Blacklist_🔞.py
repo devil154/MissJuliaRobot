@@ -157,13 +157,13 @@ async def _(event):
         if len(to_blacklist) == 1:
             extract_url = tldextract.extract(to_blacklist[0])
             if extract_url.domain and extract_url.suffix:
-                await event.reply(chat.id, "Added <code>{}</code> domain to the blacklist!".format(html.escape(extract_url.domain + "." + extract_url.suffix)), parse_mode="html")
+                await event.reply("Added <code>{}</code> domain to the blacklist!".format(html.escape(extract_url.domain + "." + extract_url.suffix)), parse_mode="html")
             else:
-                await event.reply(chat.id, "You are trying to blacklist an invalid url")
+                await event.reply("You are trying to blacklist an invalid url")
         else:
-            await event.reply(chat.id, "Added <code>{}</code> domains to the blacklist.".format(len(blacklisted)), parse_mode="html")
+            await event.reply("Added <code>{}</code> domains to the blacklist.".format(len(blacklisted)), parse_mode="html")
     else:
-        await event.reply(chat.id, "Tell me which urls you would like to add to the blacklist.")
+        await event.reply("Tell me which urls you would like to add to the blacklist.")
 
 
 
@@ -194,17 +194,17 @@ async def _(event):
 
         if len(to_unblacklist) == 1:
             if unblacklisted:
-                await event.reply(chat.id, "Removed <code>{}</code> from the blacklist!".format(html.escape(to_unblacklist[0])), parse_mode="html")
+                await event.reply("Removed <code>{}</code> from the blacklist!".format(html.escape(to_unblacklist[0])), parse_mode="html")
             else:
-                await event.reply(chat.id, "This isn't a blacklisted domain...!")
+                await event.reply("This isn't a blacklisted domain...!")
         elif unblacklisted == len(to_unblacklist):
-            await event.reply(chat.id, "Removed <code>{}</code> domains from the blacklist.".format(unblacklisted), parse_mode="html")
+            await event.reply("Removed <code>{}</code> domains from the blacklist.".format(unblacklisted), parse_mode="html")
         elif not unblacklisted:
-            await event.reply(chat.id, "None of these domains exist, so they weren't removed.")
+            await event.reply("None of these domains exist, so they weren't removed.")
         else:
-            await event.reply(chat.id, "Removed <code>{}</code> domains from the blacklist. {} did not exist, so were not removed.".format(unblacklisted, len(to_unblacklist) - unblacklisted), parse_mode="html")
+            await event.reply("Removed <code>{}</code> domains from the blacklist. {} did not exist, so were not removed.".format(unblacklisted, len(to_unblacklist) - unblacklisted), parse_mode="html")
     else:
-        await event.reply(chat.id, "Tell me which domains you would like to remove from the blacklist.")
+        await event.reply("Tell me which domains you would like to remove from the blacklist.")
 
 
 @tbot.on(events.NewMessage(incoming=True))
