@@ -43,7 +43,6 @@ async def _(event):
     if event.is_group:
         if await is_register_admin(event.input_chat, event.message.sender_id):
             pass
-
         else:
             return
     warn_getter = event.text
@@ -52,6 +51,11 @@ async def _(event):
         await event.reply("Please provide a reason for warning.")
         return
     reply_message = await event.get_reply_message()
+    if not await is_register_admin(event.input_chat, reply_message.sender_id):
+            pass
+    else:
+           await event.reply("I am not gonna warn an admin")
+           return
     limit, soft_warn = sql.get_warn_setting(event.chat_id)
     num_warns, reasons = sql.warn_user(
         reply_message.sender_id, event.chat_id, warn_reason)
@@ -87,6 +91,11 @@ async def _(event):
         else:
             return
     reply_message = await event.get_reply_message()
+    if not await is_register_admin(event.input_chat, reply_message.sender_id):
+            pass
+    else:
+           await event.reply("I am not gonna get warns of an admin")
+           return
     result = sql.get_warns(reply_message.sender_id, event.chat_id)
     if result and result[0] != 0:
         num_warns, reasons = result
@@ -115,6 +124,11 @@ async def _(event):
         else:
             return
     reply_message = await event.get_reply_message()
+    if not await is_register_admin(event.input_chat, reply_message.sender_id):
+            pass
+    else:
+           await event.reply("I am not gonna remove warn of an admin")
+           return
     result = sql.get_warns(reply_message.sender_id, event.chat_id)
     if result and result[0] != 0:
         await event.reply("This user hasn't got any warnings!")
@@ -133,6 +147,11 @@ async def _(event):
         else:
             return
     reply_message = await event.get_reply_message()
+    if not await is_register_admin(event.input_chat, reply_message.sender_id):
+            pass
+    else:
+           await event.reply("I am not gonna reset warn of an admin")
+           return
     sql.reset_warns(reply_message.sender_id, event.chat_id)
     await event.reply("Warns for this user have been reset!")
 
