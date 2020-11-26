@@ -239,7 +239,7 @@ async def _(event):
             return
     chat = event.chat    
     base_string = "Current <b>blacklisted</b> domains:\n"
-    blacklisted = sql.get_blacklisted_urls(chat.id)
+    blacklisted = urlsql.get_blacklisted_urls(chat.id)
     if not blacklisted:
         await event.reply("There are no blacklisted domains here!")
         return
