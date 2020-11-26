@@ -103,6 +103,23 @@ async def _(event):
         await event.reply("This user hasn't got any warnings!")
 
 
+@register(pattern="^/removelastwarn$")
+async def _(event):
+    if event.fwd_from:
+        return
+    if event.is_private:
+        return
+    if event.is_group:
+        if await is_register_admin(event.input_chat, event.message.sender_id):
+            pass
+        else:
+            return
+    reply_message = await event.get_reply_message()
+    result = sql.get_warns(reply_message.sender_id, event.chat_id)
+    if result and result[0] != 0:
+        await event.reply("This user hasn't got any warnings!")
+    sql.remove_warn(reply_message.sender_id, event.chat_id)
+
 @register(pattern="^/resetwarns$")
 async def _(event):
     if event.fwd_from:
