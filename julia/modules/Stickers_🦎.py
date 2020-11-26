@@ -20,10 +20,14 @@ import datetime
 from julia import tbot, ubot, MONGO_DB_URI
 
 from telethon.tl.functions.messages import GetStickerSetRequest
+
 from telethon.tl.types import (
     DocumentAttributeSticker,
     InputStickerSetID,
+    InputStickerSetShortName,
+    MessageMediaPhoto,
 )
+
 
 from julia.events import register
 from telethon import *
