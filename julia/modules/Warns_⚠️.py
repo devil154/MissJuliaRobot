@@ -80,7 +80,7 @@ async def _(event):
 @tbot.on(events.CallbackQuery(pattern=r'rm_warn'))
 async def rm_warn(event):
     if event.is_group:
-        if await is_register_admin(event.input_chat, event.message.sender_id):
+        if await is_register_admin(event.input_chat, event.sender_id):
             pass
         else:
             await event.answer("You need to be an admin to do this", alert=False)
