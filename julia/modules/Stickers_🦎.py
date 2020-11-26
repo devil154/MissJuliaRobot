@@ -158,7 +158,7 @@ async def _(event):
     )
     is_a_s = is_it_animated_sticker(reply_message)
     file_ext_ns_ion = "@MissJuliaRobot.png"
-    file = await ubot.download_file(reply_message.media)
+    file = await event.client.download_file(reply_message.media)
     uploaded_sticker = None
     if is_a_s:
         file_ext_ns_ion = "AnimatedSticker.tgs"
@@ -305,7 +305,7 @@ async def _(event):
     await kanga.edit(
         f"Sticker added! Your pack can be found [here](t.me/addstickers/{packshortname})"
     )
-
+    os.system("rm -rf *.webp")
 
 @register(pattern="^/getsticker$")
 async def _(event):
