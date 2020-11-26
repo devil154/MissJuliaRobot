@@ -123,7 +123,7 @@ DEFAULTUSER = "Julia"
 FILLED_UP_DADDY = "Invalid pack selected."
 
 
-@tbot.on(events.NewMessage(pattern="^/kang ?(.*)"))
+@register(pattern="^/kang ?(.*)")
 async def _(event):
     approved_userss = approved_users.find({})
     for ch in approved_userss:
