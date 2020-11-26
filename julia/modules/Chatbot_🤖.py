@@ -51,7 +51,7 @@ async def _(event):
         expires = str(ses.expires)
         sql.set_ses(chat.id, ses_id, expires)
         await event.reply("AI successfully enabled for this chat!")
-
+        return
     await event.reply("AI is already enabled for this chat!")
     return ""
 
