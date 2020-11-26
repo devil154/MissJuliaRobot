@@ -234,13 +234,16 @@ file_help = file_help.replace(".py", "")
 file_helpo = file_help.replace("_", " ")
 
 __help__ = """
-**Admin Only**
  - /addblacklist <trigger> : blacklists the trigger
  - /rmblacklist <trigger> : stop blacklisting a certain blacklist trigger
  - /listblacklist: list all active blacklist filters
+ - /geturl: View the current blacklisted urls
+ - /addurl <urls>: Add a domain to the blacklist. The bot will automatically parse the url.
+ - /delurl <urls>: Remove urls from the blacklist.
 
 **Example:**
  - /addblacklist the admins suck: This will remove "the admins suck" everytime some non-admin types it
+ - /addurl bit.ly: This would delete any message containing url "bit.ly"
 """
 
 CMD_HELP.update({
